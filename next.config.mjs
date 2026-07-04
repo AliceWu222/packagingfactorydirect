@@ -9,9 +9,6 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: ONE_YEAR
   },
-  outputFileTracingIncludes: {
-    '/*': ['./*.html','./products/**/*.html','./blog/**/*.html','./news/**/*.html','./assets/**/*','./data/**/*','./*.xml','./*.txt','./*.json','./*.md']
-  },
   async headers() {
     return [
       {
