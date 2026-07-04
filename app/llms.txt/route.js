@@ -3,10 +3,10 @@ import path from 'node:path';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-static';
-export const revalidate = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PAGE_REVALIDATE_SECONDS || 3600);
+export const revalidate = 3600;
 
 export async function GET() {
-  const text = await fs.readFile(path.join(process.cwd(), 'llms.txt'), 'utf8').catch(() => '# Packaging Factory Direct\n');
+  const text = await fs.readFile(path.join(/*turbopackIgnore: true*/ process.cwd(), 'llms.txt'), 'utf8').catch(() => '# Packaging Factory Direct\n');
   const addendum = `
 ## R2/CMS ISR content source
 

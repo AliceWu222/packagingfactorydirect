@@ -4,7 +4,7 @@ import path from 'node:path';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const ROOT = process.cwd();
+const ROOT = /*turbopackIgnore: true*/ process.cwd();
 const ISR_SECONDS = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PAGE_REVALIDATE_SECONDS || 3600);
 
 function contentBaseUrl() {
@@ -45,7 +45,7 @@ async function localProducts() {
   const byUrl = new Map();
   for (const file of files) {
     try {
-      const json = JSON.parse(await fs.readFile(path.join(ROOT, file), 'utf8'));
+      const json = JSON.parse(await fs.readFile(path.join(/*turbopackIgnore: true*/ ROOT, file), 'utf8'));
       for (const item of normalizeItems(json)) byUrl.set(item.url, item);
     } catch {}
   }

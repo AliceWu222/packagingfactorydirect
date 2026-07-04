@@ -3,7 +3,7 @@ import path from 'node:path';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-static';
-export const revalidate = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PAGE_REVALIDATE_SECONDS || 3600);
+export const revalidate = 3600;
 
 
 const SITE_URL = 'https://packagingfactorydirect.com';
@@ -81,7 +81,7 @@ function priorityFor(url) {
   return '0.60';
 }
 export async function GET() {
-  const localXml = await fs.readFile(path.join(process.cwd(), 'sitemap.xml'), 'utf8').catch(() => '');
+  const localXml = await fs.readFile(path.join(/*turbopackIgnore: true*/ process.cwd(), 'sitemap.xml'), 'utf8').catch(() => '');
   const entries = extractLocalEntries(localXml);
 
   for (const kind of ['products', 'blog', 'news']) {

@@ -5,9 +5,9 @@ import { notFound } from 'next/navigation';
 export const runtime = 'nodejs';
 export const dynamic = 'force-static';
 export const dynamicParams = true;
-export const revalidate = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PAGE_REVALIDATE_SECONDS || 3600);
+export const revalidate = 3600;
 
-const ROOT = process.cwd();
+const ROOT = /*turbopackIgnore: true*/ process.cwd();
 const SITE_URL = 'https://packagingfactorydirect.com';
 const ISR_SECONDS = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PAGE_REVALIDATE_SECONDS || 3600);
 
@@ -49,7 +49,7 @@ function manifestUrlFor(kind) {
   return new URL(`data/${kind}.remote.json`, base).toString();
 }
 function safeResolve(relPath) {
-  const resolved = path.resolve(ROOT, relPath);
+  const resolved = path.resolve(/*turbopackIgnore: true*/ ROOT, relPath);
   if (!resolved.startsWith(ROOT)) return null;
   return resolved;
 }

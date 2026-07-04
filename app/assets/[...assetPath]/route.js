@@ -3,8 +3,8 @@ import path from 'node:path';
 
 export const runtime = 'nodejs';
 
-const ROOT = process.cwd();
-const ASSET_ROOT = path.resolve(ROOT, 'assets');
+const ROOT = /*turbopackIgnore: true*/ process.cwd();
+const ASSET_ROOT = path.resolve(/*turbopackIgnore: true*/ ROOT, 'assets');
 
 function contentType(file) {
   const ext = path.extname(file).toLowerCase();

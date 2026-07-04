@@ -3,7 +3,7 @@ import path from 'node:path';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-static';
-export const revalidate = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PAGE_REVALIDATE_SECONDS || 3600);
+export const revalidate = 3600;
 
 
 const SITE_URL = 'https://packagingfactorydirect.com';
@@ -56,7 +56,7 @@ function absoluteSiteUrl(url, kind) {
 
 
 export async function GET() {
-  const local = await fs.readFile(path.join(process.cwd(), 'ai-index.json'), 'utf8').then(JSON.parse).catch(() => ({ site: 'Packaging Factory Direct' }));
+  const local = await fs.readFile(path.join(/*turbopackIgnore: true*/ process.cwd(), 'ai-index.json'), 'utf8').then(JSON.parse).catch(() => ({ site: 'Packaging Factory Direct' }));
   const remoteProducts = await remoteItems('products');
   const remoteBlog = await remoteItems('blog');
   const remoteNews = await remoteItems('news');
