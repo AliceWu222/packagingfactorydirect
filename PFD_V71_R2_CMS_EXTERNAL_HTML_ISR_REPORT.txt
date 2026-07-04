@@ -1,0 +1,95 @@
+PFD V71 R2/CMS External HTML + ISR Upgrade Report
+Generated: 2026-07-04 19:48:37
+
+Base package:
+PFD_V70_ADDRESS_HEADING_UPDATED_DOWNLOAD_READY.zip
+
+Backup created:
+BACKUP_PFD_V70_ADDRESS_HEADING_UPDATED_DOWNLOAD_READY.zip
+
+Main goal:
+Upgrade from file-only ISR to real external R2/CMS HTML source + ISR so new product, blog and news HTML can be uploaded to R2/CMS and served without a full Git/Vercel redeploy.
+
+Completed architecture changes:
+1. app/[[...path]]/page.jsx upgraded:
+   - Keeps local existing HTML pages first by default.
+   - If a local products/blog/news detail file is missing, fetches the same relative path from PFD_CONTENT_BASE_URL / R2_PUBLIC_BASE_URL / CMS_CONTENT_BASE_URL.
+   - Uses ISR cache with revalidate seconds.
+   - Supports optional PFD_REMOTE_CONTENT_FIRST=true if remote content should override local detail pages.
+   - products.html, blog.html and news.html can inject remote cards from R2/CMS manifests.
+
+2. Remote manifest support added:
+   - data/products.remote.json
+   - data/blog.remote.json
+   - data/news.remote.json
+   - Optional direct env URLs: PFD_PRODUCTS_INDEX_URL, PFD_BLOG_INDEX_URL, PFD_NEWS_INDEX_URL
+
+3. Dynamic feed routes added:
+   - app/sitemap.xml/route.js
+   - app/product-feed.json/route.js
+   - app/ai-index.json/route.js
+   - app/llms.txt/route.js
+   - app/robots.txt/route.js
+
+4. ISR API upgraded:
+   - app/api/revalidate/route.js supports exact path-only revalidation and optional tags.
+   - app/api/isr-status/route.js reports whether R2/CMS source is configured.
+
+5. Documentation and examples added:
+   - R2_CMS_ISR_SETUP.md
+   - ISR_SETUP.md
+   - ISR_LOCKED_HOMEPAGE_SETUP.md
+   - data/r2-cms-content-source.example.json
+
+Required Vercel environment variables:
+- REVALIDATE_SECRET=your-long-random-secret
+- PFD_CONTENT_BASE_URL=https://your-r2-custom-domain.example.com/
+- PFD_ISR_SECONDS=3600
+
+Optional Vercel variables:
+- PFD_REMOTE_CONTENT_FIRST=true
+- PFD_ENABLE_REMOTE_LISTS=true
+- PFD_PRODUCTS_INDEX_URL=https://your-r2-domain/data/products.remote.json
+- PFD_BLOG_INDEX_URL=https://your-r2-domain/data/blog.remote.json
+- PFD_NEWS_INDEX_URL=https://your-r2-domain/data/news.remote.json
+
+Example new product publish workflow:
+1. Upload to R2:
+   - products/new-product.html
+   - assets/img/products/new-product.webp
+   - data/products.remote.json
+2. Call:
+   POST /api/revalidate
+   paths:
+   - /products/new-product.html
+   - /products.html
+   - /sitemap.xml
+   - /product-feed.json
+   - /ai-index.json
+
+Preservation:
+- Existing homepage and product page HTML/images/layout were not redesigned.
+- Existing product/blog/news URLs remain stable.
+- New content is append-only through R2/CMS.
+
+Static QA:
+- HTML files: 206
+- Product pages: 180
+- Blog pages: 11
+- News pages: 9
+- Asset images: 195
+- Asset image total: 11.70 MB
+- Internal link check: 0 broken
+- Image reference check: 0 broken
+- JSON validation: OK
+- JS route syntax check: OK
+
+Important note:
+The R2/CMS source becomes active after you deploy this Next.js package to Vercel and set PFD_CONTENT_BASE_URL plus REVALIDATE_SECRET in environment variables. Without those variables, the site safely falls back to the existing local HTML files.
+
+Final package QA before zip:
+- Broken internal links: 0
+- Broken image references: 0
+- Missing meta/canonical: 0/0
+- Invalid JSON files: 0
+- JS syntax errors: 0

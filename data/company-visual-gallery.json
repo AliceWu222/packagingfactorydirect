@@ -1,0 +1,83 @@
+{
+  "version": "v74-factory-visual-proof-gallery",
+  "generatedAt": "2026-07-04",
+  "purpose": "Realistic factory and company visual proof images for About Us, Blog and News pages.",
+  "note": "Homepage and product page visual layout were not modified.",
+  "images": [
+    {
+      "title": "Offset printing press producing custom paperboard packaging sheets",
+      "url": "/assets/img/company/01-offset-printing-production-line.webp",
+      "alt": "Offset printing press producing custom paperboard packaging sheets",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "title": "Flexible packaging printing and lamination line for coffee bags and roll film",
+      "url": "/assets/img/company/02-coffee-flexible-packaging-production-line.webp",
+      "alt": "Flexible packaging printing and lamination line for coffee bags and roll film",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "title": "Digital label and sticker production line with quality inspection",
+      "url": "/assets/img/company/03-label-printing-inspection-line.webp",
+      "alt": "Digital label and sticker production line with quality inspection",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "title": "Finished packaging warehouse, palletizing and shipping preparation area",
+      "url": "/assets/img/company/04-warehouse-shipping-area.webp",
+      "alt": "Finished packaging warehouse, palletizing and shipping preparation area",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "title": "Packaging showroom product wall with boxes, bags, pouches and labels",
+      "url": "/assets/img/company/05-product-wall-showroom.webp",
+      "alt": "Packaging showroom product wall with boxes, bags, pouches and labels",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "title": "Modern custom packaging sample showroom and display island",
+      "url": "/assets/img/company/06-modern-sample-showroom.webp",
+      "alt": "Modern custom packaging sample showroom and display island",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "title": "QC inspection area checking printing color, packaging structure and finish quality",
+      "url": "/assets/img/company/07-qc-inspection-area.webp",
+      "alt": "QC inspection area checking printing color, packaging structure and finish quality",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "title": "International trade show booth with packaging samples and buyer meetings",
+      "url": "/assets/img/company/08-international-trade-show-booth.webp",
+      "alt": "International trade show booth with packaging samples and buyer meetings",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "title": "Sales, design and quotation office with packaging samples and buyer documents",
+      "url": "/assets/img/company/09-sales-design-office.webp",
+      "alt": "Sales, design and quotation office with packaging samples and buyer documents",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "title": "Company reception lobby with packaging samples and brand signage",
+      "url": "/assets/img/company/10-company-reception-lobby.webp",
+      "alt": "Company reception lobby with packaging samples and brand signage",
+      "width": 1122,
+      "height": 1402
+    }
+  ],
+  "usedOn": [
+    "/about.html#factory-visual-proof",
+    "/blog/factory-production-showroom-qc-office-trade-show-gallery.html",
+    "/news/factory-visual-proof-gallery-added.html"
+  ]
+}

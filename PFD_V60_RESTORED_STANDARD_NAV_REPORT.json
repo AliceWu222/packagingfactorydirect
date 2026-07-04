@@ -1,0 +1,23 @@
+{
+  "base_package": "PFD_V55_FINAL_STABLE_ISR_SEO_GEO_DOWNLOAD_READY.zip",
+  "restored_nav": [
+    "Home",
+    "Products",
+    "About Us",
+    "Blog",
+    "News",
+    "Contact Us"
+  ],
+  "home_nav_labels_found": [
+    "Home",
+    "Products",
+    "About Us",
+    "Blog",
+    "News",
+    "Contact Us"
+  ],
+  "missing_required_pages": [],
+  "isr_route_exists": true,
+  "revalidate_api_exists": true,
+  "homepage_lock_exists": true
+}

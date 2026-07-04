@@ -1,0 +1,168 @@
+{
+  "version": "v73-hybrid-b2b-ssg-isr-dynamic",
+  "mode": "r2-cms-external-html-source-with-path-only-isr",
+  "allowedPathsExamples": [
+    "/products/new-product.html",
+    "/blog/new-post.html",
+    "/news/new-news.html",
+    "/products.html",
+    "/blog.html",
+    "/news.html",
+    "/sitemap.xml"
+  ],
+  "forbiddenWorkflow": "Do not trigger full Git rebuild for every content update when a path-only ISR revalidation can refresh the exact changed URL.",
+  "recommendedWebhookBody": {
+    "secret": "YOUR_REVALIDATE_SECRET",
+    "paths": [
+      "/products/new-product.html",
+      "/products.html",
+      "/sitemap.xml"
+    ]
+  },
+  "endpoint": "/api/revalidate",
+  "generatedAt": "2026-07-04",
+  "isrEnabled": true,
+  "nextRouteConfig": {
+    "runtime": "nodejs",
+    "dynamic": "force-static",
+    "dynamicParams": true,
+    "revalidateEnv": "PFD_ISR_SECONDS",
+    "defaultRevalidateSeconds": 3600
+  },
+  "publishExamples": {
+    "newProduct": {
+      "uploadToR2": [
+        "products/new-product.html",
+        "assets/img/products/new-product.webp"
+      ],
+      "updateManifest": "data/products.remote.json",
+      "revalidatePaths": [
+        "/products/new-product.html",
+        "/products.html",
+        "/sitemap.xml",
+        "/product-feed.json",
+        "/ai-index.json"
+      ]
+    },
+    "newBlog": {
+      "uploadToR2": [
+        "blog/new-post.html"
+      ],
+      "updateManifest": "data/blog.remote.json",
+      "revalidatePaths": [
+        "/blog/new-post.html",
+        "/blog.html",
+        "/sitemap.xml",
+        "/ai-index.json"
+      ]
+    },
+    "newNews": {
+      "uploadToR2": [
+        "news/new-news.html"
+      ],
+      "updateManifest": "data/news.remote.json",
+      "revalidatePaths": [
+        "/news/new-news.html",
+        "/news.html",
+        "/sitemap.xml",
+        "/ai-index.json"
+      ]
+    }
+  },
+  "statusEndpoint": "/api/isr-status",
+  "trueNoRedeployContentSource": true,
+  "remoteHtmlLookupPolicy": "If products/blog/news HTML does not exist locally, Next.js fetches the same relative path from PFD_CONTENT_BASE_URL or R2_PUBLIC_BASE_URL.",
+  "remoteListingManifestPolicy": "products.html, blog.html and news.html can inject remote cards from data/products.remote.json, data/blog.remote.json and data/news.remote.json.",
+  "environmentVariables": {
+    "PFD_CONTENT_BASE_URL": "Required for R2/CMS mode. Example: https://static.yourdomain.com/",
+    "REVALIDATE_SECRET": "Required for /api/revalidate.",
+    "PFD_ISR_SECONDS": "Optional ISR seconds. Default 3600.",
+    "PFD_REMOTE_CONTENT_FIRST": "Optional true to let R2/CMS override local products/blog/news HTML.",
+    "PFD_ENABLE_REMOTE_LISTS": "Optional false to disable remote manifest injection.",
+    "PFD_PRODUCTS_INDEX_URL": "Optional custom products manifest URL.",
+    "PFD_BLOG_INDEX_URL": "Optional custom blog manifest URL.",
+    "PFD_NEWS_INDEX_URL": "Optional custom news manifest URL."
+  },
+  "r2FolderStructure": {
+    "products": "products/new-product.html",
+    "blog": "blog/new-post.html",
+    "news": "news/new-news.html",
+    "manifests": [
+      "data/products.remote.json",
+      "data/blog.remote.json",
+      "data/news.remote.json"
+    ],
+    "assets": "assets/img/products/new-product.webp or absolute CDN image URLs"
+  },
+  "precisionTags": {
+    "homepage": "homepage",
+    "productList": "products",
+    "productDetail": [
+      "products",
+      "product-slug",
+      "product-{slug}"
+    ],
+    "blogList": "blog",
+    "blogDetail": [
+      "blog",
+      "blog-slug",
+      "blog-{slug}"
+    ],
+    "newsList": "news",
+    "newsDetail": [
+      "news",
+      "news-slug",
+      "news-{slug}"
+    ],
+    "sitemap": "sitemap"
+  },
+  "refreshRules": {
+    "newProduct": [
+      "/products/{slug}.html",
+      "/products.html",
+      "/",
+      "/index.html",
+      "/sitemap.xml",
+      "/product-feed.json",
+      "/ai-index.json"
+    ],
+    "newBlog": [
+      "/blog/{slug}.html",
+      "/blog.html",
+      "/",
+      "/index.html",
+      "/sitemap.xml",
+      "/ai-index.json",
+      "/llms.txt"
+    ],
+    "newNews": [
+      "/news/{slug}.html",
+      "/news.html",
+      "/",
+      "/index.html",
+      "/sitemap.xml",
+      "/ai-index.json",
+      "/llms.txt"
+    ]
+  },
+  "pageTypePolicy": {
+    "homepage": "static generation + ISR",
+    "productList": "static generation + ISR",
+    "productDetails": "ISR generated per path; R2/CMS fallback supported",
+    "blogList": "static generation + ISR",
+    "blogDetails": "ISR generated per path; R2/CMS fallback supported",
+    "newsList": "static generation + ISR",
+    "newsDetails": "ISR generated per path; R2/CMS fallback supported",
+    "industrySolutionPages": "prebuilt static + ISR",
+    "categoryHubs": "prebuilt static + ISR",
+    "search": "dynamic API and client-side filtering for buyers; not primary SEO entry"
+  },
+  "newCategoryOrIndustryRefresh": [
+    "/custom-{slug}.html or /industry/{slug}.html",
+    "/products.html",
+    "/",
+    "/index.html",
+    "/sitemap.xml",
+    "/ai-index.json"
+  ]
+}

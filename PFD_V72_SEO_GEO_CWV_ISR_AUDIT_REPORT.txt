@@ -1,0 +1,155 @@
+PFD V72 SEO / GEO / Core Web Vitals / Precision ISR Audit Report
+Generated: 2026-07-04
+
+Base package:
+PFD_V71_R2_CMS_EXTERNAL_HTML_ISR_DOWNLOAD_READY.zip
+
+First principle:
+- Existing homepage and product page visual layouts were not redesigned.
+- Existing homepage/product images, image ratios, image order, image positions and WhatsApp/email inquiry boxes were preserved.
+- Changes are SEO/GEO content, ISR logic, metadata/feed updates and non-visual performance attributes.
+
+20 new high-quality SEO/GEO pages added:
+
+Blog pages:
+- blog/custom-gift-boxes-rfq-cost-structure-finish-guide.html — Custom Gift Boxes RFQ Guide: Structure, Cost Drivers, Inserts and Premium Finishes
+- blog/magnetic-packaging-engineering-guide-for-premium-brands.html — Magnetic Packaging Engineering Guide for Premium Gift Sets and Retail Kits
+- blog/rigid-boxes-material-thickness-finish-selection-guide.html — Rigid Boxes Material, Thickness and Finish Selection Guide for B2B Packaging Buyers
+- blog/mailer-boxes-corrugated-board-ecommerce-shipping-guide.html — Mailer Boxes and Corrugated Board Guide for Ecommerce Shipping and Subscription Kits
+- blog/paper-bags-paper-gift-bag-handle-finish-guide.html — Paper Bags and Paper Gift Bag Guide: Materials, Handles, Finish and Retail RFQ Checklist
+- blog/sliding-drawer-box-premium-unboxing-structure-guide.html — Sliding Drawer Box Structure Guide for Premium Unboxing, Inserts and Retail Display
+- blog/cylinder-tube-packaging-paper-tube-rfq-guide.html — Cylinder Tube Packaging Guide for Candles, Tea, Coffee, Cosmetics and Gift Products
+- blog/foam-insert-eva-epe-molded-pulp-comparison-guide.html — Foam Insert, EVA, EPE and Molded Pulp Comparison Guide for Protective Gift Packaging
+- blog/food-packaging-box-safety-material-printing-guide.html — Food Packaging Box Guide: Food Safety, Grease Resistance, Paperboard and Printing
+- blog/cardstock-product-boxes-folding-carton-rfq-guide.html — Cardstock Product Boxes Guide: Folding Carton Materials, Finish and Retail RFQ Checklist
+- blog/b2b-packaging-dieline-artwork-prepress-checklist.html — B2B Packaging Dieline, Artwork and Prepress Checklist for Faster Sampling
+- blog/custom-packaging-cost-drivers-moq-500-buyer-guide.html — Custom Packaging Cost Drivers: MOQ 500 PCS, Materials, Tooling, Printing and Freight
+
+News pages:
+- news/ai-search-b2b-packaging-procurement-2026.html — AI Search Changes B2B Packaging Procurement: What Buyers Expect from Supplier Pages
+- news/premium-gift-packaging-demand-custom-gift-boxes-rigid-boxes.html — Premium Gift Packaging Demand Moves Toward Custom Gift Boxes and Rigid Boxes
+- news/ecommerce-mailer-boxes-corrugated-protection-trend.html — Ecommerce Brands Increase Demand for Corrugated Mailer Boxes with Better Protection
+- news/paper-bags-paper-gift-bags-retail-branding-trend.html — Paper Bags and Paper Gift Bags Gain Value in Retail Branding and Gift Programs
+- news/food-packaging-box-buyers-focus-grease-resistance-food-grade.html — Food Packaging Box Buyers Focus on Grease Resistance, Food Contact and Custom Printing
+- news/r2-cms-isr-seo-packaging-publishing-trend.html — R2/CMS + ISR Becomes a Safer Publishing Model for Large Packaging Catalogs
+- news/magnetic-packaging-collapsible-rigid-box-export-trend.html — Collapsible Magnetic Gift Boxes Rise as Export Buyers Compare Freight and Luxury Feel
+- news/cardstock-product-boxes-retail-folding-carton-demand.html — Cardstock Product Boxes Demand Grows for Beauty, Electronics and Retail Goods
+
+Core Web Vitals / speed improvements:
+- Added preload for desktop hero image and mobile hero image in App Router layout.
+- Removed duplicate main.js execution during App Router HTML rendering.
+- Enabled immutable asset cache headers.
+- Enabled Next.js compression and stronger route cache headers.
+- Prioritized product detail LCP images with loading=eager and fetchpriority=high.
+- Prioritized first product list images without changing image dimensions or layout.
+- Safely recompressed WebP assets without changing image dimensions.
+- Kept all visual CSS/layout intact for homepage/product pages.
+
+ISR improvements:
+- Homepage, product list, product details, blog list, blog details, news list, news details and sitemap are covered by ISR.
+- App Router route uses revalidate and dynamicParams=true.
+- /api/revalidate supports revalidatePath and revalidateTag.
+- Precision tags:
+  - products
+  - product-slug
+  - product-{slug}
+  - blog
+  - blog-slug
+  - blog-{slug}
+  - news
+  - news-slug
+  - news-{slug}
+  - homepage
+  - sitemap
+- New product refresh rule:
+  - /products/{slug}.html
+  - /products.html
+  - /
+  - /index.html
+  - /sitemap.xml
+  - /product-feed.json
+  - /ai-index.json
+- New blog refresh rule:
+  - /blog/{slug}.html
+  - /blog.html
+  - /
+  - /index.html
+  - /sitemap.xml
+  - /ai-index.json
+  - /llms.txt
+- New news refresh rule:
+  - /news/{slug}.html
+  - /news.html
+  - /
+  - /index.html
+  - /sitemap.xml
+  - /ai-index.json
+  - /llms.txt
+
+SEO/GEO protection:
+- Existing URLs were kept unchanged.
+- Existing canonical tags remain self-canonical.
+- Dynamic sitemap route preserves existing local lastmod values.
+- New article pages include stable publishedTime / modifiedTime.
+- No duplicate titles found.
+- No duplicate descriptions found.
+- No noindex pages found.
+- No 404 internal links found.
+- No broken image references found.
+
+Static QA:
+- HTML files: 226
+- Product pages: 180
+- Blog pages: 23
+- News pages: 17
+- Asset images: 195
+- Asset image total: 11.69 MB
+- Broken internal links: 0
+- Broken image references: 0
+- Missing title/meta description: 0
+- Missing canonical: 0
+- Duplicate titles: 0
+- Duplicate descriptions: 0
+- noindex pages: 0
+- Invalid JSON files: 0
+- JS route syntax errors: 0
+
+Key edited files:
+- app/[[...path]]/page.jsx
+- app/api/revalidate/route.js
+- app/sitemap.xml/route.js
+- app/layout.jsx
+- next.config.mjs
+- assets/css/style.css
+- blog.html
+- news.html
+- sitemap.xml
+- ai-index.json
+- llms.txt
+- data/revalidation.policy.json
+- data/seo-geo-keyword-map.json
+- data/ai-search-answer-cards.json
+- ISR_SETUP.md
+- R2_CMS_ISR_SETUP.md
+- README.md
+
+Deployment reminder:
+Set these in Vercel:
+REVALIDATE_SECRET=your-long-random-secret
+PFD_CONTENT_BASE_URL=https://your-r2-custom-domain.example.com/
+PFD_ISR_SECONDS=3600
+PFD_ENABLE_REMOTE_LISTS=true
+
+
+Final QA before packaging:
+- HTML files: 226
+- Broken internal links: 0
+- Broken image references: 0
+- Missing title/meta description: 0
+- Missing canonical tags: 0
+- noindex pages: 0
+- Duplicate titles: 0
+- Duplicate descriptions: 0
+- Invalid JSON files: 0
+- JS route syntax errors: 0
+- ZIP generated after this report.

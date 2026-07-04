@@ -1,0 +1,44 @@
+{
+  "version": "v71-r2-cms-isr",
+  "baseUrl": "https://your-r2-custom-domain.example.com/",
+  "notes": "Upload this folder structure to R2/CMS. The deployed Next.js site reads these files through PFD_CONTENT_BASE_URL without Git redeploy.",
+  "requiredEnv": {
+    "PFD_CONTENT_BASE_URL": "https://your-r2-custom-domain.example.com/",
+    "REVALIDATE_SECRET": "set-in-vercel",
+    "PFD_ISR_SECONDS": "3600"
+  },
+  "productsRemoteJsonExample": {
+    "items": [
+      {
+        "title": "Custom Cardstock Product Boxes with Foil Logo",
+        "url": "products/custom-cardstock-product-boxes-foil-logo.html",
+        "description": "Custom cardstock product boxes for beauty, electronics and retail brands. MOQ 500 PCS.",
+        "image": "assets/img/products/custom-cardstock-product-boxes-foil-logo.webp",
+        "category": "Cardstock Product Boxes",
+        "keywords": "cardstock product boxes, custom product boxes, folding cartons"
+      }
+    ]
+  },
+  "blogRemoteJsonExample": {
+    "items": [
+      {
+        "title": "How to Choose Cardstock Product Boxes",
+        "url": "blog/how-to-choose-cardstock-product-boxes.html",
+        "description": "RFQ checklist for cardstock product boxes.",
+        "category": "Blog",
+        "keywords": "cardstock product boxes"
+      }
+    ]
+  },
+  "newsRemoteJsonExample": {
+    "items": [
+      {
+        "title": "Cardstock Product Boxes Demand Update",
+        "url": "news/cardstock-product-boxes-demand-update.html",
+        "description": "B2B packaging news update.",
+        "category": "News",
+        "keywords": "cardstock product boxes"
+      }
+    ]
+  }
+}

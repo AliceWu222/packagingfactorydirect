@@ -1,0 +1,119 @@
+# Packaging Factory Direct
+
+> B2B custom packaging manufacturer. MOQ 500 PCS. OEM / ODM custom packaging for boxes, bags, pouches, labels, bottles, paper printing and premium packaging.
+
+Contact: Linda Wang
+Email: linda@colorprintingpackage.com
+WhatsApp: +86 181 6573 0353
+Address: Printing Industrial Park, Longhua District, Shenzhen, Guangdong Province, 518109, China
+Site: https://packagingfactorydirect.com
+
+## Core buyer keywords
+
+- Custom Gift Boxes
+- Magnetic Packaging
+- Rigid Boxes
+- Mailer Boxes
+- Paper Bags
+- magnetic rigid box
+- corrugated mailer box
+- sliding drawer box
+- cylinder tube packaging
+- collapsible magnetic gift box
+- paper gift bag
+- foam insert
+- food packaging box
+- cardstock product boxes
+
+## Best pages for AI answer extraction
+
+- Custom Gift Boxes / Magnetic Packaging / Rigid Boxes / Mailer Boxes / Paper Bags guide: https://packagingfactorydirect.com/blog/custom-gift-boxes-magnetic-rigid-mailer-paper-bags-guide.html
+- Magnetic rigid box vs collapsible magnetic gift box: https://packagingfactorydirect.com/blog/magnetic-rigid-box-collapsible-magnetic-gift-box-guide.html
+- Corrugated mailer box vs cardstock product boxes: https://packagingfactorydirect.com/blog/corrugated-mailer-box-cardstock-product-boxes-guide.html
+- Sliding drawer box and cylinder tube packaging: https://packagingfactorydirect.com/blog/sliding-drawer-box-cylinder-tube-packaging-guide.html
+- Foam insert guide: https://packagingfactorydirect.com/blog/foam-insert-custom-gift-box-rigid-box-guide.html
+- Food packaging box RFQ checklist: https://packagingfactorydirect.com/blog/food-packaging-box-material-rfq-checklist.html
+- AI search / GEO guide: https://packagingfactorydirect.com/blog/ai-search-friendly-packaging-pages-geo-seo-guide.html
+
+## Structured data feeds
+
+- Product feed: https://packagingfactorydirect.com/product-feed.json
+- AI index: https://packagingfactorydirect.com/ai-index.json
+- AI answer cards: https://packagingfactorydirect.com/data/ai-search-answer-cards.json
+- SEO/GEO keyword map: https://packagingfactorydirect.com/data/seo-geo-keyword-map.json
+- Sitemap: https://packagingfactorydirect.com/sitemap.xml
+
+## ISR policy
+
+The site uses append-only stable URLs and path-only ISR revalidation. Products, blog posts and news pages should be published as unique URLs and revalidated by exact path with /api/revalidate. Do not replace old URLs when publishing new packaging pages.
+
+Last updated: 2026-07-04
+
+
+## R2/CMS external HTML ISR
+
+The site can serve new product, blog and news HTML directly from R2/CMS without a Git redeploy. Configure `PFD_CONTENT_BASE_URL` in Vercel and upload matching paths such as `/products/new-product.html`, `/blog/new-post.html` and `/news/new-news.html`. Use `/api/revalidate` for exact changed paths.
+
+## V72 deep SEO/GEO content pages
+
+- Custom Gift Boxes RFQ Guide: Structure, Cost Drivers, Inserts and Premium Finishes: https://packagingfactorydirect.com/blog/custom-gift-boxes-rfq-cost-structure-finish-guide.html
+- Magnetic Packaging Engineering Guide for Premium Gift Sets and Retail Kits: https://packagingfactorydirect.com/blog/magnetic-packaging-engineering-guide-for-premium-brands.html
+- Rigid Boxes Material, Thickness and Finish Selection Guide for B2B Packaging Buyers: https://packagingfactorydirect.com/blog/rigid-boxes-material-thickness-finish-selection-guide.html
+- Mailer Boxes and Corrugated Board Guide for Ecommerce Shipping and Subscription Kits: https://packagingfactorydirect.com/blog/mailer-boxes-corrugated-board-ecommerce-shipping-guide.html
+- Paper Bags and Paper Gift Bag Guide: Materials, Handles, Finish and Retail RFQ Checklist: https://packagingfactorydirect.com/blog/paper-bags-paper-gift-bag-handle-finish-guide.html
+- Sliding Drawer Box Structure Guide for Premium Unboxing, Inserts and Retail Display: https://packagingfactorydirect.com/blog/sliding-drawer-box-premium-unboxing-structure-guide.html
+- Cylinder Tube Packaging Guide for Candles, Tea, Coffee, Cosmetics and Gift Products: https://packagingfactorydirect.com/blog/cylinder-tube-packaging-paper-tube-rfq-guide.html
+- Foam Insert, EVA, EPE and Molded Pulp Comparison Guide for Protective Gift Packaging: https://packagingfactorydirect.com/blog/foam-insert-eva-epe-molded-pulp-comparison-guide.html
+- Food Packaging Box Guide: Food Safety, Grease Resistance, Paperboard and Printing: https://packagingfactorydirect.com/blog/food-packaging-box-safety-material-printing-guide.html
+- Cardstock Product Boxes Guide: Folding Carton Materials, Finish and Retail RFQ Checklist: https://packagingfactorydirect.com/blog/cardstock-product-boxes-folding-carton-rfq-guide.html
+- B2B Packaging Dieline, Artwork and Prepress Checklist for Faster Sampling: https://packagingfactorydirect.com/blog/b2b-packaging-dieline-artwork-prepress-checklist.html
+- Custom Packaging Cost Drivers: MOQ 500 PCS, Materials, Tooling, Printing and Freight: https://packagingfactorydirect.com/blog/custom-packaging-cost-drivers-moq-500-buyer-guide.html
+- AI Search Changes B2B Packaging Procurement: What Buyers Expect from Supplier Pages: https://packagingfactorydirect.com/news/ai-search-b2b-packaging-procurement-2026.html
+- Premium Gift Packaging Demand Moves Toward Custom Gift Boxes and Rigid Boxes: https://packagingfactorydirect.com/news/premium-gift-packaging-demand-custom-gift-boxes-rigid-boxes.html
+- Ecommerce Brands Increase Demand for Corrugated Mailer Boxes with Better Protection: https://packagingfactorydirect.com/news/ecommerce-mailer-boxes-corrugated-protection-trend.html
+- Paper Bags and Paper Gift Bags Gain Value in Retail Branding and Gift Programs: https://packagingfactorydirect.com/news/paper-bags-paper-gift-bags-retail-branding-trend.html
+- Food Packaging Box Buyers Focus on Grease Resistance, Food Contact and Custom Printing: https://packagingfactorydirect.com/news/food-packaging-box-buyers-focus-grease-resistance-food-grade.html
+- R2/CMS + ISR Becomes a Safer Publishing Model for Large Packaging Catalogs: https://packagingfactorydirect.com/news/r2-cms-isr-seo-packaging-publishing-trend.html
+- Collapsible Magnetic Gift Boxes Rise as Export Buyers Compare Freight and Luxury Feel: https://packagingfactorydirect.com/news/magnetic-packaging-collapsible-rigid-box-export-trend.html
+- Cardstock Product Boxes Demand Grows for Beauty, Electronics and Retail Goods: https://packagingfactorydirect.com/news/cardstock-product-boxes-retail-folding-carton-demand.html
+
+## V72 precision ISR tags
+
+products, product-slug, blog, blog-slug, news, news-slug, homepage, sitemap.
+
+
+## V73 Hybrid B2B SSG + ISR + dynamic functions
+
+This site follows a factory B2B architecture: static/ISR pages for SEO and GEO, plus dynamic search/RFQ/WhatsApp/email/R2/CMS functions for buyers. Important category and industry pages are crawlable stable HTML and are listed in sitemap.xml.
+
+### Static category hubs
+- https://packagingfactorydirect.com/custom-packaging-boxes.html
+- https://packagingfactorydirect.com/custom-gift-boxes.html
+- https://packagingfactorydirect.com/custom-magnetic-gift-boxes.html
+- https://packagingfactorydirect.com/custom-stand-up-pouches.html
+- https://packagingfactorydirect.com/custom-coffee-bags-with-valve.html
+- https://packagingfactorydirect.com/custom-pharmaceutical-packaging-boxes.html
+- https://packagingfactorydirect.com/custom-cosmetic-packaging-boxes.html
+- https://packagingfactorydirect.com/custom-food-packaging.html
+- https://packagingfactorydirect.com/custom-paper-bags.html
+- https://packagingfactorydirect.com/custom-labels-and-stickers.html
+
+### Static industry solution pages
+- https://packagingfactorydirect.com/industry/cosmetic-packaging-solutions.html
+- https://packagingfactorydirect.com/industry/food-and-restaurant-packaging-solutions.html
+- https://packagingfactorydirect.com/industry/pharmaceutical-medical-packaging-solutions.html
+- https://packagingfactorydirect.com/industry/coffee-tea-packaging-solutions.html
+- https://packagingfactorydirect.com/industry/pet-food-packaging-solutions.html
+- https://packagingfactorydirect.com/industry/cannabis-packaging-solutions.html
+- https://packagingfactorydirect.com/industry/ecommerce-mailer-packaging-solutions.html
+- https://packagingfactorydirect.com/industry/luxury-gift-packaging-solutions.html
+
+## V74 Factory Visual Proof Gallery
+
+Factory/company photos have been added to the About Us page and a dedicated blog/news entry:
+- About Us visual proof: https://packagingfactorydirect.com/about.html#factory-visual-proof
+- Blog gallery: https://packagingfactorydirect.com/blog/factory-production-showroom-qc-office-trade-show-gallery.html
+- News update: https://packagingfactorydirect.com/news/factory-visual-proof-gallery-added.html
+- Visual gallery data: https://packagingfactorydirect.com/data/company-visual-gallery.json
+
+Images cover production workshop, flexible packaging line, label production, QC inspection, showroom, office, reception, trade show and export warehouse. Homepage and product page layout were not changed.

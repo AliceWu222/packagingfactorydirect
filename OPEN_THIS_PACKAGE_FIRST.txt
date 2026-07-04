@@ -1,0 +1,14 @@
+This is a Vercel/Next.js ISR package.
+
+For local preview:
+1. Run: npm install
+2. Run: npm run dev
+3. Open: http://localhost:3000
+
+For Vercel:
+1. Upload all files to GitHub.
+2. Import into Vercel.
+3. Add REVALIDATE_SECRET environment variable.
+4. Deploy.
+
+The old static HTML files are preserved in the root/products/blog/news folders. Images and carousel files remain in /assets.

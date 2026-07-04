@@ -1,0 +1,117 @@
+PFD V73 Factory B2B Hybrid SSG + ISR + Dynamic Functions Report
+Generated: 2026-07-04
+
+Base package:
+PFD_V72_SEO_GEO_CWV_ISR_INQUIRY_MACHINE_DOWNLOAD_READY.zip
+
+User-requested architecture implemented:
+- Static / ISR pages for Google, GEO and AI search.
+- Dynamic functions for buyer actions and operational publishing.
+- Next.js SSG + ISR + R2/CMS source + dynamic search/RFQ/WhatsApp/email/API.
+
+Preserved:
+- Existing homepage visual layout.
+- Existing product page visual layout.
+- Existing product images, image order, ratios and positions.
+- WhatsApp chat box and email inquiry box.
+
+Added static/ISR SEO category hub pages:
+- custom-packaging-boxes.html
+- custom-gift-boxes.html
+- custom-magnetic-gift-boxes.html
+- custom-stand-up-pouches.html
+- custom-coffee-bags-with-valve.html
+- custom-pharmaceutical-packaging-boxes.html
+- custom-cosmetic-packaging-boxes.html
+- custom-food-packaging.html
+- custom-paper-bags.html
+- custom-labels-and-stickers.html
+
+Added static/ISR industry solution pages:
+- industry/cosmetic-packaging-solutions.html
+- industry/food-and-restaurant-packaging-solutions.html
+- industry/pharmaceutical-medical-packaging-solutions.html
+- industry/coffee-tea-packaging-solutions.html
+- industry/pet-food-packaging-solutions.html
+- industry/cannabis-packaging-solutions.html
+- industry/ecommerce-mailer-packaging-solutions.html
+- industry/luxury-gift-packaging-solutions.html
+
+Dynamic functions:
+- Header search redirects to products.html?q=keyword.
+- Product page search filters cards.
+- /api/search?q=keyword added for dynamic product search.
+- /api/revalidate supports path and tag precision ISR.
+- R2/CMS external HTML source remains supported.
+- WhatsApp, email inquiry and RFQ form remain dynamic buyer functions.
+
+ISR structure:
+- Homepage: static + ISR.
+- Product list page: static + ISR.
+- Product detail pages: ISR per path, R2/CMS fallback.
+- Blog list page: static + ISR.
+- Blog detail pages: ISR per path, R2/CMS fallback.
+- News list page: static + ISR.
+- News detail pages: ISR per path, R2/CMS fallback.
+- Category hub pages: prebuilt static + ISR.
+- Industry solution pages: prebuilt static + ISR.
+- sitemap.xml: ISR route + static XML.
+
+Revalidation tags:
+- products
+- product-slug
+- product-{slug}
+- blog
+- blog-slug
+- blog-{slug}
+- news
+- news-slug
+- news-{slug}
+- homepage
+- sitemap
+- category
+- category-slug
+- category-{slug}
+- industry
+- industry-slug
+- industry-{slug}
+
+Product search coverage check:
+- Custom Gift Boxes: 16 matching product cards
+- Magnetic Packaging: 9 matching product cards
+- Rigid Boxes: 10 matching product cards
+- Mailer Boxes: 5 matching product cards
+- Paper Bags: 10 matching product cards
+- magnetic rigid box: 9 matching product cards
+- corrugated mailer box: 2 matching product cards
+- sliding drawer box: 2 matching product cards
+- cylinder tube packaging: 4 matching product cards
+- collapsible magnetic gift box: 4 matching product cards
+- paper gift bag: 5 matching product cards
+- foam insert: 5 matching product cards
+- food packaging box: 29 matching product cards
+- cardstock product boxes: 2 matching product cards
+
+SEO/GEO safety checks:
+- Existing URLs kept stable.
+- Canonical tags present.
+- No noindex pages.
+- No duplicate titles.
+- No duplicate descriptions.
+- No broken internal links.
+- No broken image references.
+- JSON files valid.
+- Next.js route syntax valid.
+
+Counts:
+- HTML files: 244
+- Product pages: 180
+- Blog pages: 23
+- News pages: 17
+- Category hub pages: 10
+- Industry solution pages: 8
+- Asset images: 195
+- Asset image total: 11.69 MB
+
+Important SEO note:
+Product/category/industry pages are linked through crawlable <a href> links and sitemap entries. Search is kept as buyer assistance, not the only SEO entry path.

@@ -1,0 +1,43 @@
+PFD V63 Mobile HTML/CSS Hero Carousel Update
+
+Base package:
+PFD_V62_HERO_LEFT_INQUIRY_BOX_DOWNLOAD_READY.zip
+
+Completed changes:
+1. Added 5 optimized mobile-only homepage carousel product image assets:
+   - assets/img/hero/mobile-hero-products-1.webp
+   - assets/img/hero/mobile-hero-products-2.webp
+   - assets/img/hero/mobile-hero-products-3.webp
+   - assets/img/hero/mobile-hero-products-4.webp
+   - assets/img/hero/mobile-hero-products-5.webp
+
+2. The mobile carousel is built as HTML + CSS + image layers:
+   - Text, bullets, and buttons remain editable HTML content.
+   - Layout, typography, buttons, chips, spacing, and mobile display are controlled by CSS.
+   - Product displays are separate WebP image assets.
+   - It is not a single flat full-screen image.
+
+3. Removed duplicate mobile text problem:
+   - Desktop background images are hidden on mobile.
+   - Mobile product images contain only product visuals.
+   - The carousel keeps one set of mobile text only from the HTML hero content.
+
+4. Mobile carousel order:
+   1) Custom Packaging Manufacturer for Global B2B Buyers
+   2) Flexible Packaging & Stand Up Pouches Manufacturer
+   3) Luxury Boxes, Paper Bags & Premium Print
+   4) Food Packaging Solutions for Restaurants & Brands
+   5) Pharma & Medical Packaging with Traceability
+
+5. Desktop homepage files and existing site structure are preserved.
+6. Existing Blog / News / Products / Contact pages and ISR setup files are preserved.
+
+Main files changed:
+- index.html
+- assets/css/style.css
+- assets/js/main.js
+- assets/img/hero/mobile-hero-products-1.webp
+- assets/img/hero/mobile-hero-products-2.webp
+- assets/img/hero/mobile-hero-products-3.webp
+- assets/img/hero/mobile-hero-products-4.webp
+- assets/img/hero/mobile-hero-products-5.webp

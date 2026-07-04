@@ -1,0 +1,16 @@
+PackagingFactoryDirect V20
+Download-ready static package.
+
+This version fixes 10 more mismatched product images with newly generated and compressed real product photos:
+- Paper Cups
+- Custom Printed Tape
+- Spout Pouches
+- Courier Bags
+- Apparel Zipper Bags
+- Tin Boxes
+- Presentation Folders
+- Bubble Mailers
+- Stickers & Labels
+- Security Labels
+
+All updated images are optimized WEBP files for faster loading.

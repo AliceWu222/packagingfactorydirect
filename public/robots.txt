@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://packagingfactorydirect.com/sitemap.xml
+Allow: /llms.txt
+Allow: /ai-index.json
+Allow: /product-feed.json

@@ -1,0 +1,10 @@
+{
+  "framework": "nextjs",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "env": {
+    "PFD_ISR_SECONDS": "3600",
+    "PFD_ENABLE_REMOTE_LISTS": "true",
+    "PFD_REMOTE_CONTENT_FIRST": "false"
+  }
+}

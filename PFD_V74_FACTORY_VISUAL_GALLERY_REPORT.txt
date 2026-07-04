@@ -1,0 +1,65 @@
+PFD V74 Factory Visual Proof Gallery Update Report
+Generated: 2026-07-04 10:19:32
+
+Base package:
+PFD_V73_HYBRID_B2B_SSG_ISR_DYNAMIC_STRUCTURE_DOWNLOAD_READY.zip
+
+User request:
+Add uploaded factory/workshop, QC, exhibition, office, product wall/showroom and related company photos to the most suitable website locations without breaking current homepage and product page layouts.
+
+Completed changes:
+1. Added 10 optimized WebP company/factory images to:
+   assets/img/company/
+
+2. Added a new visual proof gallery section to:
+   about.html#factory-visual-proof
+
+3. Created a new Blog page:
+   blog/factory-production-showroom-qc-office-trade-show-gallery.html
+
+4. Created a new News page:
+   news/factory-visual-proof-gallery-added.html
+
+5. Added cards to:
+   blog.html
+   news.html
+
+6. Added gallery styling to:
+   assets/css/style.css
+
+7. Updated supporting files:
+   sitemap.xml
+   ai-index.json
+   public/ai-index.json
+   llms.txt
+   data/company-visual-gallery.json
+
+Homepage / product page protection:
+- index.html unchanged from base package: True
+- products.html unchanged from base package: True
+- No homepage layout or product-page layout redesign was performed.
+- WhatsApp/email inquiry boxes were not changed.
+
+Image optimization:
+- Company image count: 10
+- Total company image size: 1.47 MB
+- Format: WebP
+- Loading: lazy except first visual proof image where appropriate
+- Width/height attributes included to reduce layout shift
+
+QA result:
+- HTML files checked: 246
+- Broken internal links: 0
+- Broken image references: 0
+- Missing title/meta description: 0
+- Missing canonical tags: 0
+- noindex pages: 0
+- Duplicate titles: 0
+- Duplicate descriptions: 0
+- Invalid JSON files: 0
+- JS route syntax errors: 0
+
+Best placement rationale:
+- About Us: best for trust proof, factory capability, QC, showroom, warehouse and company infrastructure.
+- Blog: best for full image gallery and buyer explanation.
+- News: best for announcing the new visual proof update.

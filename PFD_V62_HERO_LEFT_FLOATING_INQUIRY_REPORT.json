@@ -1,0 +1,10 @@
+{
+  "version": "V62",
+  "changes": [
+    "Moved homepage carousel text containers to the far-left safe area for all 5 hero slides using CSS override.",
+    "Restored bottom-right inquiry widget from square WhatsApp button to full contact box with WhatsApp, email inquiry, and visible email address.",
+    "Kept existing images, product pages, navigation, blog/news, ISR files, and data files unchanged except CSS and the floating widget HTML blocks."
+  ],
+  "html_files_with_floating_widget_updated": 194,
+  "css_file": "assets/css/style.css"
+}

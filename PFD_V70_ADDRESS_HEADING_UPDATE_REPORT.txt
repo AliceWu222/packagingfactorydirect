@@ -1,0 +1,28 @@
+PFD V70 Address + Homepage Heading Update Report
+
+Base package:
+PFD_V69_SEO_GEO_ISR_TRAFFIC_READY_DOWNLOAD.zip
+
+Completed changes:
+1. Added address below the phone/contact line across HTML pages:
+   Address: Printing Industrial Park, Longhua District, Shenzhen, Guangdong Province, 518109, China
+2. Added address data to structured/global JSON files where contact data exists.
+3. Added PostalAddress to Organization JSON-LD where present.
+4. Changed homepage heading:
+   From: One-stop custom packaging solutions
+   To: China's Leading One-Stop Custom Packaging Solutions
+5. Added topbar address styling and footer overflow safety.
+
+Counts:
+- HTML files processed: 206
+- Address occurrences in HTML: 413
+- Homepage new heading count: 1
+- Homepage old heading count: 0
+
+QA:
+- Broken internal links: 0
+- Broken image references: 0
+- Missing meta title/description: 0
+- Missing canonical tags: 0
+- Invalid JSON files: 0
+- JS syntax checks: [('assets/js/main.js', 0, ''), ('app/api/revalidate/route.js', 0, ''), ('app/api/isr-status/route.js', 0, ''), ('next.config.mjs', 0, '')]

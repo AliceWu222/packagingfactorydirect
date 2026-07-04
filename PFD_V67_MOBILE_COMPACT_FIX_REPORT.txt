@@ -1,0 +1,26 @@
+PFD V67 Mobile Compact Fix
+
+Base package:
+PFD_V66_MOBILE_VERTICAL_DEDICATED_DOWNLOAD_READY.zip
+
+Completed mobile changes:
+1. Mobile navigation links Home / Products / About Us / Blog / News / Contact Us are forced onto one line.
+2. Mobile Request A Quote button is reduced in size.
+3. Dedicated mobile homepage carousel text is reduced significantly:
+   - smaller eyebrow
+   - smaller title
+   - smaller paragraph
+   - smaller feature chips
+   - smaller carousel buttons
+   - product image area starts earlier and stays complete
+4. First feature strip after hero is compacted:
+   - smaller section padding
+   - 2-column mobile layout
+   - smaller title and body text
+   - smaller card padding and height
+5. Existing desktop layout and product pages are preserved.
+
+Changed file:
+- assets/css/style.css
+
+Package integrity checked after zipping.

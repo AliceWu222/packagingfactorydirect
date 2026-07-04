@@ -1,0 +1,11 @@
+PFD V68 Mobile Refinements
+
+Base package: PFD_V67_MOBILE_NAV_HERO_FEATURE_COMPACT_DOWNLOAD_READY.zip
+
+Changes made:
+1. Improved mobile hero blending so the product area integrates more smoothly with the background using a soft transition overlay and top-edge fade.
+2. Reduced the large blank gap above the Featured Categories section on mobile.
+3. Reduced the mobile heading size for "One-stop custom packaging solutions" and its supporting text so users can see products sooner.
+
+Primary edited file:
+- assets/css/style.css

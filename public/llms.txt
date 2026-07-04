@@ -1,0 +1,10 @@
+# Packaging Factory Direct
+
+B2B custom packaging manufacturer. MOQ 500 PCS. RFQ only.
+
+Homepage data is locked to homepage/featured tags in data/homepage.locked.json and never reads Latest.
+ISR: core pages prebuilt; product/blog/news details generated per path. Revalidate one specified URL through /api/revalidate.
+Search: header search redirects to /products.html?q=keyword and filters product cards.
+
+Product feed: https://packagingfactorydirect.com/product-feed.json
+Sitemap: https://packagingfactorydirect.com/sitemap.xml

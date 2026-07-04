@@ -1,0 +1,17 @@
+{
+  "name": "packaging-factory-direct-v72-seo-geo-cwv-isr",
+  "version": "72.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "check": "node --check next.config.mjs",
+    "check:routes": "node --check next.config.mjs && find app -name 'route.js' -print -exec node --check {} \\;"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}

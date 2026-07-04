@@ -1,0 +1,29 @@
+{
+  "base_package": "PFD_V60_RESTORED_STANDARD_NAV_DOWNLOAD_READY.zip",
+  "changes": [
+    "Logo visual size reduced in header.",
+    "Menu button hidden and search box displayed in its place.",
+    "WhatsApp floating box changed to square button at bottom right.",
+    "Standard nav preserved: Home, Products, About Us, Blog, News, Contact Us."
+  ],
+  "home_nav": [
+    "Home",
+    "Products",
+    "About Us",
+    "Blog",
+    "News",
+    "Contact Us"
+  ],
+  "search_tests_count": {
+    "cupcake": 2,
+    "coffee bag": 7,
+    "paper cups": 4,
+    "sterilization": 19,
+    "sushi boxes": 1,
+    "taco": 1
+  },
+  "broken_links": 0,
+  "has_isr": true,
+  "has_revalidate": true,
+  "has_homepage_lock": true
+}

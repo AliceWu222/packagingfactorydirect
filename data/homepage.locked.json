@@ -1,0 +1,187 @@
+{
+  "version": "v55",
+  "mode": "locked-homepage-data",
+  "rule": "Homepage carousel and homepage recommendation sections render only homepage/featured tagged items and fixed IDs, never latest products.",
+  "homepageTags": [
+    "homepage",
+    "featured"
+  ],
+  "heroBannersLimit": 5,
+  "heroBanners": [
+    {
+      "src": "assets/img/hero/hero-1.webp",
+      "alt": "Custom Packaging Manufacturer for Global B2B Buyers",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "src": "assets/img/hero/hero-2.webp",
+      "alt": "Flexible Packaging & Stand Up Pouches Manufacturer",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "src": "assets/img/hero/hero-3.webp",
+      "alt": "Food Packaging Solutions for Restaurants & Brands",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "src": "assets/img/hero/hero-4.webp",
+      "alt": "Pharma & Medical Packaging with Traceability",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "src": "assets/img/hero/hero-5.webp",
+      "alt": "Luxury Boxes, Paper Bags & Premium Print",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    }
+  ],
+  "featuredProductsLimit": 12,
+  "featuredProducts": [
+    {
+      "title": "Custom Tamper-Evident Hyaluronic Acid Injection Box with GS1 DataMatrix for Pre-filled Syringes",
+      "url": "products/custom-tamper-evident-hyaluronic-acid-injection-box-gs1-datamatrix-pre-filled-syringes.html",
+      "description": "Premium serialized hyaluronic acid injection boxes with GS1 DataMatrix, tamper-evident structure and medical aesthetic branding for pre-filled syringe packaging projects.",
+      "image": "assets/img/products/custom-tamper-evident-hyaluronic-acid-injection-box-gs1-datamatrix-pre-filled-syringes-1.webp",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "title": "Child-Resistant Secure Sliding Drawer Box with Serialized Track and Trace Code for Meso-Cocktails",
+      "url": "products/child-resistant-secure-sliding-drawer-box-serialized-track-trace-meso-cocktails.html",
+      "description": "Child-resistant drawer-style meso-cocktail packaging with serialized track-and-trace coding, premium branding and secure retail presentation.",
+      "image": "assets/img/products/child-resistant-secure-sliding-drawer-box-serialized-track-trace-meso-cocktails-1.webp",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "title": "Premium Anti-Counterfeiting Magnetic Gift Box with Destructible Void Seal for Luxury Medical Aesthetics",
+      "url": "products/premium-anti-counterfeiting-magnetic-gift-box-destructible-void-seal-luxury-medical-aesthetics.html",
+      "description": "Luxury medical aesthetic magnetic gift box with anti-counterfeiting features, destructible void seal and premium brand presentation for clinic retail kits.",
+      "image": "assets/img/products/premium-anti-counterfeiting-magnetic-gift-box-destructible-void-seal-luxury-medical-aesthetics-1.webp",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "title": "Wholesale Reverse Tuck End Pharmaceutical Cartons with Integrated Tamper-Evident Tear-Strip",
+      "url": "products/wholesale-reverse-tuck-end-pharmaceutical-cartons-integrated-tamper-evident-tear-strip.html",
+      "description": "Wholesale reverse tuck end pharma cartons with integrated tear-strip security, clean medical printing and export-ready custom carton production.",
+      "image": "assets/img/products/wholesale-reverse-tuck-end-pharmaceutical-cartons-integrated-tamper-evident-tear-strip-1.webp",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "title": "GS1 Compliant Straight Tuck Tamper-Proof Medicine Box for Eye Drops and Clinical Vials",
+      "url": "products/gs1-compliant-straight-tuck-tamper-proof-medicine-box-eye-drops-clinical-vials.html",
+      "description": "Straight tuck tamper-proof medicine boxes for eye drops and clinical vials with GS1-ready coding panels and clean medical export presentation.",
+      "image": "assets/img/products/gs1-compliant-straight-tuck-tamper-proof-medicine-box-eye-drops-clinical-vials-1.webp",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "title": "Eco-Friendly Tamper-Evident Mailer Box with Self-Sealing Tear Strip for Supplement E-Commerce",
+      "url": "products/eco-friendly-tamper-evident-mailer-box-self-sealing-tear-strip-supplement-ecommerce.html",
+      "description": "Eco-friendly tamper-evident mailer boxes for supplement e-commerce, featuring self-sealing tear strip, strong corrugated structure and brand-ready print.",
+      "image": "assets/img/products/eco-friendly-tamper-evident-mailer-box-self-sealing-tear-strip-supplement-ecommerce-1.webp",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "title": "Serialized Book-Style Multi-Pack Presentation Box for Premium Collagen and Health Supplements",
+      "url": "products/serialized-book-style-multi-pack-presentation-box-premium-collagen-health-supplements.html",
+      "description": "Serialized book-style presentation box for premium collagen and health supplement multipacks with elegant organization and retail-ready branding.",
+      "image": "assets/img/products/serialized-book-style-multi-pack-presentation-box-premium-collagen-health-supplements-1.webp",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "title": "Serialized Medical Device Hanging Box with Security Perforation Line for Diagnostic Kits",
+      "url": "products/serialized-medical-device-hanging-box-security-perforation-line-diagnostic-kits.html",
+      "description": "Serialized hanging medical device boxes with euro slot and security perforation line for rapid test kits and diagnostic product packaging.",
+      "image": "assets/img/products/serialized-medical-device-hanging-box-security-perforation-line-diagnostic-kits-1.webp",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "title": "Heavy-Duty Corrugated Case with GS1-128 Aggregation Barcode for Pharmaceutical Storage",
+      "url": "products/heavy-duty-corrugated-case-gs1-128-aggregation-barcode-pharmaceutical-storage.html",
+      "description": "Heavy-duty corrugated pharmaceutical storage cases with GS1-128 aggregation barcode and warehouse-ready shipping performance.",
+      "image": "assets/img/products/heavy-duty-corrugated-case-gs1-128-aggregation-barcode-pharmaceutical-storage-1.webp",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "title": "Child-Resistant Cannabis Vape Box with Serial Number Anti-Tamper Security Lock",
+      "url": "products/child-resistant-cannabis-vape-box-serial-number-anti-tamper-security-lock.html",
+      "description": "Child-resistant cannabis vape boxes with serial number control, anti-tamper security lock and compliant premium branding for vape cartridge products.",
+      "image": "assets/img/products/child-resistant-cannabis-vape-box-serial-number-anti-tamper-security-lock-1.webp",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "title": "Botanical Skincare Ritual Gift Set Boxes with Custom Molded Inserts",
+      "url": "products/botanical-skincare-ritual-gift-set-boxes-custom-inserts.html",
+      "description": "Premium botanical skincare ritual gift set boxes with luxury rigid structure, custom molded inserts, soft blush paper wrap and gold logo printing for serum, cream, toner and skincare set brands.",
+      "image": "assets/img/products/botanical-skincare-ritual-gift-set-boxes-custom-inserts-1.webp",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    },
+    {
+      "title": "Perfume Discovery Set Boxes with Sample Vial Tray and Printed Scent Card",
+      "url": "products/perfume-discovery-set-boxes-sample-vial-tray-scent-card.html",
+      "description": "Luxury perfume discovery set boxes with sample vial tray, ribbon pull, printed scent card and floral artwork for fragrance trial kits, perfume samples and boutique scent collections.",
+      "image": "assets/img/products/perfume-discovery-set-boxes-sample-vial-tray-scent-card-1.webp",
+      "tags": [
+        "homepage",
+        "featured"
+      ]
+    }
+  ],
+  "latestProductsPolicy": {
+    "homepage": "disabled",
+    "homepageCarousel": "disabled",
+    "homepageFeaturedProducts": "disabled",
+    "productsList": "append-only stable order",
+    "reason": "New products must not change homepage carousel or featured layout unless manually tagged homepage/featured."
+  },
+  "cmsQueryPolicy": {
+    "strapi": "filters[tags][$contains]=featured&pagination[limit]=12",
+    "contentful": "where: { tags_contains_all: [\"featured\"] }, limit: 12",
+    "api": "GET /api/products?tag=featured&limit=12"
+  }
+}

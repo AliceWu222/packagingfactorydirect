@@ -1,0 +1,33 @@
+PFD V64 Mobile Strict 1:1 Carousel Update
+
+Base package:
+PFD_V62_HERO_LEFT_INQUIRY_BOX_DOWNLOAD_READY.zip
+
+This package includes a stricter mobile homepage hero rebuild based on the 5 uploaded mobile carousel references.
+
+Completed changes:
+1. Rebuilt the mobile homepage hero as HTML + CSS + separate image assets (not one flat image).
+2. Mobile text stays as HTML. Product visuals are separate WebP assets.
+3. Mobile duplicate text issue removed: only one mobile text layer remains.
+4. Mobile carousel order:
+   1) Custom
+   2) Flexible
+   3) Luxury
+   4) Food
+   5) Pharma
+5. Added 5 new mobile product image assets:
+   - assets/img/hero/mobile-hero-products-1.webp
+   - assets/img/hero/mobile-hero-products-2.webp
+   - assets/img/hero/mobile-hero-products-3.webp
+   - assets/img/hero/mobile-hero-products-4.webp
+   - assets/img/hero/mobile-hero-products-5.webp
+6. Updated files:
+   - index.html
+   - assets/css/style.css
+   - assets/img/hero/mobile-hero-products-1.webp
+   - assets/img/hero/mobile-hero-products-2.webp
+   - assets/img/hero/mobile-hero-products-3.webp
+   - assets/img/hero/mobile-hero-products-4.webp
+   - assets/img/hero/mobile-hero-products-5.webp
+
+Desktop homepage and the rest of the site remain preserved.

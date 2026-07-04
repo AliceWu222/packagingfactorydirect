@@ -1,0 +1,85 @@
+PFD V69 SEO/GEO/ISR Optimization Report
+Generated: 2026-07-04 19:15:39
+
+Base package:
+PFD_V68_MOBILE_BLEND_GAP_TITLE_FIXED_DOWNLOAD_READY.zip
+
+Important preservation note:
+- Homepage layout and product page layout were not redesigned.
+- Existing product URLs were kept stable.
+- New blog/news pages were added as append-only URLs to avoid disturbing previous URL equity.
+
+Keyword clusters optimized:
+- Custom Gift Boxes
+- Magnetic Packaging
+- Rigid Boxes
+- Mailer Boxes
+- Paper Bags
+- magnetic rigid box
+- corrugated mailer box
+- sliding drawer box
+- cylinder tube packaging
+- collapsible magnetic gift box
+- paper gift bag
+- foam insert
+- food packaging box
+- cardstock product boxes
+
+New blog guides added:
+- blog/ai-search-friendly-packaging-pages-geo-seo-guide.html
+- blog/corrugated-mailer-box-cardstock-product-boxes-guide.html
+- blog/custom-gift-boxes-magnetic-rigid-mailer-paper-bags-guide.html
+- blog/foam-insert-custom-gift-box-rigid-box-guide.html
+- blog/food-packaging-box-material-rfq-checklist.html
+- blog/magnetic-rigid-box-collapsible-magnetic-gift-box-guide.html
+- blog/sliding-drawer-box-cylinder-tube-packaging-guide.html
+
+New news pages added:
+- news/ai-search-packaging-supplier-content-trend.html
+- news/foam-insert-premium-packaging-demand-update.html
+- news/food-packaging-box-material-procurement-update.html
+- news/magnetic-packaging-rigid-box-demand-update.html
+- news/mailer-boxes-paper-bags-ecommerce-unboxing-trend.html
+
+SEO/GEO enhancements:
+- Added Article / NewsArticle schema on new articles.
+- Added FAQPage schema on new articles.
+- Added direct answer boxes, comparison tables and RFQ checklists for AI extraction.
+- Updated blog.html and news.html listings.
+- Updated sitemap.xml with all HTML pages.
+- Updated robots.txt.
+- Updated llms.txt.
+- Updated ai-index.json.
+- Added data/seo-geo-keyword-map.json.
+- Added data/ai-search-answer-cards.json.
+
+ISR enhancements:
+- app/[[...path]]/page.jsx uses force-static, dynamicParams=true and revalidate seconds.
+- Only core pages are prebuilt.
+- Product/blog/news detail pages are generated per path and cached.
+- app/api/revalidate/route.js supports exact path-only ISR for products/blog/news/listing/sitemap/AI feeds.
+- app/api/isr-status/route.js added for deployment diagnostics.
+- data/revalidation.policy.json updated.
+- ISR_SETUP.md updated with Vercel webhook examples.
+
+Image optimization:
+- WebP images were recompressed where doing so reduced file size without changing dimensions.
+- Current asset image count: 195
+- Current total asset image size: 11.70 MB
+
+Static QA checks:
+- HTML files checked: 206
+- Product pages: 180
+- Blog pages: 11
+- News pages: 9
+- Broken internal links: 0
+- Broken image references: 0
+- Missing title/meta description: 0
+- Missing canonical tags: 0
+- Invalid JSON files: 0
+
+If deploying to Vercel:
+1. Set REVALIDATE_SECRET in project environment variables.
+2. Set PFD_ISR_SECONDS=3600 or your preferred interval.
+3. For new products/blog/news, call /api/revalidate with exact paths.
+4. Keep old URLs unchanged.

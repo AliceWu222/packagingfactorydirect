@@ -1,0 +1,19 @@
+PFD V65 Mobile Refined Carousel Update
+
+Base package: PFD_V64_MOBILE_STRICT_1TO1_DOWNLOAD_READY.zip
+
+Main improvements:
+1. Re-optimized the 5 mobile homepage hero slides using the latest 5 user reference images.
+2. Kept the structure as HTML + CSS + separate product image assets (not one flat image).
+3. Reduced mobile text size across headline, paragraph, pills, and buttons.
+4. Increased relative prominence of the product section and tightened the product crops to better match the references.
+5. Preserved one text layer only for mobile to avoid duplicates.
+
+Updated files:
+- index.html
+- assets/css/style.css
+- assets/img/hero/mobile-hero-products-1.webp
+- assets/img/hero/mobile-hero-products-2.webp
+- assets/img/hero/mobile-hero-products-3.webp
+- assets/img/hero/mobile-hero-products-4.webp
+- assets/img/hero/mobile-hero-products-5.webp

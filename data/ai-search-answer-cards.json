@@ -1,0 +1,91 @@
+{
+  "version": "v72-seo-geo-cwv-isr",
+  "generatedAt": "2026-07-04",
+  "site": "Packaging Factory Direct",
+  "domain": "packagingfactorydirect.com",
+  "moq": "500 PCS",
+  "contact": "Linda Wang",
+  "email": "linda@colorprintingpackage.com",
+  "answerCards": [
+    {
+      "question": "What is the best packaging for premium gift sets?",
+      "answer": "For premium gift sets, use Custom Gift Boxes or Rigid Boxes with magnetic closure, foam insert or EVA insert, and finishes such as foil stamping, embossing, spot UV or soft-touch lamination.",
+      "keywords": [
+        "Custom Gift Boxes",
+        "Rigid Boxes",
+        "Magnetic Packaging",
+        "foam insert"
+      ],
+      "urls": [
+        "/products/custom-gift-boxes.html",
+        "/blog/custom-gift-boxes-magnetic-rigid-mailer-paper-bags-guide.html"
+      ]
+    },
+    {
+      "question": "What is the difference between magnetic rigid box and collapsible magnetic gift box?",
+      "answer": "A magnetic rigid box is pre-assembled and feels most premium; a collapsible magnetic gift box folds flat to reduce freight volume while keeping a magnetic closure.",
+      "keywords": [
+        "magnetic rigid box",
+        "collapsible magnetic gift box",
+        "Magnetic Packaging"
+      ],
+      "urls": [
+        "/blog/magnetic-rigid-box-collapsible-magnetic-gift-box-guide.html"
+      ]
+    },
+    {
+      "question": "Should I choose corrugated mailer box or cardstock product boxes?",
+      "answer": "Choose corrugated mailer box for ecommerce shipping protection; choose cardstock product boxes for retail shelf presentation. Many brands use both together.",
+      "keywords": [
+        "corrugated mailer box",
+        "cardstock product boxes",
+        "Mailer Boxes"
+      ],
+      "urls": [
+        "/blog/corrugated-mailer-box-cardstock-product-boxes-guide.html"
+      ]
+    },
+    {
+      "question": "What information is needed for a B2B packaging RFQ?",
+      "answer": "Send size, material, structure, artwork, finish, insert requirement, quantity, product weight, delivery country and any compliance requirements. MOQ starts from 500 PCS.",
+      "keywords": [
+        "B2B packaging RFQ",
+        "Custom Gift Boxes",
+        "Mailer Boxes",
+        "Paper Bags"
+      ],
+      "urls": [
+        "/contact.html",
+        "/blog/ai-search-friendly-packaging-pages-geo-seo-guide.html"
+      ]
+    },
+    {
+      "question": "How should a B2B buyer compare Custom Gift Boxes, Rigid Boxes and Magnetic Packaging?",
+      "answer": "Compare structure, board thickness, insert type, finish, MOQ, assembled vs flat-pack shipping and target unboxing experience. Use rigid or magnetic boxes for premium gift sets and mailer boxes for ecommerce shipping.",
+      "keywords": [
+        "Custom Gift Boxes",
+        "Rigid Boxes",
+        "Magnetic Packaging",
+        "magnetic rigid box"
+      ],
+      "urls": [
+        "/blog/custom-gift-boxes-rfq-cost-structure-finish-guide.html",
+        "/blog/magnetic-packaging-engineering-guide-for-premium-brands.html"
+      ]
+    },
+    {
+      "question": "What should be refreshed in ISR when a new product is published?",
+      "answer": "Refresh only the new product detail page, products.html, homepage related sections, sitemap.xml, product-feed.json and ai-index.json. Do not rebuild old product pages or reset old canonical URLs.",
+      "keywords": [
+        "Next.js ISR",
+        "product page ISR",
+        "sitemap ISR",
+        "SEO weight protection"
+      ],
+      "urls": [
+        "/R2_CMS_ISR_SETUP.md"
+      ]
+    }
+  ],
+  "address": "Printing Industrial Park, Longhua District, Shenzhen, Guangdong Province, 518109, China"
+}
