@@ -25,17 +25,35 @@ const nextConfig = {
   },
   async headers() {
     return [
-      // HTML routes: allow CDN ISR-style caching while browsers revalidate quickly.
+      // Homepage and major listing pages: keep browsers fresh while giving the CDN a longer ISR window.
       {
         source: '/',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=3600, stale-while-revalidate' }
+          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
+        ]
+      },
+      {
+        source: '/products.html',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
+        ]
+      },
+      {
+        source: '/blog.html',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
+        ]
+      },
+      {
+        source: '/news.html',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
         ]
       },
       {
         source: '/:path*.html',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=3600, stale-while-revalidate' }
+          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
         ]
       },
       // CSS and JS: short browser cache, always revalidate to pick up patches quickly

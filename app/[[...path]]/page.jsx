@@ -451,12 +451,14 @@ function articleJsonLd(html, rel, title, description, sourceUrl) {
   const image = firstImageAbsoluteUrl(html, sourceUrl);
   const publishedTime = getMeta(html, 'property', 'article:published_time') || undefined;
   const modifiedTime = getMeta(html, 'property', 'article:modified_time') || undefined;
+  const isNews = rel.startsWith('news/');
   return {
     '@context': 'https://schema.org',
-    '@type': rel.startsWith('news/') ? 'NewsArticle' : 'BlogPosting',
+    '@type': isNews ? 'NewsArticle' : 'Article',
     headline: title.replace(/\s*\|\s*.+$/, '').trim(),
     description: description,
     image: [image],
+    articleSection: isNews ? 'Packaging Industry News' : 'Custom Packaging Buyer Guide',
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/${rel}` },
     author: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL },
     publisher: {
@@ -535,9 +537,30 @@ function hasInlineJsonLdOfType(html, type) {
   const re = new RegExp(`<script[^>]+application/ld\\+json[^>]*>([\\s\\S]*?)</script>`, 'gi');
   let m;
   while ((m = re.exec(html)) !== null) {
-    if (m[1] && m[1].includes(`"@type"`) && m[1].includes(`"${type}"`)) return true;
-    if (m[1] && m[1].includes(`@type`) && m[1].includes(type)) return true;
+    const raw = (m[1] || '').trim();
+    if (!raw) continue;
+    const normalized = raw.replace(/&quot;/g, '"').replace(/&#34;/g, '"').replace(/&#39;/g, "'");
+    try {
+      const parsed = JSON.parse(normalized);
+      if (jsonLdContainsType(parsed, type)) return true;
+    } catch {
+      const escapedType = type.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const exactDouble = new RegExp(`"@type"\\s*:\\s*(?:\\[[^\\]]*)?"${escapedType}"`, 'i');
+      const exactSingle = new RegExp(`'@type'\\s*:\\s*(?:\\[[^\\]]*)?'${escapedType}'`, 'i');
+      if (exactDouble.test(normalized) || exactSingle.test(normalized)) return true;
+    }
   }
+  return false;
+}
+
+function jsonLdContainsType(value, type) {
+  if (!value) return false;
+  if (Array.isArray(value)) return value.some(item => jsonLdContainsType(item, type));
+  if (typeof value !== 'object') return false;
+  const ownType = value['@type'];
+  if (ownType === type) return true;
+  if (Array.isArray(ownType) && ownType.includes(type)) return true;
+  if (Array.isArray(value['@graph']) && value['@graph'].some(item => jsonLdContainsType(item, type))) return true;
   return false;
 }
 
@@ -601,7 +624,7 @@ function buyerGuideSection(kind, rel) {
 
   // Product detail: only trust links (categories link back would be redundant here since related products already shown)
   if (kind === 'products' && rel !== 'products.html') {
-    return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>What to Send for Quotation</h2><p>For a fast factory-direct RFQ, send product size, order quantity, material, printing colors, finish, destination country and artwork file. MOQ 500 PCS. OEM/ODM custom size packaging is supported.</p><ul><li>Product size and structure or reference photo</li><li>Quantity and target delivery country</li><li>Material, thickness and application industry</li><li>Printing colors, logo file and artwork format</li><li>Finish request: matte, gloss, foil, embossing, spot UV, window or insert</li></ul><h2>Buyer-Guide Pages</h2><p>Complete B2B buyer resources — factory capability, quality control, sample process, MOQ, artwork, shipping and FAQ.</p><ul>${trustLis}</ul></div></section>`;
+    return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>What to Send for Quotation</h2><p>For a fast factory-direct RFQ, send product size, order quantity, material, printing colors, finish, destination country and artwork file. MOQ 500 PCS. OEM/ODM custom size packaging is supported.</p><ul><li>Product size and structure or reference photo</li><li>Quantity and target delivery country</li><li>Material, thickness and application industry</li><li>Printing colors, logo file and artwork format</li><li>Finish request: matte, gloss, foil, embossing, spot UV, window or insert</li></ul><h2>Materials, Processes and Applications</h2><p>Common custom packaging options include greyboard, kraft paper, corrugated board, coated paperboard, specialty paper and laminated flexible film. Printing and finishing can include CMYK, Pantone matching, foil stamping, embossing, debossing, spot UV, matte or gloss lamination, soft-touch coating, windows and inserts.</p><ul><li>Applications: retail display, ecommerce shipping, gift sets, food, cosmetics, pharma, coffee, apparel and promotional packaging</li><li>Sample process: dieline review, artwork check, material confirmation, sample approval and mass production setup</li><li>Shipping notes: confirm carton packing, destination country, delivery method and lead-time target before production</li></ul><h2>Buyer-Guide Pages</h2><p>Complete B2B buyer resources: factory capability, quality control, sample process, MOQ, artwork, shipping and FAQ.</p><ul>${trustLis}</ul><h2>Related Product Categories</h2><ul>${catLis}</ul></div></section>`;
   }
   // Blog/news detail: trust links + category shortcuts to relevant products
   if ((kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html') {
@@ -625,7 +648,8 @@ export default async function HtmlPage({ params }) {
   // Original static <head> content is not rendered inside the extracted body,
   // so SEO schemas are injected here at the App Router layer.
   const injectProduct = kind === 'products' && rel !== 'products.html';
-  const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(html, 'Article');
+  const articleType = kind === 'news' ? 'NewsArticle' : 'Article';
+  const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(bodyHtml, articleType);
   const injectTrust = Boolean(trustSchema);
   const injectFaq = Boolean(faqSchema);
 
