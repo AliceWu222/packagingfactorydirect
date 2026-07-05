@@ -2153,3 +2153,45 @@ main.hero .slide::before{
     font-size: 96px !important;
   }
 }
+
+/* V93 HERO COPY WIDTH SPECIFICITY FIX — older rules use main.hero .hero-copy
+   with !important, which overrode V90-V92 and kept the real browser width at
+   500px. Match that selector so the red-frame scale can actually render. */
+@media(min-width:761px){
+  main.hero .slide > .container {
+    align-items: flex-start !important;
+    padding-left: clamp(42px, 4vw, 72px) !important;
+    padding-right: 28px !important;
+  }
+  main.hero .hero-copy,
+  .hero .slide > .container .hero-copy {
+    width: min(96vw, 1180px) !important;
+    max-width: min(96vw, 1180px) !important;
+    padding-top: 58px !important;
+    padding-bottom: 58px !important;
+    transform: none !important;
+  }
+  main.hero .hero-copy h1,
+  main.hero .hero-copy h2,
+  .hero .slide > .container .hero-copy h1,
+  .hero .slide > .container .hero-copy h2 {
+    font-size: 92px !important;
+    line-height: .98 !important;
+    margin: 6px 0 10px !important;
+    max-width: 1180px !important;
+  }
+}
+@media(min-width:1200px){
+  main.hero .hero-copy,
+  .hero .slide > .container .hero-copy {
+    width: min(96vw, 1260px) !important;
+    max-width: min(96vw, 1260px) !important;
+  }
+  main.hero .hero-copy h1,
+  main.hero .hero-copy h2,
+  .hero .slide > .container .hero-copy h1,
+  .hero .slide > .container .hero-copy h2 {
+    font-size: 96px !important;
+    max-width: 1260px !important;
+  }
+}
