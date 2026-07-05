@@ -33,14 +33,60 @@ function extractLocalEntries(xml) {
 
 export async function readSitemapEntries() {
   const paths = [
-    path.join(process.cwd(), 'public', 'sitemap.xml'),
-    path.join(process.cwd(), 'sitemap.xml')
+    path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'sitemap.xml'),
+    path.join(/*turbopackIgnore: true*/ process.cwd(), 'sitemap.xml')
   ];
+  let entries = [];
   for (const p of paths) {
     const xml = await fs.readFile(p, 'utf8').catch(() => '');
-    if (xml && xml.length > 200) return extractLocalEntries(xml);
+    if (xml && xml.length > 200) {
+      entries = extractLocalEntries(xml);
+      break;
+    }
   }
-  return [];
+  const scanned = await scanLocalHtmlEntries();
+  const merged = new Map();
+  for (const entry of entries) merged.set(entry.loc, entry);
+  for (const entry of scanned) merged.set(entry.loc, { ...merged.get(entry.loc), ...entry });
+  return Array.from(merged.values());
+}
+
+async function walkHtml(dir, prefix = '') {
+  const root = path.join(/*turbopackIgnore: true*/ process.cwd(), dir);
+  const out = [];
+  const items = await fs.readdir(root, { withFileTypes: true }).catch(() => []);
+  for (const item of items) {
+    const rel = prefix ? `${prefix}/${item.name}` : item.name;
+    const abs = path.join(root, item.name);
+    if (item.isDirectory()) {
+      const nested = await walkHtml(path.join(dir, item.name), rel);
+      out.push(...nested);
+    } else if (item.isFile() && item.name.endsWith('.html')) {
+      const stat = await fs.stat(abs).catch(() => null);
+      out.push({ path: `${dir.replace(/\\/g, '/')}/${rel}`, mtime: stat?.mtime });
+    }
+  }
+  return out;
+}
+
+async function scanLocalHtmlEntries() {
+  const files = [
+    ...(await walkHtml('blog')),
+    ...(await walkHtml('news')),
+    ...(await walkHtml('products'))
+  ];
+  const coreFiles = ['index.html','products.html','contact.html','faq.html','factory-capability.html','quality-control.html','sample-process.html','shipping.html','moq-policy.html','artwork-guidelines.html','about.html','blog.html','news.html'];
+  for (const file of coreFiles) {
+    const abs = path.join(/*turbopackIgnore: true*/ process.cwd(), file);
+    const stat = await fs.stat(abs).catch(() => null);
+    if (stat) files.push({ path: file, mtime: stat.mtime });
+  }
+  return files.map(file => ({
+    loc: file.path === 'index.html' ? `${SITE_URL}/` : `${SITE_URL}/${file.path.replace(/\\/g, '/')}`,
+    lastmod: (file.mtime || new Date()).toISOString().slice(0, 10),
+    changefreq: file.path.startsWith('blog/') || file.path.startsWith('news/') ? 'weekly' : 'monthly',
+    priority: file.path === 'index.html' ? '1.00' : file.path.startsWith('products/') ? '0.80' : '0.70'
+  }));
 }
 
 export function filterEntries(entries, kind) {

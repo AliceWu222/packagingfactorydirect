@@ -85,6 +85,18 @@ function deepNormalizeHost(value) {
 }
 function classifiedPages(remoteProducts, remoteBlog, remoteNews) {
   const core = (url, title, type, buyerIntent) => ({ url: SITE_URL + url, title, type, buyerIntent });
+  const localBlogGuides = [
+    core('/blog/custom-packaging-moq-500-pcs-guide.html', 'Custom Packaging MOQ 500 PCS Guide', 'blog-guide', 'MOQ 500 PCS custom packaging procurement'),
+    core('/blog/custom-packaging-rfq-checklist.html', 'Custom Packaging RFQ Checklist', 'blog-guide', 'quote request checklist for custom packaging'),
+    core('/blog/custom-packaging-sample-process-guide.html', 'Custom Packaging Sample Process Guide', 'blog-guide', 'sampling and approval workflow for custom packaging'),
+    core('/blog/food-packaging-material-guide.html', 'Food Packaging Material Guide', 'blog-guide', 'food packaging material selection'),
+    core('/blog/pharma-packaging-serialization-guide.html', 'Pharma Packaging Serialization Guide', 'blog-guide', 'pharma carton serialization and artwork requirements'),
+    core('/blog/cosmetic-packaging-box-guide.html', 'Cosmetic Packaging Box Guide', 'blog-guide', 'cosmetic packaging box structure and finish selection'),
+    core('/blog/coffee-bag-with-valve-guide.html', 'Coffee Bag with Valve Guide', 'blog-guide', 'coffee bag valve and laminate procurement'),
+    core('/blog/stand-up-pouch-material-structure-guide.html', 'Stand Up Pouch Material Structure Guide', 'blog-guide', 'stand up pouch material structure selection'),
+    core('/blog/gift-box-insert-guide.html', 'Gift Box Insert Guide', 'blog-guide', 'custom gift box insert material selection'),
+    core('/blog/shipping-and-packaging-lead-time-guide.html', 'Shipping and Packaging Lead Time Guide', 'blog-guide', 'custom packaging lead time and shipping planning')
+  ];
   return {
     homepage: [core('/', 'Packaging Factory Direct homepage', 'homepage', 'custom packaging manufacturer overview, MOQ 500 PCS and RFQ entry')],
     productCategories: [
@@ -111,7 +123,7 @@ function classifiedPages(remoteProducts, remoteBlog, remoteNews) {
     shipping: [core('/shipping.html', 'Shipping and lead time', 'trust-page', 'worldwide shipping and export delivery')],
     artworkGuidelines: [core('/artwork-guidelines.html', 'Artwork guidelines', 'trust-page', 'dieline, bleed, color and prepress requirements')],
     moqPolicy: [core('/moq-policy.html', 'MOQ policy', 'trust-page', 'MOQ 500 PCS policy for B2B packaging orders')],
-    blogGuides: remoteBlog.map(item => ({ ...item, type: 'blog-guide', buyerIntent: 'B2B custom packaging guide and RFQ education' })),
+    blogGuides: [...localBlogGuides, ...remoteBlog.map(item => ({ ...item, type: 'blog-guide', buyerIntent: 'B2B custom packaging guide and RFQ education' }))],
     newsPages: remoteNews.map(item => ({ ...item, type: 'news-page', buyerIntent: 'custom packaging market and procurement update' }))
   };
 }
