@@ -1,5 +1,16 @@
 const ONE_YEAR = 31536000;
 
+const SECURITY_HEADERS = [
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=()' }
+];
+const HTML_CACHE_HEADERS = [
+  ...SECURITY_HEADERS,
+  { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
+];
+
 const nextConfig = {
   poweredByHeader: false,
   compress: true,
@@ -18,42 +29,46 @@ const nextConfig = {
     ];
   },
   async redirects() {
-    return [
-      { source: '/cases', destination: '/factory-capability.html', statusCode: 301 },
-      { source: '/cases/:path*', destination: '/factory-capability.html', statusCode: 301 }
-    ];
+    return [];
   },
   async headers() {
     return [
       // Homepage and major listing pages: keep browsers fresh while giving the CDN a longer ISR window.
       {
         source: '/',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
-        ]
+        headers: HTML_CACHE_HEADERS
       },
       {
         source: '/products.html',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
-        ]
+        headers: HTML_CACHE_HEADERS
       },
       {
         source: '/blog.html',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
-        ]
+        headers: HTML_CACHE_HEADERS
       },
       {
         source: '/news.html',
+        headers: HTML_CACHE_HEADERS
+      },
+      {
+        source: '/:path*.html',
+        headers: HTML_CACHE_HEADERS
+      },
+      {
+        source: '/cases/:path*',
         headers: [
+          ...SECURITY_HEADERS,
+          { key: 'X-Robots-Tag', value: 'noindex, follow' },
           { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
         ]
       },
       {
-        source: '/:path*.html',
+        source: '/product-feed.json',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
+          ...SECURITY_HEADERS,
+          { key: 'Content-Type', value: 'application/json; charset=utf-8' },
+          { key: 'Cache-Control', value: 'public, max-age=60, s-maxage=7200, stale-while-revalidate=86400' },
+          { key: 'X-Robots-Tag', value: 'noindex, follow' }
         ]
       },
       // CSS and JS: short browser cache, always revalidate to pick up patches quickly
@@ -73,7 +88,7 @@ const nextConfig = {
         source: '/data/:path*.json',
         headers: [
           { key: 'Content-Type', value: 'application/json; charset=utf-8' },
-          { key: 'Cache-Control', value: 'public, max-age=60, s-maxage=3600, stale-while-revalidate' },
+          { key: 'Cache-Control', value: 'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400' },
           { key: 'X-Robots-Tag', value: 'noindex, follow' }
         ]
       },

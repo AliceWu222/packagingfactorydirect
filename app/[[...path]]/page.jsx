@@ -261,12 +261,32 @@ function getTitle(html) {
   return m ? m[1].replace(/\s+/g, ' ').trim() : 'Packaging Factory Direct';
 }
 function getDescription(html, rel) {
-  const m = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["'][^>]*>/i);
-  if (m) return m[1].trim();
-  // Per-page-kind fallback so pages without inline meta description still get a unique one
+  // Runtime descriptions intentionally override older static meta on strategic pages.
   const kind = getKindFromRel(rel);
   const slug = slugFromRel(rel).replace(/-/g, ' ');
   const short = slug.charAt(0).toUpperCase() + slug.slice(1);
+  const strategicDescriptions = {
+    'faq.html': 'FAQ for B2B custom packaging buyers: MOQ 500 PCS, OEM/ODM options, sample process, artwork files, materials, printing finishes, lead time, shipping and RFQ requirements.',
+    'factory-capability.html': 'Factory capability for custom packaging buyers: OEM/ODM boxes, bags, pouches and printed paper packaging with MOQ 500 PCS, custom dielines, material sourcing and export production support.',
+    'quality-control.html': 'Quality control process for B2B custom packaging orders, covering material checks, artwork review, printing inspection, finishing approval, carton packing and pre-shipment checks.',
+    'sample-process.html': 'Custom packaging sample process for B2B buyers: dieline review, artwork check, material confirmation, prototype sampling, buyer approval and mass production setup.',
+    'shipping.html': 'Shipping and lead time guide for custom packaging orders, including carton packing, export delivery, destination planning, sample timing and worldwide freight coordination.',
+    'moq-policy.html': 'MOQ 500 PCS policy for custom packaging buyers, covering custom boxes, paper bags, pouches, labels and printed packaging with factory-direct OEM/ODM production.',
+    'artwork-guidelines.html': 'Artwork guidelines for custom packaging RFQ: dielines, bleed, CMYK and Pantone color, logo files, fonts, barcode placement, prepress checks and print-ready packaging files.',
+    'custom-packaging-boxes.html': 'Custom packaging boxes manufacturer for B2B buyers. MOQ 500 PCS, OEM/ODM rigid boxes, folding cartons, mailer boxes, gift boxes, custom size, printing and finishes.',
+    'custom-gift-boxes.html': 'Custom gift boxes manufacturer for brands, importers and retailers. MOQ 500 PCS, OEM/ODM rigid boxes, magnetic boxes, inserts, foil stamping and premium print finishes.',
+    'custom-magnetic-gift-boxes.html': 'Custom magnetic gift boxes manufacturer with MOQ 500 PCS, foldable or rigid structures, logo printing, foil stamping, inserts and premium retail packaging support.',
+    'custom-stand-up-pouches.html': 'Custom stand up pouches manufacturer for food, coffee, pet food, supplements and cosmetics. MOQ 500 PCS, laminated film, zipper, valve, spout and custom printing.',
+    'custom-coffee-bags-with-valve.html': 'Custom coffee bags with valve for roasters and beverage brands. MOQ 500 PCS, flat bottom or stand up pouches, degassing valve, zipper and branded printing.',
+    'custom-pharmaceutical-packaging-boxes.html': 'Custom pharmaceutical packaging boxes manufacturer for medical and healthcare buyers. MOQ 500 PCS, serialized cartons, GS1/DataMatrix support, security labels and QC checks.',
+    'custom-cosmetic-packaging-boxes.html': 'Custom cosmetic packaging boxes manufacturer for skincare, beauty and makeup brands. MOQ 500 PCS, OEM/ODM cartons, rigid boxes, labels, inserts and premium finishes.',
+    'custom-food-packaging.html': 'Custom food packaging manufacturer for restaurants, bakeries, snacks and beverage brands. MOQ 500 PCS, food boxes, bags, wraps, trays, greaseproof paper and branded printing.',
+    'custom-paper-bags.html': 'Custom paper bags manufacturer for retail, gift, apparel and luxury brands. MOQ 500 PCS, kraft or art paper, handles, logo printing, foil stamping and OEM sizes.',
+    'custom-labels-and-stickers.html': 'Custom labels and stickers manufacturer for B2B packaging buyers. MOQ 500 PCS, product labels, security labels, QR codes, foil look, waterproof options and custom rolls or sheets.'
+  };
+  if (strategicDescriptions[rel]) return strategicDescriptions[rel];
+  const m = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["'][^>]*>/i);
+  if (m) return m[1].trim();
   const kw = short.length > 6 ? short : 'custom packaging';
   if (rel === 'index.html') return 'Packaging Factory Direct is a B2B custom packaging manufacturer offering OEM/ODM boxes, bags, pouches, labels and paper printing. MOQ 500 PCS, factory direct from Shenzhen, worldwide shipping.';
   if (rel === 'products.html') return 'Browse the full custom packaging product catalog: gift boxes, magnetic boxes, mailer boxes, stand-up pouches, coffee bags, pharma cartons, paper bags and labels. MOQ 500 PCS, factory direct, OEM and ODM supported.';
@@ -498,6 +518,52 @@ const TRUST_PAGES = {
   }
 };
 
+function collectionPageJsonLd(html, rel, title, description) {
+  if (getKindFromRel(rel) !== 'category') return null;
+  const links = Array.from(html.matchAll(/<a[^>]+href=["']([^"']*\/products\/[^"']+\.html|[^"']*products\/[^"']+\.html|[^"']*\.html)["'][^>]*>([\s\S]*?)<\/a>/gi))
+    .map((m) => {
+      const href = normalizeRootHref(m[1], 'products');
+      if (!href.includes('/products/') && !href.startsWith('/products/')) return null;
+      const name = m[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      return {
+        '@type': 'ListItem',
+        position: 0,
+        url: href.startsWith('http') ? href : `${SITE_URL}${href.startsWith('/') ? href : `/${href}`}`,
+        name: name || href.split('/').pop().replace(/\.html$/i, '').replace(/-/g, ' ')
+      };
+    })
+    .filter(Boolean);
+  const unique = [];
+  const seen = new Set();
+  for (const item of links) {
+    if (seen.has(item.url)) continue;
+    seen.add(item.url);
+    unique.push({ ...item, position: unique.length + 1 });
+    if (unique.length >= 24) break;
+  }
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        name: title.replace(/\s*\|\s*.+$/, '').trim(),
+        description,
+        url: `${SITE_URL}/${rel}`,
+        about: 'B2B custom packaging category page for OEM/ODM buyers, brands, importers and distributors.',
+        isPartOf: { '@type': 'WebSite', name: 'Packaging Factory Direct', url: SITE_URL },
+        publisher: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL }
+      },
+      {
+        '@type': 'ItemList',
+        name: `${title.replace(/\s*\|\s*.+$/, '').trim()} product list`,
+        itemListOrder: 'https://schema.org/ItemListUnordered',
+        numberOfItems: unique.length,
+        itemListElement: unique
+      }
+    ]
+  };
+}
+
 function trustPageJsonLd(rel, title, description) {
   const meta = TRUST_PAGES[rel];
   if (!meta) return null;
@@ -624,7 +690,7 @@ function buyerGuideSection(kind, rel) {
 
   // Product detail: only trust links (categories link back would be redundant here since related products already shown)
   if (kind === 'products' && rel !== 'products.html') {
-    return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>What to Send for Quotation</h2><p>For a fast factory-direct RFQ, send product size, order quantity, material, printing colors, finish, destination country and artwork file. MOQ 500 PCS. OEM/ODM custom size packaging is supported.</p><ul><li>Product size and structure or reference photo</li><li>Quantity and target delivery country</li><li>Material, thickness and application industry</li><li>Printing colors, logo file and artwork format</li><li>Finish request: matte, gloss, foil, embossing, spot UV, window or insert</li></ul><h2>Materials, Processes and Applications</h2><p>Common custom packaging options include greyboard, kraft paper, corrugated board, coated paperboard, specialty paper and laminated flexible film. Printing and finishing can include CMYK, Pantone matching, foil stamping, embossing, debossing, spot UV, matte or gloss lamination, soft-touch coating, windows and inserts.</p><ul><li>Applications: retail display, ecommerce shipping, gift sets, food, cosmetics, pharma, coffee, apparel and promotional packaging</li><li>Sample process: dieline review, artwork check, material confirmation, sample approval and mass production setup</li><li>Shipping notes: confirm carton packing, destination country, delivery method and lead-time target before production</li></ul><h2>Buyer-Guide Pages</h2><p>Complete B2B buyer resources: factory capability, quality control, sample process, MOQ, artwork, shipping and FAQ.</p><ul>${trustLis}</ul><h2>Related Product Categories</h2><ul>${catLis}</ul></div></section>`;
+    return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>What to Send for Quotation</h2><p>For a fast factory-direct RFQ, send product size, order quantity, material, printing colors, finish, destination country and artwork file. MOQ 500 PCS. OEM/ODM custom size packaging is supported.</p><ul><li>Product size and structure or reference photo</li><li>Quantity and target delivery country</li><li>Material, thickness and application industry</li><li>Printing colors, logo file and artwork format</li><li>Finish request: matte, gloss, foil, embossing, spot UV, window or insert</li></ul><h2>Materials, Processes and Applications</h2><p>Common custom packaging options include greyboard, kraft paper, corrugated board, coated paperboard, specialty paper and laminated flexible film. Printing and finishing can include CMYK, Pantone matching, foil stamping, embossing, debossing, spot UV, matte or gloss lamination, soft-touch coating, windows and inserts.</p><ul><li>Applications: retail display, ecommerce shipping, gift sets, food, cosmetics, pharma, coffee, apparel and promotional packaging</li><li>Sample process: dieline review, artwork check, material confirmation, sample approval and mass production setup</li><li>Shipping notes: confirm carton packing, destination country, delivery method and lead-time target before production</li></ul><h2>Related RFQ FAQ</h2><dl><dt>What is the MOQ?</dt><dd>MOQ starts from 500 PCS for custom packaging orders.</dd><dt>Can you make custom size and structure?</dt><dd>Yes. OEM/ODM custom size, dieline and structure are supported after artwork and material review.</dd><dt>What affects quotation speed?</dt><dd>Size, quantity, material, printing colors, finish, destination country and artwork file are the key RFQ fields.</dd><dt>Can I approve a sample before mass production?</dt><dd>Yes. Buyers can confirm dieline, artwork, material and sample before production setup.</dd></dl><h2>Buyer-Guide Pages</h2><p>Complete B2B buyer resources: factory capability, quality control, sample process, MOQ, artwork, shipping and FAQ.</p><ul>${trustLis}</ul><h2>Related Product Categories</h2><ul>${catLis}</ul></div></section>`;
   }
   // Blog/news detail: trust links + category shortcuts to relevant products
   if ((kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html') {
@@ -644,6 +710,7 @@ export default async function HtmlPage({ params }) {
   const buyerGuide = buyerGuideSection(kind, rel);
   const trustSchema = trustPageJsonLd(rel, title, description);
   const faqSchema = faqPageJsonLd(rel);
+  const collectionSchema = collectionPageJsonLd(html, rel, title, description);
 
   // Original static <head> content is not rendered inside the extracted body,
   // so SEO schemas are injected here at the App Router layer.
@@ -652,6 +719,7 @@ export default async function HtmlPage({ params }) {
   const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(bodyHtml, articleType);
   const injectTrust = Boolean(trustSchema);
   const injectFaq = Boolean(faqSchema);
+  const injectCollection = Boolean(collectionSchema);
 
   return (
     <>
@@ -683,6 +751,12 @@ export default async function HtmlPage({ params }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      ) : null}
+      {injectCollection ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
         />
       ) : null}
       <main dangerouslySetInnerHTML={{ __html: bodyHtml + buyerGuide }} />

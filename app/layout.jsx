@@ -56,6 +56,9 @@ const websiteJsonLd = {
   }
 };
 
+const measurementId = process.env.NEXT_PUBLIC_GA4_ID || process.env.NEXT_PUBLIC_GA_ID || '';
+const gtmId = process.env.NEXT_PUBLIC_GTM_ID || '';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -66,6 +69,44 @@ export default function RootLayout({ children }) {
         <link rel="preload" as="image" href="/assets/img/hero/mobile-vertical-slide-1.webp" fetchPriority="high" media="(max-width: 760px)" />
         <link rel="stylesheet" href="/assets/css/style.css?v=v97-seo-geo-sitemap-json" />
         <script src="/assets/js/main.js?v=v97-seo-geo-sitemap-json" defer></script>
+        {measurementId ? <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script> : null}
+        {measurementId ? <script dangerouslySetInnerHTML={{ __html: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${measurementId}', { send_page_view: true });
+` }} /> : null}
+        {gtmId ? <script dangerouslySetInnerHTML={{ __html: `
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${gtmId}');
+` }} /> : null}
+        <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  window.dataLayer = window.dataLayer || [];
+  function emit(name, params){
+    params = params || {};
+    params.page_location = location.href;
+    window.dataLayer.push(Object.assign({ event: name }, params));
+    if (typeof window.gtag === 'function') window.gtag('event', name, params);
+  }
+  function textOf(el){ return (el && (el.innerText || el.textContent) || '').replace(/\s+/g, ' ').trim().slice(0, 120); }
+  document.addEventListener('click', function(e){
+    var el = e.target && e.target.closest ? e.target.closest('a,button,input[type="submit"]') : null;
+    if (!el) return;
+    var href = el.getAttribute('href') || '';
+    var label = textOf(el) || href || el.name || el.id || 'cta';
+    var lower = (href + ' ' + label + ' ' + (el.className || '')).toLowerCase();
+    if (href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp') !== -1 || lower.indexOf('whatsapp') !== -1) emit('whatsapp_click', { link_url: href, link_text: label });
+    else if (href.indexOf('mailto:') === 0 || lower.indexOf('email') !== -1) emit('email_click', { link_url: href, link_text: label });
+    else if (lower.indexOf('quote') !== -1 || lower.indexOf('rfq') !== -1 || lower.indexOf('request') !== -1) emit('rfq_cta_click', { link_url: href, link_text: label });
+    else if (href.indexOf('/products/') !== -1 || lower.indexOf('product') !== -1) emit('product_cta_click', { link_url: href, link_text: label });
+  }, true);
+  document.addEventListener('submit', function(e){
+    var form = e.target;
+    var label = form && (form.getAttribute('aria-label') || form.getAttribute('name') || form.id || form.action || 'rfq_form');
+    emit('rfq_form_submit', { form_name: String(label).slice(0, 120) });
+  }, true);
+})();
+` }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
         <style dangerouslySetInnerHTML={{ __html: `

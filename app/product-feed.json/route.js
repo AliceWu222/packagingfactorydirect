@@ -9,6 +9,14 @@ export const revalidate = 3600;
 const SITE_URL = 'https://www.packagingfactorydirect.com';
 const LEGACY_SITE_URL = 'https://packagingfactorydirect.com';
 const ISR_SECONDS = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PAGE_REVALIDATE_SECONDS || 3600);
+const FEED_VERSION = 'v98-compact-procurement-feed';
+const DEFAULT_RFQ_PROFILE = {
+  moq: '500 PCS',
+  customSize: 'Custom size, structure and dieline supported',
+  sampleAvailable: true,
+  rfqContact: { contact: 'Linda Wang', email: 'linda@colorprintingpackage.com', whatsapp: '+86 181 6573 0353', url: `${SITE_URL}/contact.html` },
+  relatedGuides: [`${SITE_URL}/factory-capability.html`, `${SITE_URL}/quality-control.html`, `${SITE_URL}/sample-process.html`, `${SITE_URL}/artwork-guidelines.html`, `${SITE_URL}/shipping.html`, `${SITE_URL}/moq-policy.html`]
+};
 
 function contentBaseUrl() {
   return (process.env.PFD_CONTENT_BASE_URL || process.env.R2_PUBLIC_BASE_URL || process.env.CMS_CONTENT_BASE_URL || '').trim();
@@ -103,19 +111,41 @@ function procurementProfile(item) {
     isFlexible ? 'coffee, tea, pet food and snacks' : 'ecommerce and retail brands'
   ].filter(Boolean);
   return {
-    moq: item.moq || '500 PCS',
+    ...DEFAULT_RFQ_PROFILE,
     materials: item.materials || materials,
     printingOptions: item.printingOptions || ['CMYK printing', 'Pantone color matching', 'custom logo printing', isFlexible ? 'gravure/flexographic printing' : 'offset printing'],
     finishOptions: item.finishOptions || ['matte lamination', 'gloss lamination', 'soft-touch lamination', 'foil stamping', 'embossing/debossing', 'spot UV'],
     applications: item.applications || Array.from(new Set(applications)),
     industries: item.industries || Array.from(new Set(industries)),
-    customSize: item.customSize || 'Custom size, structure and dieline supported',
     leadTime: item.leadTime || 'Sampling and mass production lead time depend on structure, material, finish and order quantity; confirm during RFQ.',
-    sampleAvailable: item.sampleAvailable ?? true,
-    buyerIntentKeywords: item.buyerIntentKeywords || ['custom packaging manufacturer', 'MOQ 500 PCS', 'OEM/ODM packaging', 'factory direct packaging', 'request packaging quote'],
-    rfqContact: item.rfqContact || { contact: 'Linda Wang', email: 'linda@colorprintingpackage.com', whatsapp: '+86 181 6573 0353', url: `${SITE_URL}/contact.html` },
-    relatedGuides: item.relatedGuides || [`${SITE_URL}/factory-capability.html`, `${SITE_URL}/quality-control.html`, `${SITE_URL}/sample-process.html`, `${SITE_URL}/artwork-guidelines.html`, `${SITE_URL}/shipping.html`, `${SITE_URL}/moq-policy.html`]
+    buyerIntentKeywords: item.buyerIntentKeywords || ['custom packaging manufacturer', 'MOQ 500 PCS', 'OEM/ODM packaging', 'factory direct packaging', 'request packaging quote']
   };
+}
+function compactProduct(item) {
+  const norm = normalizeProductForFeed(item);
+  return {
+    title: norm.title || norm.name || '',
+    url: norm.url || '',
+    description: norm.description || norm.summary || '',
+    image: norm.image || '',
+    category: norm.category || norm.type || 'Custom Packaging',
+    moq: norm.moq,
+    materials: norm.materials,
+    printingOptions: norm.printingOptions,
+    finishOptions: norm.finishOptions,
+    applications: norm.applications,
+    industries: norm.industries,
+    leadTime: norm.leadTime,
+    buyerIntentKeywords: norm.buyerIntentKeywords
+  };
+}
+function wantsFullFeed(request) {
+  try {
+    const url = new URL(request.url);
+    return url.searchParams.get('full') === '1';
+  } catch {
+    return false;
+  }
 }
 function normalizeProductForFeed(item) {
   if (!item) return item;
@@ -134,21 +164,22 @@ function normalizeProductForFeed(item) {
   }
   return { ...clone, ...procurementProfile(clone) };
 }
-export async function GET() {
+export async function GET(request) {
   const local = await readLocalFeed();
   const remote = await remoteItems('products');
+  const full = wantsFullFeed(request);
   const byUrl = new Map();
   for (const product of (local.products || [])) {
-    const norm = normalizeProductForFeed(product);
+    const norm = full ? normalizeProductForFeed(product) : compactProduct(product);
     byUrl.set(norm.url || product.title, norm);
   }
   for (const item of remote) {
     const url = normalizeUrlToWww(absoluteSiteUrl(item.url, 'products'));
-    byUrl.set(url, normalizeProductForFeed({ ...item, url, source: 'r2-cms' }));
+    const merged = { ...item, url, source: 'r2-cms' };
+    byUrl.set(url, full ? normalizeProductForFeed(merged) : compactProduct(merged));
   }
   const payload = {
-    ...local,
-    version: 'v97-procurement-feed',
+    version: FEED_VERSION,
     site: SITE_URL,
     contact: 'Linda Wang',
     email: 'linda@colorprintingpackage.com',
@@ -156,7 +187,15 @@ export async function GET() {
     moq: '500 PCS',
     businessModel: 'B2B custom packaging manufacturer, OEM/ODM, factory direct from Shenzhen',
     r2CmsEnabled: Boolean(contentBaseUrl()),
+    count: byUrl.size,
+    profileDefaults: DEFAULT_RFQ_PROFILE,
     products: Array.from(byUrl.values())
   };
-  return Response.json(payload, { headers: { 'Cache-Control': `s-maxage=${ISR_SECONDS}, stale-while-revalidate` } });
+  return Response.json(payload, {
+    headers: {
+      'Cache-Control': `public, max-age=60, s-maxage=${Math.max(ISR_SECONDS, 7200)}, stale-while-revalidate=86400`,
+      'Content-Type': 'application/json; charset=utf-8',
+      'X-Robots-Tag': 'noindex, follow'
+    }
+  });
 }
