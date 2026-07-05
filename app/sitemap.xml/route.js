@@ -6,7 +6,8 @@ export const dynamic = 'force-static';
 export const revalidate = 3600;
 
 
-const SITE_URL = 'https://packagingfactorydirect.com';
+const SITE_URL = 'https://www.packagingfactorydirect.com';
+const LEGACY_SITE_URL = 'https://packagingfactorydirect.com';
 const ISR_SECONDS = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PAGE_REVALIDATE_SECONDS || 3600);
 
 function contentBaseUrl() {
@@ -80,9 +81,30 @@ function priorityFor(url) {
   if (url.includes('/blog/') || url.includes('/news/')) return '0.72';
   return '0.60';
 }
+async function readLocalSitemap() {
+  const paths = [
+    path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'sitemap.xml'),
+    path.join(/*turbopackIgnore: true*/ process.cwd(), 'sitemap.xml')
+  ];
+  for (const p of paths) {
+    const xml = await fs.readFile(p, 'utf8').catch(() => '');
+    if (xml && xml.length > 200) return xml;
+  }
+  return '';
+}
+function normalizeToWww(loc) {
+  if (!loc) return loc;
+  if (loc.startsWith(LEGACY_SITE_URL + '/')) return SITE_URL + loc.slice(LEGACY_SITE_URL.length);
+  if (loc === LEGACY_SITE_URL) return SITE_URL;
+  return loc;
+}
 export async function GET() {
-  const localXml = await fs.readFile(path.join(/*turbopackIgnore: true*/ process.cwd(), 'sitemap.xml'), 'utf8').catch(() => '');
-  const entries = extractLocalEntries(localXml);
+  const localXml = await readLocalSitemap();
+  const rawEntries = extractLocalEntries(localXml);
+  const entries = new Map();
+  for (const [loc, meta] of rawEntries.entries()) {
+    entries.set(normalizeToWww(loc), meta);
+  }
 
   for (const kind of ['products', 'blog', 'news']) {
     const items = await remoteItems(kind);

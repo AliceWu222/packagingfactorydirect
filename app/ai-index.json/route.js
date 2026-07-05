@@ -6,7 +6,8 @@ export const dynamic = 'force-static';
 export const revalidate = 3600;
 
 
-const SITE_URL = 'https://packagingfactorydirect.com';
+const SITE_URL = 'https://www.packagingfactorydirect.com';
+const LEGACY_SITE_URL = 'https://packagingfactorydirect.com';
 const ISR_SECONDS = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PAGE_REVALIDATE_SECONDS || 3600);
 
 function contentBaseUrl() {
@@ -55,14 +56,48 @@ function absoluteSiteUrl(url, kind) {
 }
 
 
+async function readLocalIndex() {
+  const paths = [
+    path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'ai-index.json'),
+    path.join(/*turbopackIgnore: true*/ process.cwd(), 'ai-index.json')
+  ];
+  for (const p of paths) {
+    const t = await fs.readFile(p, 'utf8').catch(() => '');
+    if (t && t.length > 100) {
+      try { return JSON.parse(t); } catch {}
+    }
+  }
+  return { site: 'Packaging Factory Direct' };
+}
+function deepNormalizeHost(value) {
+  if (typeof value === 'string') {
+    if (value.startsWith(LEGACY_SITE_URL + '/')) return SITE_URL + value.slice(LEGACY_SITE_URL.length);
+    if (value === LEGACY_SITE_URL) return SITE_URL;
+    return value;
+  }
+  if (Array.isArray(value)) return value.map(deepNormalizeHost);
+  if (value && typeof value === 'object') {
+    const out = {};
+    for (const k of Object.keys(value)) out[k] = deepNormalizeHost(value[k]);
+    return out;
+  }
+  return value;
+}
 export async function GET() {
-  const local = await fs.readFile(path.join(/*turbopackIgnore: true*/ process.cwd(), 'ai-index.json'), 'utf8').then(JSON.parse).catch(() => ({ site: 'Packaging Factory Direct' }));
+  const raw = await readLocalIndex();
+  const local = deepNormalizeHost(raw);
   const remoteProducts = await remoteItems('products');
   const remoteBlog = await remoteItems('blog');
   const remoteNews = await remoteItems('news');
   const payload = {
     ...local,
-    version: 'v71-r2-cms-isr',
+    version: 'v76-www-canonical',
+    site: SITE_URL,
+    contact: 'Linda Wang',
+    email: 'linda@colorprintingpackage.com',
+    whatsapp: '+86 181 6573 0353',
+    moq: '500 PCS',
+    businessModel: 'B2B custom packaging manufacturer, OEM/ODM, factory direct from Shenzhen. MOQ 500 PCS.',
     r2CmsEnabled: Boolean(contentBaseUrl()),
     r2CmsPolicy: 'New product/blog/news HTML may be uploaded to R2/CMS and served by exact URL through ISR without Git redeploy.',
     remoteProducts,

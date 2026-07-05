@@ -8,7 +8,7 @@ export const dynamicParams = true;
 export const revalidate = 3600;
 
 const ROOT = /*turbopackIgnore: true*/ process.cwd();
-const SITE_URL = 'https://packagingfactorydirect.com';
+const SITE_URL = 'https://www.packagingfactorydirect.com';
 const ISR_SECONDS = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PAGE_REVALIDATE_SECONDS || 3600);
 
 const REMOTE_DETAIL_PREFIXES = ['products/', 'blog/', 'news/'];
@@ -258,9 +258,26 @@ function getTitle(html) {
   const m = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
   return m ? m[1].replace(/\s+/g, ' ').trim() : 'Packaging Factory Direct';
 }
-function getDescription(html) {
+function getDescription(html, rel) {
   const m = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["'][^>]*>/i);
-  return m ? m[1].trim() : 'B2B custom packaging manufacturer. MOQ 500 PCS. OEM and custom packaging factory.';
+  if (m) return m[1].trim();
+  // Per-page-kind fallback so pages without inline meta description still get a unique one
+  const kind = getKindFromRel(rel);
+  const slug = slugFromRel(rel).replace(/-/g, ' ');
+  const short = slug.charAt(0).toUpperCase() + slug.slice(1);
+  const kw = short.length > 6 ? short : 'custom packaging';
+  if (rel === 'index.html') return 'Packaging Factory Direct is a B2B custom packaging manufacturer offering OEM/ODM boxes, bags, pouches, labels and paper printing. MOQ 500 PCS, factory direct from Shenzhen, worldwide shipping.';
+  if (rel === 'products.html') return 'Browse the full custom packaging product catalog: gift boxes, magnetic boxes, mailer boxes, stand-up pouches, coffee bags, pharma cartons, paper bags and labels. MOQ 500 PCS, factory direct, OEM and ODM supported.';
+  if (rel === 'blog.html') return 'Packaging manufacturer blog with technical guides on custom gift boxes, magnetic packaging, mailer boxes, paper bags, food packaging, pharma cartons and B2B RFQ best practices. Written for procurement teams and brand owners.';
+  if (rel === 'news.html') return 'Latest updates from Packaging Factory Direct on market trends, new packaging categories, MOQ policy, factory capability and supplier procurement news for B2B custom packaging buyers.';
+  if (rel === 'about.html') return 'About Packaging Factory Direct — a Shenzhen-based B2B custom packaging manufacturer serving global brands with OEM/ODM boxes, bags, pouches and printing. MOQ 500 PCS, factory direct pricing.';
+  if (rel === 'contact.html') return 'Contact Packaging Factory Direct for a factory-direct quotation. Reach Linda Wang via WhatsApp, email or RFQ form for custom packaging with MOQ 500 PCS, OEM/ODM support and worldwide shipping.';
+  if (kind === 'products') return `${short} — B2B custom packaging manufacturer. MOQ 500 PCS, OEM/ODM, factory direct pricing and worldwide shipping from Shenzhen.`;
+  if (kind === 'blog') return `${short} — technical guide from Packaging Factory Direct. Custom packaging manufacturer, MOQ 500 PCS, OEM/ODM, factory-direct RFQ support.`;
+  if (kind === 'news') return `${short} — market update from Packaging Factory Direct, B2B custom packaging manufacturer. MOQ 500 PCS, factory direct, OEM/ODM.`;
+  if (kind === 'industry') return `${short} — industry packaging solutions from Packaging Factory Direct. Custom manufacturer, MOQ 500 PCS, OEM/ODM, factory direct.`;
+  if (kind === 'category') return `${short} — category from Packaging Factory Direct. B2B custom packaging manufacturer, MOQ 500 PCS, OEM/ODM, factory direct pricing.`;
+  return `${short} — Packaging Factory Direct, B2B custom packaging manufacturer. MOQ 500 PCS, OEM/ODM, factory direct.`;
 }
 function getMeta(html, attr, name) {
   const re = new RegExp(`<meta[^>]+${attr}=["']${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["'][^>]+content=["']([^"']*)["'][^>]*>`, 'i');
@@ -319,7 +336,7 @@ export async function generateMetadata({ params }) {
   const result = await loadHtml(params);
   const { html, rel, sourceUrl } = result;
   const title = getTitle(html);
-  const description = getDescription(html);
+  const description = getDescription(html, rel);
   const canonical = getCanonical(html, rel, sourceUrl);
   const image = getOgImage(html, sourceUrl);
   const isProduct = rel.includes('/products/');
@@ -337,7 +354,47 @@ export async function generateMetadata({ params }) {
     other: { 'x-pfd-content-source': result.source, 'x-pfd-isr-tags': cacheTagsForRel(rel).join(',') }
   };
 }
+function breadcrumbJsonLd(rel) {
+  const items = [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` }];
+  if (rel === 'index.html' || !rel) return null;
+  const kind = getKindFromRel(rel);
+  const slugText = slugFromRel(rel).replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  if (kind === 'products' && rel !== 'products.html') {
+    items.push({ '@type': 'ListItem', position: 2, name: 'Products', item: `${SITE_URL}/products.html` });
+    items.push({ '@type': 'ListItem', position: 3, name: slugText, item: `${SITE_URL}/${rel}` });
+  } else if (kind === 'blog' && rel !== 'blog.html') {
+    items.push({ '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog.html` });
+    items.push({ '@type': 'ListItem', position: 3, name: slugText, item: `${SITE_URL}/${rel}` });
+  } else if (kind === 'news' && rel !== 'news.html') {
+    items.push({ '@type': 'ListItem', position: 2, name: 'News', item: `${SITE_URL}/news.html` });
+    items.push({ '@type': 'ListItem', position: 3, name: slugText, item: `${SITE_URL}/${rel}` });
+  } else if (kind === 'industry') {
+    items.push({ '@type': 'ListItem', position: 2, name: 'Industry Solutions', item: `${SITE_URL}/products.html` });
+    items.push({ '@type': 'ListItem', position: 3, name: slugText, item: `${SITE_URL}/${rel}` });
+  } else {
+    const label = rel === 'products.html' ? 'Products'
+      : rel === 'blog.html' ? 'Blog'
+      : rel === 'news.html' ? 'News'
+      : rel === 'about.html' ? 'About Us'
+      : rel === 'contact.html' ? 'Contact'
+      : slugText;
+    items.push({ '@type': 'ListItem', position: 2, name: label, item: `${SITE_URL}/${rel}` });
+  }
+  return { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items };
+}
+
 export default async function HtmlPage({ params }) {
   const result = await loadHtml(params);
-  return <main dangerouslySetInnerHTML={{ __html: extractBody(result.html, result) }} />;
+  const bc = breadcrumbJsonLd(result.rel);
+  return (
+    <>
+      {bc ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(bc) }}
+        />
+      ) : null}
+      <main dangerouslySetInnerHTML={{ __html: extractBody(result.html, result) }} />
+    </>
+  );
 }

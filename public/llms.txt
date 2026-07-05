@@ -6,5 +6,5 @@ Homepage data is locked to homepage/featured tags in data/homepage.locked.json a
 ISR: core pages prebuilt; product/blog/news details generated per path. Revalidate one specified URL through /api/revalidate.
 Search: header search redirects to /products.html?q=keyword and filters product cards.
 
-Product feed: https://packagingfactorydirect.com/product-feed.json
-Sitemap: https://packagingfactorydirect.com/sitemap.xml
+Product feed: https://www.packagingfactorydirect.com/product-feed.json
+Sitemap: https://www.packagingfactorydirect.com/sitemap.xml

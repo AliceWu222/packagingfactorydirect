@@ -6,7 +6,8 @@ export const dynamic = 'force-static';
 export const revalidate = 3600;
 
 
-const SITE_URL = 'https://packagingfactorydirect.com';
+const SITE_URL = 'https://www.packagingfactorydirect.com';
+const LEGACY_SITE_URL = 'https://packagingfactorydirect.com';
 const ISR_SECONDS = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PAGE_REVALIDATE_SECONDS || 3600);
 
 function contentBaseUrl() {
@@ -55,15 +56,66 @@ function absoluteSiteUrl(url, kind) {
 }
 
 
+async function readLocalFeed() {
+  const paths = [
+    path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'product-feed.json'),
+    path.join(/*turbopackIgnore: true*/ process.cwd(), 'product-feed.json')
+  ];
+  for (const p of paths) {
+    const t = await fs.readFile(p, 'utf8').catch(() => '');
+    if (t && t.length > 100) {
+      try {
+        const parsed = JSON.parse(t);
+        if (parsed && Array.isArray(parsed.products) && parsed.products.length > 0) return parsed;
+      } catch {}
+    }
+  }
+  return { products: [] };
+}
+function normalizeUrlToWww(url) {
+  if (!url) return url;
+  if (url.startsWith(LEGACY_SITE_URL + '/')) return SITE_URL + url.slice(LEGACY_SITE_URL.length);
+  if (url === LEGACY_SITE_URL) return SITE_URL;
+  return url;
+}
+function normalizeProductForFeed(item) {
+  if (!item) return item;
+  const clone = { ...item };
+  const rawUrl = clone.url || clone.href || clone.path || '';
+  if (rawUrl) {
+    const abs = absoluteSiteUrl(rawUrl, 'products');
+    clone.url = normalizeUrlToWww(abs);
+  }
+  if (clone.image && /^https?:\/\//i.test(clone.image)) {
+    clone.image = normalizeUrlToWww(clone.image);
+  } else if (clone.image && !clone.image.startsWith('/') && !/^https?:/.test(clone.image)) {
+    clone.image = SITE_URL + '/' + clone.image.replace(/^\/+/, '');
+  } else if (clone.image && clone.image.startsWith('/')) {
+    clone.image = SITE_URL + clone.image;
+  }
+  return clone;
+}
 export async function GET() {
-  const local = await fs.readFile(path.join(/*turbopackIgnore: true*/ process.cwd(), 'product-feed.json'), 'utf8').then(JSON.parse).catch(() => ({ products: [] }));
+  const local = await readLocalFeed();
   const remote = await remoteItems('products');
   const byUrl = new Map();
-  for (const product of (local.products || [])) byUrl.set(product.url || product.href || product.path || product.title, product);
-  for (const item of remote) byUrl.set(item.url, { ...item, url: absoluteSiteUrl(item.url, 'products'), source: 'r2-cms' });
+  for (const product of (local.products || [])) {
+    const norm = normalizeProductForFeed(product);
+    byUrl.set(norm.url || product.title, norm);
+  }
+  for (const item of remote) {
+    const url = normalizeUrlToWww(absoluteSiteUrl(item.url, 'products'));
+    byUrl.set(url, { ...item, url, source: 'r2-cms' });
+  }
   const payload = {
     ...local,
-    version: 'v71-r2-cms-isr',
+    version: 'v76-www-canonical',
+    site: SITE_URL,
+    contact: 'Linda Wang',
+    email: 'linda@colorprintingpackage.com',
+    whatsapp: '+86 181 6573 0353',
+    moq: '500 PCS',
+    businessModel: 'B2B custom packaging manufacturer, OEM/ODM, factory direct from Shenzhen',
     r2CmsEnabled: Boolean(contentBaseUrl()),
     products: Array.from(byUrl.values())
   };
