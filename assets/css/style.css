@@ -1714,3 +1714,57 @@ main.hero .slide::before{
   color:#10281e;
   text-decoration:none;
 }
+
+
+/* V77 IMAGE NO-CROP PATCH — show full product image on desktop without changing layout
+   - Product-card thumbnails on all list/homepage grids: 1:1 aspect ratio + object-fit:contain (was 210px cover)
+   - Product detail main gallery: 1:1 aspect ratio + object-fit:contain (was min-height:520px cover)
+   - Background stays white so the image sits cleanly inside its card
+   - Mobile behavior already uses contain via V55 rules; this patch aligns desktop to the same behavior
+*/
+.product-card img,
+.products-page .product-card img,
+.grid .product-card img,
+.products-grid .product-card img,
+.product-grid .product-card img{
+  width:100% !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  aspect-ratio:1 / 1 !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  background:#fff !important;
+  padding:10px !important;
+}
+
+.product-detail .gallery-main,
+.gallery-main{
+  min-height:0 !important;
+}
+.product-detail .gallery-main img,
+.gallery-main img{
+  width:100% !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  aspect-ratio:1 / 1 !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  background:#fff !important;
+  padding:14px !important;
+}
+
+@media(max-width:760px){
+  .product-card img,
+  .products-page .product-card img,
+  .grid .product-card img,
+  .products-grid .product-card img,
+  .product-grid .product-card img{
+    padding:8px !important;
+  }
+  .product-detail .gallery-main img,
+  .gallery-main img{
+    padding:10px !important;
+  }
+}
