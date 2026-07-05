@@ -1476,4 +1476,16 @@
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
+  <url>
+    <loc>https://packagingfactorydirect.com/products/custom-magnetic-gift-box-gold-foil-logo.html</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://packagingfactorydirect.com/products/custom-pink-magnetic-jewelry-gift-box-set-gold-foil-thank-you-card-drawstring-pouch.html</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
 </urlset>
