@@ -19,8 +19,22 @@ const nextConfig = {
   },
   async headers() {
     return [
+      // CSS and JS: short browser cache, always revalidate to pick up patches quickly
       {
-        source: '/assets/:path*',
+        source: '/assets/:path*.css',
+        headers: [
+          { key: 'Cache-Control', value: `public, max-age=60, s-maxage=3600, must-revalidate` }
+        ]
+      },
+      {
+        source: '/assets/:path*.js',
+        headers: [
+          { key: 'Cache-Control', value: `public, max-age=60, s-maxage=3600, must-revalidate` }
+        ]
+      },
+      // Images / fonts / other static assets: long cache is fine (they rarely change)
+      {
+        source: '/assets/img/:path*',
         headers: [
           { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` }
         ]
