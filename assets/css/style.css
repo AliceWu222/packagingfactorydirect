@@ -1926,3 +1926,81 @@ main.hero .slide::before{
     font-size: 72px !important;
   }
 }
+
+/* V90 HERO COPY SCALE-UP — make the text inside the user's blue frame visually
+   approach the red frame scale while keeping product imagery, layout order,
+   URLs, and media untouched. */
+@media(min-width:761px){
+  .hero .hero-copy {
+    max-width: 66vw !important;
+    padding-top: 70px !important;
+    padding-bottom: 52px !important;
+  }
+  .hero {
+    min-height: 780px !important;
+  }
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 92px !important;
+    line-height: 1.02 !important;
+    margin: 8px 0 12px !important;
+    max-width: 100% !important;
+  }
+  .hero .hero-copy .eyebrow {
+    font-size: 17px !important;
+    letter-spacing: .18em !important;
+    margin-bottom: 4px !important;
+  }
+  .hero .hero-copy p {
+    font-size: 25px !important;
+    line-height: 1.4 !important;
+    margin: 10px 0 16px !important;
+    max-width: 860px !important;
+  }
+  .hero .hero-copy .hero-bullets {
+    margin: 12px 0 !important;
+    gap: 9px !important;
+  }
+  .hero .hero-copy .hero-bullets span {
+    font-size: 19px !important;
+    min-height: 42px !important;
+    padding: 8px 14px !important;
+    gap: 10px !important;
+  }
+  .hero .hero-copy .hero-bullets b {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 16px !important;
+  }
+  .hero .hero-copy .btn {
+    font-size: 19px !important;
+    padding: 14px 26px !important;
+  }
+}
+@media(min-width:1200px){
+  .hero .hero-copy {
+    max-width: 70vw !important;
+  }
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 100px !important;
+  }
+}
+@media(min-width:1500px){
+  .hero .hero-copy {
+    max-width: 72vw !important;
+  }
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 100px !important;
+  }
+}
