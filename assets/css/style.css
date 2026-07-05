@@ -1798,54 +1798,86 @@ main.hero .slide::before{
 }
 
 
-/* V82 HERO COPY DESKTOP-ONLY ENLARGE — user requested bigger text on the 5 desktop hero
-   slides (red-frame size vs current blue-frame size), ~1.35× scale. Only affects hero
-   .hero-copy on screens 761px+. Mobile keeps the existing V55/V61 rules untouched. */
+/* V83 HERO COPY — user wants text bigger than original but currently top/bottom clipped
+   and the copy column too narrow. Fix: widen the copy column, slightly smaller title,
+   tighter vertical rhythm, and grow hero min-height so nothing gets clipped.
+   Desktop only (≥761px). Mobile keeps original V55/V61 rules. */
 @media(min-width:761px){
-  /* Title (h1 + all 5 slide h2 aliases): 58 → 80 */
+  /* Widen hero-copy from 500 → 760px so long headlines fit on fewer lines */
+  .hero .hero-copy {
+    max-width: 760px !important;
+    padding-top: 72px !important;
+  }
+  /* Give the hero itself more vertical room so bigger copy is never clipped */
+  .hero {
+    min-height: 780px !important;
+  }
+  /* Title (h1 + all 5 slide h2 aliases): 58 → 72 (still ~1.24× original, less clipping) */
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 72px !important;
+    line-height: 1.05 !important;
+    margin: 14px 0 14px !important;
+  }
+  /* Eyebrow: 13 → 15 */
+  .hero .hero-copy .eyebrow {
+    font-size: 15px !important;
+    letter-spacing: .17em !important;
+    margin: 0 0 4px !important;
+  }
+  /* Description paragraph: 18 → 20, tighter line */
+  .hero .hero-copy p {
+    font-size: 20px !important;
+    line-height: 1.45 !important;
+    max-width: 640px !important;
+  }
+  /* Bullet chips */
+  .hero .hero-copy .hero-bullets {
+    margin: 18px 0 !important;
+    gap: 8px !important;
+  }
+  .hero .hero-copy .hero-bullets span {
+    font-size: 17px !important;
+    min-height: 46px !important;
+    padding: 10px 14px !important;
+    gap: 10px !important;
+  }
+  .hero .hero-copy .hero-bullets b {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 15px !important;
+  }
+  /* CTA buttons */
+  .hero .hero-copy .btn {
+    font-size: 17px !important;
+    padding: 14px 24px !important;
+  }
+}
+@media(min-width:1200px){
+  /* Very-wide screens: allow slightly bigger title (still fits in wider column) */
+  .hero .hero-copy {
+    max-width: 820px !important;
+  }
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 76px !important;
+  }
+}
+@media(min-width:1500px){
+  .hero .hero-copy {
+    max-width: 880px !important;
+  }
   .hero .hero-copy h1,
   .hero .hero-copy h2,
   .hero .slide .hero-copy h1,
   .hero .slide .hero-copy h2,
   .hero .slide h2 {
     font-size: 80px !important;
-    line-height: 1.02 !important;
-  }
-  /* Eyebrow: 13 → 16, more letter-spacing keeps the small-caps look */
-  .hero .hero-copy .eyebrow {
-    font-size: 16px !important;
-    letter-spacing: .18em !important;
-  }
-  /* Description paragraph: 18 → 22 */
-  .hero .hero-copy p {
-    font-size: 22px !important;
-    line-height: 1.5 !important;
-  }
-  /* Bullet chips (✔ MOQ 500 PCS etc): icon + text scale up */
-  .hero .hero-copy .hero-bullets span {
-    font-size: 18px !important;
-    min-height: 50px !important;
-    padding: 12px 16px !important;
-    gap: 12px !important;
-  }
-  .hero .hero-copy .hero-bullets b {
-    width: 28px !important;
-    height: 28px !important;
-    font-size: 16px !important;
-  }
-  /* CTA buttons: bigger padding + font */
-  .hero .hero-copy .btn {
-    font-size: 18px !important;
-    padding: 15px 26px !important;
-  }
-}
-@media(min-width:1200px){
-  /* Very-wide screens: allow another small step up on the headline */
-  .hero .hero-copy h1,
-  .hero .hero-copy h2,
-  .hero .slide .hero-copy h1,
-  .hero .slide .hero-copy h2,
-  .hero .slide h2 {
-    font-size: 84px !important;
   }
 }
