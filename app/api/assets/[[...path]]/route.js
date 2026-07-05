@@ -50,12 +50,18 @@ export async function GET(_req, { params }) {
     const data = await fs.readFile(abs);
     const ext = path.extname(abs).toLowerCase();
     const type = MIME[ext] || 'application/octet-stream';
+    // CSS / JS: short browser cache so patches take effect fast; edge stays hot for 1h.
+    // Images / fonts / other binary assets: long immutable cache (they very rarely change).
+    const isTextAsset = ext === '.css' || ext === '.js' || ext === '.mjs' || ext === '.map';
+    const cacheControl = isTextAsset
+      ? 'public, max-age=60, s-maxage=3600, must-revalidate'
+      : `public, max-age=${ONE_YEAR}, immutable`;
     return new Response(data, {
       status: 200,
       headers: {
         'Content-Type': type,
         'Content-Length': String(data.length),
-        'Cache-Control': `public, max-age=${ONE_YEAR}, immutable`,
+        'Cache-Control': cacheControl,
         'X-PFD-Asset-Source': 'filesystem'
       }
     });
