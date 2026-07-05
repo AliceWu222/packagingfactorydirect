@@ -144,11 +144,11 @@ export async function GET() {
   }
   for (const item of remote) {
     const url = normalizeUrlToWww(absoluteSiteUrl(item.url, 'products'));
-    byUrl.set(url, { ...item, url, source: 'r2-cms' });
+    byUrl.set(url, normalizeProductForFeed({ ...item, url, source: 'r2-cms' }));
   }
   const payload = {
     ...local,
-    version: 'v95-procurement-feed',
+    version: 'v97-procurement-feed',
     site: SITE_URL,
     contact: 'Linda Wang',
     email: 'linda@colorprintingpackage.com',

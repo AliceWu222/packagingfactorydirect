@@ -3,7 +3,7 @@ import path from 'node:path';
 import { notFound } from 'next/navigation';
 
 export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-static';
 export const dynamicParams = true;
 export const revalidate = 3600;
 
@@ -287,8 +287,6 @@ function getMeta(html, attr, name) {
   return m ? m[1].trim() : '';
 }
 function getCanonical(html, rel, sourceUrl) {
-  const m = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']*)["'][^>]*>/i);
-  if (m) return m[1].trim();
   if (rel === 'index.html') return SITE_URL + '/';
   return `${SITE_URL}/${rel}`;
 }
@@ -414,6 +412,15 @@ function productJsonLd(html, rel, title, description, sourceUrl) {
     manufacturer: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL },
     category: 'Custom Packaging',
     material: 'Greyboard, art paper, kraft paper, corrugated board, PET/PLA film, laminated flexible packaging materials, foil and specialty paper depending on product application',
+    printingOptions: ['Offset printing', 'Digital printing', 'Flexographic printing', 'Gravure printing', 'CMYK', 'Pantone color matching', 'Custom logo printing'],
+    finishOptions: ['Matte lamination', 'Gloss lamination', 'Soft-touch lamination', 'Foil stamping', 'Embossing', 'Debossing', 'Spot UV', 'Window patching'],
+    applications: ['Retail packaging', 'Ecommerce shipping', 'Food packaging', 'Cosmetic packaging', 'Gift packaging', 'Pharma packaging', 'Branded promotional packaging'],
+    industries: ['Food', 'Beverage', 'Coffee and tea', 'Cosmetics', 'Skincare', 'Apparel', 'Gifts', 'Ecommerce', 'Pharmaceutical', 'Pet food', 'Cannabis where compliant'],
+    moq: '500 PCS',
+    oemOdm: 'OEM/ODM custom packaging supported',
+    customSize: 'Custom size, structure and dieline supported',
+    url: `${SITE_URL}/${rel}`,
+    rfqContact: { '@type': 'ContactPoint', contactType: 'sales', name: 'Linda Wang', email: 'linda@colorprintingpackage.com', telephone: '+86-181-6573-0353', url: `${SITE_URL}/contact.html` },
     additionalProperty: [
       { '@type': 'PropertyValue', name: 'MOQ', value: '500 PCS' },
       { '@type': 'PropertyValue', name: 'Customization', value: 'Yes, OEM/ODM supported' },
@@ -615,11 +622,12 @@ export default async function HtmlPage({ params }) {
   const trustSchema = trustPageJsonLd(rel, title, description);
   const faqSchema = faqPageJsonLd(rel);
 
-  // Only inject if the underlying HTML does NOT already contain a same-typed JSON-LD
-  const injectProduct = kind === 'products' && rel !== 'products.html' && !hasInlineJsonLdOfType(html, 'Product');
+  // Original static <head> content is not rendered inside the extracted body,
+  // so SEO schemas are injected here at the App Router layer.
+  const injectProduct = kind === 'products' && rel !== 'products.html';
   const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(html, 'Article');
-  const injectTrust = trustSchema && !hasInlineJsonLdOfType(html, 'WebPage');
-  const injectFaq = faqSchema && !hasInlineJsonLdOfType(html, 'FAQPage');
+  const injectTrust = Boolean(trustSchema);
+  const injectFaq = Boolean(faqSchema);
 
   return (
     <>

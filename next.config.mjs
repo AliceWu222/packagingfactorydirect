@@ -10,15 +10,34 @@ const nextConfig = {
     minimumCacheTTL: ONE_YEAR
   },
   outputFileTracingIncludes: {
-    '/*': ['./*.html', './products/**/*.html', './blog/**/*.html', './news/**/*.html', './assets/**/*', './data/**/*', './*.xml', './*.txt', './*.json', './*.md']
+    '/*': ['./*.html', './products/**/*.html', './blog/**/*.html', './news/**/*.html', './industry/**/*.html', './cases/**/*.html', './assets/**/*', './data/**/*', './*.xml', './*.txt', './*.json', './*.md']
   },
   async rewrites() {
     return [
       { source: '/assets/:path*', destination: '/api/assets/:path*' }
     ];
   },
+  async redirects() {
+    return [
+      { source: '/cases', destination: '/factory-capability.html', statusCode: 301 },
+      { source: '/cases/:path*', destination: '/factory-capability.html', statusCode: 301 }
+    ];
+  },
   async headers() {
     return [
+      // HTML routes: allow CDN ISR-style caching while browsers revalidate quickly.
+      {
+        source: '/',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=3600, stale-while-revalidate' }
+        ]
+      },
+      {
+        source: '/:path*.html',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=3600, stale-while-revalidate' }
+        ]
+      },
       // CSS and JS: short browser cache, always revalidate to pick up patches quickly
       {
         source: '/assets/:path*.css',
@@ -30,6 +49,14 @@ const nextConfig = {
         source: '/assets/:path*.js',
         headers: [
           { key: 'Cache-Control', value: `public, max-age=60, s-maxage=3600, must-revalidate` }
+        ]
+      },
+      {
+        source: '/data/:path*.json',
+        headers: [
+          { key: 'Content-Type', value: 'application/json; charset=utf-8' },
+          { key: 'Cache-Control', value: 'public, max-age=60, s-maxage=3600, stale-while-revalidate' },
+          { key: 'X-Robots-Tag', value: 'noindex, follow' }
         ]
       },
       // Images / fonts / other static assets: long cache is fine (they rarely change)

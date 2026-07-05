@@ -88,6 +88,6 @@ export async function GET(request) {
     count: results.length,
     results
   }, {
-    headers: { 'Cache-Control': 'no-store' }
+    headers: { 'Cache-Control': 'public, max-age=30, s-maxage=300, stale-while-revalidate=600' }
   });
 }

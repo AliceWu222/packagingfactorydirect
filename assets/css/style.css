@@ -2371,3 +2371,190 @@ main.hero .slide::before{
     max-width:560px !important;
   }
 }
+
+/* V97 DESKTOP HOMEPAGE HERO NO-CROP LOCK
+   Desktop only: preserve the approved blue-frame copy scale and force the carousel
+   artwork to render complete. Does not change image files, order, markup, product
+   pages, WhatsApp, forms, or URLs. */
+@media(min-width:761px){
+  main.hero{
+    background:#f4f6f3 !important;
+    overflow:hidden !important;
+  }
+  main.hero .slide{
+    overflow:hidden !important;
+  }
+  main.hero .slide-img{
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    max-width:none !important;
+    object-fit:contain !important;
+    object-position:center top !important;
+    background:#f4f6f3 !important;
+  }
+  main.hero .slide > .container{
+    position:relative !important;
+    z-index:2 !important;
+    padding-left:clamp(42px, 3.75vw, 72px) !important;
+    padding-right:28px !important;
+  }
+  main.hero .hero-copy,
+  body main.hero .slide > .container .hero-copy{
+    width:min(42vw, 540px) !important;
+    max-width:min(42vw, 540px) !important;
+    padding-top:52px !important;
+    padding-bottom:40px !important;
+    transform:none !important;
+  }
+  main.hero .hero-copy h1,
+  main.hero .hero-copy h2,
+  body main.hero .slide > .container .hero-copy h1,
+  body main.hero .slide > .container .hero-copy h2,
+  body main.hero .slide h2{
+    font-size:52px !important;
+    line-height:1.04 !important;
+    max-width:560px !important;
+    margin:10px 0 18px !important;
+  }
+  main.hero .hero-copy p,
+  body main.hero .slide > .container .hero-copy p{
+    font-size:17px !important;
+    line-height:1.55 !important;
+    max-width:520px !important;
+  }
+}
+@media(min-width:1500px){
+  main.hero .hero-copy{
+    width:540px !important;
+    max-width:540px !important;
+  }
+  main.hero .hero-copy h1,
+  main.hero .hero-copy h2{
+    font-size:56px !important;
+  }
+}
+
+/* V98 DESKTOP HOMEPAGE GAP FIX
+   Remove the header-to-hero spacer while keeping carousel artwork uncropped and
+   the approved left copy inside the safe text area. */
+@media(min-width:761px){
+  body > .mobile-hero-only,
+  .mobile-hero-only{
+    display:none !important;
+    height:0 !important;
+    min-height:0 !important;
+    max-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+  }
+  body > header.header + main.hero,
+  body > header.header + section.mobile-hero-only + main.hero,
+  main.hero{
+    display:block !important;
+    margin-top:0 !important;
+    padding-top:0 !important;
+    top:auto !important;
+    transform:none !important;
+    height:calc(100vh - 134px) !important;
+    min-height:620px !important;
+    background:#f4f6f3 !important;
+    overflow:hidden !important;
+  }
+  main.hero .slide,
+  main.hero .slide.active{
+    top:0 !important;
+    bottom:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+  }
+  main.hero .slide-img{
+    object-fit:contain !important;
+    object-position:center top !important;
+  }
+  main.hero .slide > .container,
+  body main.hero .slide > .container{
+    height:100% !important;
+    max-width:none !important;
+    margin:0 !important;
+    padding-left:clamp(42px, 4vw, 72px) !important;
+    padding-right:28px !important;
+    padding-top:0 !important;
+    padding-bottom:0 !important;
+  }
+  main.hero .hero-copy,
+  body main.hero .slide > .container .hero-copy{
+    width:min(40vw, 520px) !important;
+    max-width:min(40vw, 520px) !important;
+    padding-top:clamp(38px, 5.4vh, 52px) !important;
+    padding-bottom:34px !important;
+  }
+}
+
+/* V99 DESKTOP HERO COPY SAFE FRAME LOCK
+   Keep the homepage carousel copy upright and inside the left safe frame. */
+@media(min-width:761px){
+  main.hero .slide > .container,
+  body main.hero .slide > .container{
+    position:relative !important;
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    max-width:none !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+  main.hero .hero-copy,
+  body main.hero .slide > .container .hero-copy{
+    position:absolute !important;
+    left:clamp(56px, 5.2vw, 78px) !important;
+    top:clamp(46px, 6.4vh, 72px) !important;
+    width:min(39vw, 540px) !important;
+    max-width:min(39vw, 540px) !important;
+    margin:0 !important;
+    padding:0 !important;
+    transform:none !important;
+    rotate:0deg !important;
+    skew:0deg !important;
+    translate:0 0 !important;
+    font-style:normal !important;
+    text-align:left !important;
+    z-index:3 !important;
+  }
+  main.hero .hero-copy *,
+  body main.hero .slide > .container .hero-copy *{
+    transform:none !important;
+    rotate:0deg !important;
+    skew:0deg !important;
+    translate:0 0 !important;
+    font-style:normal !important;
+  }
+  main.hero .hero-copy h1,
+  main.hero .hero-copy h2,
+  body main.hero .slide > .container .hero-copy h1,
+  body main.hero .slide > .container .hero-copy h2{
+    max-width:540px !important;
+    margin-top:12px !important;
+    margin-bottom:18px !important;
+    line-height:.98 !important;
+    font-family:Inter, Arial, sans-serif !important;
+    font-style:normal !important;
+    font-weight:900 !important;
+    letter-spacing:0 !important;
+    transform:none !important;
+    rotate:0deg !important;
+    skew:0deg !important;
+  }
+  main.hero .hero-copy p,
+  body main.hero .slide > .container .hero-copy p{
+    max-width:520px !important;
+  }
+  main.hero .slide-img,
+  body main.hero .slide-img{
+    object-fit:contain !important;
+    object-position:center top !important;
+  }
+}
