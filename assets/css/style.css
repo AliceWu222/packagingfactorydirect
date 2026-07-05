@@ -1798,64 +1798,65 @@ main.hero .slide::before{
 }
 
 
-/* V84 HERO COPY WIDER — user wants left text column extended to the right, close to
-   the product image. NO vertical/height changes. Only the max-width of .hero-copy
-   and its inner p/hero-bullets is enlarged. Everything vertical stays V83. */
+/* V85 HERO COPY WIDER + TIGHTER — user wants left text column even wider (closer to
+   the right product image) AND vertical spacing tightened. Font sizes unchanged;
+   only max-width goes up (68 / 72 / 74vw) and margins/padding shrink. */
 @media(min-width:761px){
-  /* Widened dramatically: fill roughly the left 60% of viewport */
   .hero .hero-copy {
-    max-width: 60vw !important;
-    padding-top: 72px !important;
+    max-width: 68vw !important;
+    padding-top: 48px !important;
+    padding-bottom: 24px !important;
   }
-  /* Height rules kept from V83, unchanged */
+  /* Reduce hero min-height slightly to match tighter copy */
   .hero {
-    min-height: 780px !important;
+    min-height: 720px !important;
   }
-  /* Title */
+  /* Title — tighter top/bottom margin */
   .hero .hero-copy h1,
   .hero .hero-copy h2,
   .hero .slide .hero-copy h1,
   .hero .slide .hero-copy h2,
   .hero .slide h2 {
     font-size: 72px !important;
-    line-height: 1.05 !important;
-    margin: 14px 0 14px !important;
+    line-height: 1.02 !important;
+    margin: 8px 0 10px !important;
   }
   .hero .hero-copy .eyebrow {
     font-size: 15px !important;
     letter-spacing: .17em !important;
-    margin: 0 0 4px !important;
+    margin: 0 0 2px !important;
   }
-  /* Description: also widen so it fills the extra room, not stuck at 640 */
+  /* Description: full width of the wider column, tighter */
   .hero .hero-copy p {
     font-size: 20px !important;
-    line-height: 1.45 !important;
+    line-height: 1.4 !important;
     max-width: 100% !important;
+    margin: 6px 0 12px !important;
   }
+  /* Bullets — tighter chip and margin */
   .hero .hero-copy .hero-bullets {
-    margin: 18px 0 !important;
-    gap: 8px !important;
+    margin: 10px 0 !important;
+    gap: 6px !important;
   }
   .hero .hero-copy .hero-bullets span {
     font-size: 17px !important;
-    min-height: 46px !important;
-    padding: 10px 14px !important;
+    min-height: 40px !important;
+    padding: 7px 12px !important;
     gap: 10px !important;
   }
   .hero .hero-copy .hero-bullets b {
-    width: 26px !important;
-    height: 26px !important;
-    font-size: 15px !important;
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 14px !important;
   }
   .hero .hero-copy .btn {
     font-size: 17px !important;
-    padding: 14px 24px !important;
+    padding: 12px 22px !important;
   }
 }
 @media(min-width:1200px){
-  /* On wider screens allow the copy column even more room and slightly larger title */
   .hero .hero-copy {
-    max-width: 64vw !important;
+    max-width: 72vw !important;
   }
   .hero .hero-copy h1,
   .hero .hero-copy h2,
@@ -1867,7 +1868,7 @@ main.hero .slide::before{
 }
 @media(min-width:1500px){
   .hero .hero-copy {
-    max-width: 66vw !important;
+    max-width: 74vw !important;
   }
   .hero .hero-copy h1,
   .hero .hero-copy h2,
