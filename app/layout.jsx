@@ -64,11 +64,24 @@ export default function RootLayout({ children }) {
         <meta name="format-detection" content="telephone=yes,email=yes,address=yes" />
         <link rel="preload" as="image" href="/assets/img/hero/hero-1.webp" fetchPriority="high" />
         <link rel="preload" as="image" href="/assets/img/hero/mobile-vertical-slide-1.webp" fetchPriority="high" media="(max-width: 760px)" />
-        <link rel="preload" href="/assets/css/style.css?v=v79-h2-bold" as="style" />
-        <link rel="stylesheet" href="/assets/css/style.css?v=v79-h2-bold" />
-        <script src="/assets/js/main.js?v=v79-h2-bold" defer></script>
+        <link rel="preload" href="/assets/css/style.css?v=v80-italic-fix" as="style" />
+        <link rel="stylesheet" href="/assets/css/style.css?v=v80-italic-fix" />
+        <script src="/assets/js/main.js?v=v80-italic-fix" defer></script>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
+        <style dangerouslySetInnerHTML={{ __html: `
+/* V80 EMERGENCY OVERRIDE — the original HTML has unclosed <em> tags from a legacy encoding
+   corruption, causing the browser to italicize everything after the first <em>.
+   This rule forces every em/i to render as upright, and only elements that need italic
+   (blockquote, cite, standard prose italic contexts) keep it. This is a visual-only fix
+   that does NOT touch the HTML files. */
+em, em *, i, i *, .hero em, .hero em *, .hero i, .hero i *,
+.floating em, .floating em *, .floating i, .floating i *,
+.container em, .container em *,
+body em, body em *, body i, body i * { font-style: normal !important; }
+/* Restore italics on the very few semantic elements where italic is expected */
+cite, cite *, blockquote em, blockquote i, dfn, address i { font-style: italic !important; }
+` }} />
       </head>
       <body>{children}</body>
     </html>
