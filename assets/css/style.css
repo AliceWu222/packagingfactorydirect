@@ -1877,3 +1877,52 @@ main.hero .slide::before{
     font-size: 120px !important;
   }
 }
+
+/* V89 HERO COPY RED-BOX RESTORE — restore the old desktop hero feel by matching
+   the user's red frame: wide enough left copy area, moderate title size, and
+   extra vertical breathing room so the copy is not clipped. Product image and
+   slide media remain untouched. */
+@media(min-width:761px){
+  .hero .hero-copy {
+    max-width: 56vw !important;
+    padding-top: 78px !important;
+    padding-bottom: 62px !important;
+  }
+  .hero {
+    min-height: 780px !important;
+  }
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 72px !important;
+    line-height: 1.04 !important;
+    margin: 10px 0 16px !important;
+    max-width: 100% !important;
+  }
+}
+@media(min-width:1200px){
+  .hero .hero-copy {
+    max-width: 60vw !important;
+  }
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 72px !important;
+  }
+}
+@media(min-width:1500px){
+  .hero .hero-copy {
+    max-width: 62vw !important;
+  }
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 72px !important;
+  }
+}

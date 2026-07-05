@@ -297,10 +297,19 @@ function getOgImage(html, sourceUrl) {
   if (m) return normalizeImageSrc(m[1].trim(), sourceUrl);
   return `${SITE_URL}/assets/img/hero/hero-1.webp`;
 }
+function repairCorruptedLogoMarkup(bodyHtml) {
+  // Server-side repair for legacy mojibake like: <span class="logo-mark">▖?/span>
+  // Runtime DOM repair may run too late or fail when the broken span swallows sibling text.
+  return bodyHtml
+    .replace(/<span class=["']logo-mark["']>[^<]{0,12}\?\/span>\s*<span>/gi, '<span class="logo-mark">▱</span><span>')
+    .replace(/<span class=["']logo-mark["']>[^<]{0,12}锟[^<]*<span>/gi, '<span class="logo-mark">▱</span><span>')
+    .replace(/<span class=["']logo-mark["']>[^<]{0,12}\ufffd[^<]*<span>/gi, '<span class="logo-mark">▱</span><span>');
+}
 function extractBody(html, result) {
   const m = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
   let body = m ? m[1] : html;
   body = stripDuplicateBodyAssets(body);
+  body = repairCorruptedLogoMarkup(body);
   return result?.source === 'r2' ? rewriteRemoteImageUrls(body, result.sourceUrl) : body;
 }
 export async function generateStaticParams() {
