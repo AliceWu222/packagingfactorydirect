@@ -133,9 +133,11 @@ function rewriteRemoteImageUrls(bodyHtml, sourceUrl) {
 function stripDuplicateBodyAssets(bodyHtml) {
   // Layout already loads /assets/css/style.css and /assets/js/main.js.
   // Removing duplicate body script improves INP/TBT without changing the static HTML source files.
+  // Also strip any other <link> to style.css so we can inject a versioned one via layout only.
   return bodyHtml
     .replace(/<script\s+src=["'](?:\.\.\/|\.\/)?assets\/js\/main\.js["']\s*><\/script>/gi, '')
-    .replace(/<link\s+href=["'](?:\.\.\/|\.\/)?assets\/css\/style\.css["']\s+rel=["']stylesheet["']\s*\/?>/gi, '');
+    .replace(/<link\s+href=["'](?:\.\.\/|\.\/)?assets\/css\/style\.css["']\s+rel=["']stylesheet["']\s*\/?>/gi, '')
+    .replace(/<link\s+rel=["']stylesheet["']\s+href=["'](?:\.\.\/|\.\/)?assets\/css\/style\.css["']\s*\/?>/gi, '');
 }
 async function readLocalHtml(rel) {
   const file = safeResolve(rel);
