@@ -1089,9 +1089,9 @@
     {
       "title": "Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets",
       "url": "products/heavy-duty-10kg-20kg-flat-bottom-pet-food-bag-slider-zipper-reinforced-side-gussets.html",
-      "description": "Heavy-duty 10kgâ€?0kg flat bottom pet food bag with slider zipper, reinforced side gussets and premium printing for large dog food and cat food packaging.",
+      "description": "Heavy-duty 10kgï¿½?0kg flat bottom pet food bag with slider zipper, reinforced side gussets and premium printing for large dog food and cat food packaging.",
       "image": "assets/img/products/heavy-duty-10kg-20kg-flat-bottom-pet-food-bag-slider-zipper-reinforced-side-gussets-1.webp",
-      "search": "Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets Heavy-duty 10kgâ€?0kg flat bottom pet food bag with slider zipper, reinforced side gussets and premium printing for large dog food and cat food packaging. Pet Food Packaging heavy-duty pet food bag, 20kg dog food bag, flat bottom pet food packaging, slider zipper pet food pouch, reinforced gusset bag Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets Heavy-duty 10kgâ€?0kg flat bottom pet food bag with slider zipper, reinforced side gussets and premium printing for large dog food and cat food packaging. Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets Heavy-duty 10kgâ€?0kg flat bottom pet food bag with slider zipper, reinforced side gussets and premium printing for large dog food and cat food packaging. Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets Heavy-duty 10kgâ€?0kg flat bottom pet food bag with slider zipper, reinforced side gussets and premium printing for large dog food and cat food packaging. Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets",
+      "search": "Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets Heavy-duty 10kgï¿½?0kg flat bottom pet food bag with slider zipper, reinforced side gussets and premium printing for large dog food and cat food packaging. Pet Food Packaging heavy-duty pet food bag, 20kg dog food bag, flat bottom pet food packaging, slider zipper pet food pouch, reinforced gusset bag Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets Heavy-duty 10kgï¿½?0kg flat bottom pet food bag with slider zipper, reinforced side gussets and premium printing for large dog food and cat food packaging. Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets Heavy-duty 10kgï¿½?0kg flat bottom pet food bag with slider zipper, reinforced side gussets and premium printing for large dog food and cat food packaging. Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets Heavy-duty 10kgï¿½?0kg flat bottom pet food bag with slider zipper, reinforced side gussets and premium printing for large dog food and cat food packaging. Heavy-Duty 10kg-20kg Flat Bottom Pet Food Bag with Slider Zipper and Reinforced Side Gussets",
       "tags": [],
       "urlPolicy": "append-only-stable-url"
     },
@@ -2340,5 +2340,183 @@
     "manifest": "/data/company-visual-gallery.json",
     "imageCount": 10,
     "layoutProtection": "Homepage and product pages were not visually changed."
+  },
+  "pageClassifications": {
+    "blogGuides": [
+      {
+        "title": "Custom Packaging MOQ 500 PCS Guide",
+        "url": "https://www.packagingfactorydirect.com/blog/custom-packaging-moq-500-pcs-guide.html",
+        "type": "blog-guide",
+        "buyerIntent": "MOQ 500 PCS custom packaging procurement",
+        "moq": "500 PCS",
+        "rfqFields": [
+          "size",
+          "quantity",
+          "material",
+          "printing colors",
+          "finish",
+          "destination country",
+          "artwork file"
+        ]
+      },
+      {
+        "title": "Custom Packaging RFQ Checklist",
+        "url": "https://www.packagingfactorydirect.com/blog/custom-packaging-rfq-checklist.html",
+        "type": "blog-guide",
+        "buyerIntent": "quote request checklist for custom packaging",
+        "moq": "500 PCS",
+        "rfqFields": [
+          "size",
+          "quantity",
+          "material",
+          "printing colors",
+          "finish",
+          "destination country",
+          "artwork file"
+        ]
+      },
+      {
+        "title": "Custom Packaging Sample Process Guide",
+        "url": "https://www.packagingfactorydirect.com/blog/custom-packaging-sample-process-guide.html",
+        "type": "blog-guide",
+        "buyerIntent": "sampling and approval workflow for custom packaging",
+        "moq": "500 PCS",
+        "rfqFields": [
+          "size",
+          "quantity",
+          "material",
+          "printing colors",
+          "finish",
+          "destination country",
+          "artwork file"
+        ]
+      },
+      {
+        "title": "Food Packaging Material Guide",
+        "url": "https://www.packagingfactorydirect.com/blog/food-packaging-material-guide.html",
+        "type": "blog-guide",
+        "buyerIntent": "food packaging material selection",
+        "moq": "500 PCS",
+        "rfqFields": [
+          "size",
+          "quantity",
+          "material",
+          "printing colors",
+          "finish",
+          "destination country",
+          "artwork file"
+        ]
+      },
+      {
+        "title": "Pharma Packaging Serialization Guide",
+        "url": "https://www.packagingfactorydirect.com/blog/pharma-packaging-serialization-guide.html",
+        "type": "blog-guide",
+        "buyerIntent": "pharma carton serialization and artwork requirements",
+        "moq": "500 PCS",
+        "rfqFields": [
+          "size",
+          "quantity",
+          "material",
+          "printing colors",
+          "finish",
+          "destination country",
+          "artwork file"
+        ]
+      },
+      {
+        "title": "Cosmetic Packaging Box Guide",
+        "url": "https://www.packagingfactorydirect.com/blog/cosmetic-packaging-box-guide.html",
+        "type": "blog-guide",
+        "buyerIntent": "cosmetic packaging box structure and finish selection",
+        "moq": "500 PCS",
+        "rfqFields": [
+          "size",
+          "quantity",
+          "material",
+          "printing colors",
+          "finish",
+          "destination country",
+          "artwork file"
+        ]
+      },
+      {
+        "title": "Coffee Bag with Valve Guide",
+        "url": "https://www.packagingfactorydirect.com/blog/coffee-bag-with-valve-guide.html",
+        "type": "blog-guide",
+        "buyerIntent": "coffee bag valve and laminate procurement",
+        "moq": "500 PCS",
+        "rfqFields": [
+          "size",
+          "quantity",
+          "material",
+          "printing colors",
+          "finish",
+          "destination country",
+          "artwork file"
+        ]
+      },
+      {
+        "title": "Stand Up Pouch Material Structure Guide",
+        "url": "https://www.packagingfactorydirect.com/blog/stand-up-pouch-material-structure-guide.html",
+        "type": "blog-guide",
+        "buyerIntent": "stand up pouch material structure selection",
+        "moq": "500 PCS",
+        "rfqFields": [
+          "size",
+          "quantity",
+          "material",
+          "printing colors",
+          "finish",
+          "destination country",
+          "artwork file"
+        ]
+      },
+      {
+        "title": "Gift Box Insert Guide",
+        "url": "https://www.packagingfactorydirect.com/blog/gift-box-insert-guide.html",
+        "type": "blog-guide",
+        "buyerIntent": "custom gift box insert material selection",
+        "moq": "500 PCS",
+        "rfqFields": [
+          "size",
+          "quantity",
+          "material",
+          "printing colors",
+          "finish",
+          "destination country",
+          "artwork file"
+        ]
+      },
+      {
+        "title": "Shipping and Packaging Lead Time Guide",
+        "url": "https://www.packagingfactorydirect.com/blog/shipping-and-packaging-lead-time-guide.html",
+        "type": "blog-guide",
+        "buyerIntent": "custom packaging lead time and shipping planning",
+        "moq": "500 PCS",
+        "rfqFields": [
+          "size",
+          "quantity",
+          "material",
+          "printing colors",
+          "finish",
+          "destination country",
+          "artwork file"
+        ]
+      }
+    ]
+  },
+  "procurementAnswers": {
+    "guideUrls": [
+      "https://www.packagingfactorydirect.com/blog/custom-packaging-moq-500-pcs-guide.html",
+      "https://www.packagingfactorydirect.com/blog/custom-packaging-rfq-checklist.html",
+      "https://www.packagingfactorydirect.com/blog/custom-packaging-sample-process-guide.html",
+      "https://www.packagingfactorydirect.com/blog/food-packaging-material-guide.html",
+      "https://www.packagingfactorydirect.com/blog/pharma-packaging-serialization-guide.html",
+      "https://www.packagingfactorydirect.com/blog/cosmetic-packaging-box-guide.html",
+      "https://www.packagingfactorydirect.com/blog/coffee-bag-with-valve-guide.html",
+      "https://www.packagingfactorydirect.com/blog/stand-up-pouch-material-structure-guide.html",
+      "https://www.packagingfactorydirect.com/blog/gift-box-insert-guide.html",
+      "https://www.packagingfactorydirect.com/blog/shipping-and-packaging-lead-time-guide.html"
+    ]
   }
 }
