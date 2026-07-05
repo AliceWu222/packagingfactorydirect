@@ -1,7 +1,7 @@
 {
   "framework": "nextjs",
   "installCommand": "npm install",
-  "buildCommand": "npm run build",
+  "buildCommand": "NEXT_EXPERIMENTAL_TURBO=0 npm run build",
   "env": {
     "PFD_ISR_SECONDS": "3600",
     "PFD_ENABLE_REMOTE_LISTS": "true",
