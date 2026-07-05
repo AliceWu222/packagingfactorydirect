@@ -1768,3 +1768,27 @@ main.hero .slide::before{
     padding:10px !important;
   }
 }
+
+
+/* V78 HERO H2 ALIAS — 4 hero slide titles were downgraded from h1 to h2 for SEO (single H1 rule).
+   Mirror the exact hero h1 typography so the visual is 100% identical.
+   Same rule applies to page-hero on the mobile-hero <h1> aliases. */
+.hero h2,
+.hero .slide h2,
+.hero .hero-copy h2{
+  font-size:58px;
+  line-height:1.02;
+  margin:18px 0 18px;
+  font-family:Georgia,serif;
+  font-weight:normal;
+}
+@media(max-width:980px){
+  .hero h2,
+  .hero .slide h2,
+  .hero .hero-copy h2{ font-size:42px; }
+}
+@media(max-width:560px){
+  .hero h2,
+  .hero .slide h2,
+  .hero .hero-copy h2{ font-size:34px; }
+}

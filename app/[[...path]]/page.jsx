@@ -356,6 +356,95 @@ export async function generateMetadata({ params }) {
     other: { 'x-pfd-content-source': result.source, 'x-pfd-isr-tags': cacheTagsForRel(rel).join(',') }
   };
 }
+function firstImageAbsoluteUrl(html, sourceUrl) {
+  const og = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']*)["'][^>]*>/i);
+  if (og && og[1]) return normalizeImageSrc(og[1].trim(), sourceUrl || SITE_URL + '/');
+  const gm = html.match(/<div[^>]*class=["'][^"']*gallery-main[^"']*["'][^>]*>[\s\S]*?<img[^>]*\bsrc=["']([^"']+)["']/i);
+  if (gm && gm[1]) {
+    const raw = gm[1].trim();
+    if (/^https?:\/\//i.test(raw)) return raw;
+    const clean = raw.replace(/^(\.\.\/)+/, '/').replace(/^\.\//, '/');
+    return SITE_URL + (clean.startsWith('/') ? clean : '/' + clean);
+  }
+  const anyImg = html.match(/<img[^>]*\bsrc=["']([^"']+)["'][^>]*>/i);
+  if (anyImg && anyImg[1]) {
+    const raw = anyImg[1].trim();
+    if (/^https?:\/\//i.test(raw)) return raw;
+    const clean = raw.replace(/^(\.\.\/)+/, '/').replace(/^\.\//, '/');
+    return SITE_URL + (clean.startsWith('/') ? clean : '/' + clean);
+  }
+  return `${SITE_URL}/assets/img/hero/hero-1.webp`;
+}
+
+function firstParagraphText(html) {
+  const p = html.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
+  if (!p) return '';
+  return p[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 500);
+}
+
+function productJsonLd(html, rel, title, description, sourceUrl) {
+  const image = firstImageAbsoluteUrl(html, sourceUrl);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: title.replace(/\s*\|\s*.+$/, '').trim(),
+    description: description,
+    image: image,
+    brand: { '@type': 'Brand', name: 'Packaging Factory Direct' },
+    manufacturer: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL },
+    category: 'Custom Packaging',
+    material: 'Greyboard, art paper, specialty paper, kraft paper, PET/PLA, foil',
+    additionalProperty: [
+      { '@type': 'PropertyValue', name: 'MOQ', value: '500 PCS' },
+      { '@type': 'PropertyValue', name: 'Customization', value: 'Yes, OEM/ODM supported' },
+      { '@type': 'PropertyValue', name: 'Business Model', value: 'B2B, factory direct, RFQ only' }
+    ],
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      priceSpecification: { '@type': 'PriceSpecification', description: 'B2B RFQ required. MOQ 500 PCS. No public retail price.' },
+      url: `${SITE_URL}/${rel}`,
+      seller: {
+        '@type': 'Organization',
+        name: 'Packaging Factory Direct',
+        contactPoint: { '@type': 'ContactPoint', contactType: 'sales', name: 'Linda Wang', email: 'linda@colorprintingpackage.com', telephone: '+86-181-6573-0353' }
+      }
+    }
+  };
+}
+
+function articleJsonLd(html, rel, title, description, sourceUrl) {
+  const image = firstImageAbsoluteUrl(html, sourceUrl);
+  const publishedTime = getMeta(html, 'property', 'article:published_time') || undefined;
+  const modifiedTime = getMeta(html, 'property', 'article:modified_time') || undefined;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title.replace(/\s*\|\s*.+$/, '').trim(),
+    description: description,
+    image: [image],
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/${rel}` },
+    author: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Packaging Factory Direct',
+      logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo.png` }
+    },
+    datePublished: publishedTime,
+    dateModified: modifiedTime || publishedTime
+  };
+}
+
+function hasInlineJsonLdOfType(html, type) {
+  const re = new RegExp(`<script[^>]+application/ld\\+json[^>]*>([\\s\\S]*?)</script>`, 'gi');
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    if (m[1] && m[1].includes(`"@type"`) && m[1].includes(`"${type}"`)) return true;
+    if (m[1] && m[1].includes(`@type`) && m[1].includes(type)) return true;
+  }
+  return false;
+}
+
 function breadcrumbJsonLd(rel) {
   const items = [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` }];
   if (rel === 'index.html' || !rel) return null;
@@ -385,9 +474,60 @@ function breadcrumbJsonLd(rel) {
   return { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items };
 }
 
+function buyerGuideSection(kind, rel) {
+  // Additive-only buyer guide links, rendered AFTER the original body.
+  // Never appears on: homepage (index.html), products list, blog list, news list, or the 7 trust pages themselves.
+  // Product detail: append a compact buyer-guide box.
+  // Blog/news detail: append related product-category shortcuts + buyer-guide links.
+  const TRUST_LINKS = [
+    ['/factory-capability.html', 'Factory Capability'],
+    ['/quality-control.html', 'Quality Control'],
+    ['/sample-process.html', 'Sample Process'],
+    ['/artwork-guidelines.html', 'Artwork Guidelines'],
+    ['/moq-policy.html', 'MOQ Policy'],
+    ['/shipping.html', 'Shipping & Packing'],
+    ['/faq.html', 'Buyer FAQ']
+  ];
+  const CATEGORY_LINKS = [
+    ['/custom-packaging-boxes.html', 'Custom Packaging Boxes'],
+    ['/custom-gift-boxes.html', 'Custom Gift Boxes'],
+    ['/custom-magnetic-gift-boxes.html', 'Custom Magnetic Gift Boxes'],
+    ['/custom-stand-up-pouches.html', 'Custom Stand Up Pouches'],
+    ['/custom-coffee-bags-with-valve.html', 'Custom Coffee Bags with Valve'],
+    ['/custom-pharmaceutical-packaging-boxes.html', 'Custom Pharmaceutical Packaging Boxes'],
+    ['/custom-cosmetic-packaging-boxes.html', 'Custom Cosmetic Packaging Boxes'],
+    ['/custom-food-packaging.html', 'Custom Food Packaging'],
+    ['/custom-paper-bags.html', 'Custom Paper Bags'],
+    ['/custom-labels-and-stickers.html', 'Custom Labels and Stickers']
+  ];
+  const trustLis = TRUST_LINKS.map(([u,t]) => `<li><a href="${u}">${t}</a></li>`).join('');
+  const catLis = CATEGORY_LINKS.map(([u,t]) => `<li><a href="${u}">${t}</a></li>`).join('');
+
+  // Product detail: only trust links (categories link back would be redundant here since related products already shown)
+  if (kind === 'products' && rel !== 'products.html') {
+    return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>Buyer-Guide Pages</h2><p>Complete B2B buyer resources — factory capability, quality control, sample process, MOQ, artwork, shipping and FAQ. MOQ 500 PCS. OEM/ODM only.</p><ul>${trustLis}</ul></div></section>`;
+  }
+  // Blog/news detail: trust links + category shortcuts to relevant products
+  if ((kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html') {
+    return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>Related Custom Packaging Categories</h2><ul>${catLis}</ul><h2>Buyer-Guide Pages</h2><ul>${trustLis}</ul></div></section>`;
+  }
+  return '';
+}
+
 export default async function HtmlPage({ params }) {
   const result = await loadHtml(params);
-  const bc = breadcrumbJsonLd(result.rel);
+  const { html, rel, sourceUrl } = result;
+  const bc = breadcrumbJsonLd(rel);
+  const kind = getKindFromRel(rel);
+  const title = getTitle(html);
+  const description = getDescription(html, rel);
+  const bodyHtml = extractBody(html, result);
+  const buyerGuide = buyerGuideSection(kind, rel);
+
+  // Only inject if the underlying HTML does NOT already contain a same-typed JSON-LD
+  const injectProduct = kind === 'products' && rel !== 'products.html' && !hasInlineJsonLdOfType(html, 'Product');
+  const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(html, 'Article');
+
   return (
     <>
       {bc ? (
@@ -396,7 +536,19 @@ export default async function HtmlPage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(bc) }}
         />
       ) : null}
-      <main dangerouslySetInnerHTML={{ __html: extractBody(result.html, result) }} />
+      {injectProduct ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(html, rel, title, description, sourceUrl)) }}
+        />
+      ) : null}
+      {injectArticle ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd(html, rel, title, description, sourceUrl)) }}
+        />
+      ) : null}
+      <main dangerouslySetInnerHTML={{ __html: bodyHtml + buyerGuide }} />
     </>
   );
 }

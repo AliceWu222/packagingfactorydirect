@@ -64,9 +64,9 @@ export default function RootLayout({ children }) {
         <meta name="format-detection" content="telephone=yes,email=yes,address=yes" />
         <link rel="preload" as="image" href="/assets/img/hero/hero-1.webp" fetchPriority="high" />
         <link rel="preload" as="image" href="/assets/img/hero/mobile-vertical-slide-1.webp" fetchPriority="high" media="(max-width: 760px)" />
-        <link rel="preload" href="/assets/css/style.css?v=v77-nocrop" as="style" />
-        <link rel="stylesheet" href="/assets/css/style.css?v=v77-nocrop" />
-        <script src="/assets/js/main.js?v=v77-nocrop" defer></script>
+        <link rel="preload" href="/assets/css/style.css?v=v78-h1-alias" as="style" />
+        <link rel="stylesheet" href="/assets/css/style.css?v=v78-h1-alias" />
+        <script src="/assets/js/main.js?v=v78-h1-alias" defer></script>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
       </head>

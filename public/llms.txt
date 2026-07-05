@@ -1,10 +1,85 @@
 # Packaging Factory Direct
 
-B2B custom packaging manufacturer. MOQ 500 PCS. RFQ only.
+> B2B custom packaging manufacturer based in Shenzhen, China.
+> Factory direct pricing. MOQ 500 PCS. OEM and ODM only. No public retail price.
+> RFQ handled by Linda Wang.
 
-Homepage data is locked to homepage/featured tags in data/homepage.locked.json and never reads Latest.
-ISR: core pages prebuilt; product/blog/news details generated per path. Revalidate one specified URL through /api/revalidate.
-Search: header search redirects to /products.html?q=keyword and filters product cards.
+## Who we are
 
-Product feed: https://www.packagingfactorydirect.com/product-feed.json
-Sitemap: https://www.packagingfactorydirect.com/sitemap.xml
+Packaging Factory Direct is a Shenzhen-based custom packaging factory. We produce
+paper boxes, magnetic gift boxes, mailer boxes, stand-up pouches, coffee bags with
+valve, pharmaceutical boxes, cosmetic boxes, food packaging, paper bags and printed
+labels for brand owners and B2B buyers worldwide.
+
+## What we do
+
+- Structural design (dieline, box style, closure type, insert tray)
+- Print & finishing: CMYK, Pantone matching, gold/silver foil, embossing, debossing,
+  spot UV, matte / gloss / soft-touch lamination, specialty paper finishes
+- Serialization and pharma traceability: GS1 DataMatrix, batch/lot printing
+- OEM / ODM: full brand customization, sampling, mass production, export packing
+- Worldwide shipping (sea / air / express)
+
+## MOQ policy
+
+- Standard MOQ: 500 PCS per SKU
+- Some SKUs may allow smaller trial runs on RFQ
+- Rush sampling available (paid)
+
+## Who we serve
+
+- Boutique retail brands (jewelry, cosmetics, skincare, candles, apparel)
+- Food & beverage brands (restaurants, coffee, tea, snacks, pet food)
+- Pharma / medical / medical aesthetic packaging buyers
+- E-commerce / DTC / mailer packaging buyers
+- Corporate gifting and PR programs
+
+## How to request a quote
+
+Provide: product type, box dimensions, quantity, artwork (AI/PDF/PSD), Pantone
+color, foil color, material, and shipping country.
+
+- Contact: Linda Wang
+- Email: linda@colorprintingpackage.com
+- WhatsApp: +86 181 6573 0353
+- Site: https://www.packagingfactorydirect.com
+
+## Core pages
+
+- Homepage: https://www.packagingfactorydirect.com/
+- Products (all): https://www.packagingfactorydirect.com/products.html
+- About: https://www.packagingfactorydirect.com/about.html
+- Contact / RFQ: https://www.packagingfactorydirect.com/contact.html
+- Blog: https://www.packagingfactorydirect.com/blog.html
+- News: https://www.packagingfactorydirect.com/news.html
+
+## Trust & buyer-guide pages
+
+- Factory Capability: https://www.packagingfactorydirect.com/factory-capability.html
+- Quality Control: https://www.packagingfactorydirect.com/quality-control.html
+- Sample Process: https://www.packagingfactorydirect.com/sample-process.html
+- Shipping: https://www.packagingfactorydirect.com/shipping.html
+- MOQ Policy: https://www.packagingfactorydirect.com/moq-policy.html
+- Artwork Guidelines: https://www.packagingfactorydirect.com/artwork-guidelines.html
+- FAQ: https://www.packagingfactorydirect.com/faq.html
+
+## Core product categories
+
+- Custom Packaging Boxes: https://www.packagingfactorydirect.com/custom-packaging-boxes.html
+- Custom Gift Boxes: https://www.packagingfactorydirect.com/custom-gift-boxes.html
+- Custom Magnetic Gift Boxes: https://www.packagingfactorydirect.com/custom-magnetic-gift-boxes.html
+- Custom Stand Up Pouches: https://www.packagingfactorydirect.com/custom-stand-up-pouches.html
+- Custom Coffee Bags with Valve: https://www.packagingfactorydirect.com/custom-coffee-bags-with-valve.html
+- Custom Pharmaceutical Packaging Boxes: https://www.packagingfactorydirect.com/custom-pharmaceutical-packaging-boxes.html
+- Custom Cosmetic Packaging Boxes: https://www.packagingfactorydirect.com/custom-cosmetic-packaging-boxes.html
+- Custom Food Packaging: https://www.packagingfactorydirect.com/custom-food-packaging.html
+- Custom Paper Bags: https://www.packagingfactorydirect.com/custom-paper-bags.html
+- Custom Labels and Stickers: https://www.packagingfactorydirect.com/custom-labels-and-stickers.html
+
+## Machine-readable data feeds
+
+- Sitemap: https://www.packagingfactorydirect.com/sitemap.xml
+- Product feed (JSON): https://www.packagingfactorydirect.com/product-feed.json
+- AI index (JSON): https://www.packagingfactorydirect.com/ai-index.json
+- Answer cards (JSON): https://www.packagingfactorydirect.com/data/ai-search-answer-cards.json
+- Keyword map (JSON): https://www.packagingfactorydirect.com/data/seo-geo-keyword-map.json
