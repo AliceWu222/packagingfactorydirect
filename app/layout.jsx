@@ -64,9 +64,9 @@ export default function RootLayout({ children }) {
         <meta name="format-detection" content="telephone=yes,email=yes,address=yes" />
         <link rel="preload" as="image" href="/assets/img/hero/hero-1.webp" fetchPriority="high" />
         <link rel="preload" as="image" href="/assets/img/hero/mobile-vertical-slide-1.webp" fetchPriority="high" media="(max-width: 760px)" />
-        <link rel="preload" href="/assets/css/style.css?v=v90-hero-redbox-scale" as="style" />
-        <link rel="stylesheet" href="/assets/css/style.css?v=v90-hero-redbox-scale" />
-        <script src="/assets/js/main.js?v=v90-hero-redbox-scale" defer></script>
+        <link rel="preload" href="/assets/css/style.css?v=v91-hero-wider-fewer-lines" as="style" />
+        <link rel="stylesheet" href="/assets/css/style.css?v=v91-hero-wider-fewer-lines" />
+        <script src="/assets/js/main.js?v=v91-hero-wider-fewer-lines" defer></script>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
         <style dangerouslySetInnerHTML={{ __html: `

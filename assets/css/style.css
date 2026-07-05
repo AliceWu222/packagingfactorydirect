@@ -2004,3 +2004,73 @@ main.hero .slide::before{
     font-size: 100px !important;
   }
 }
+
+/* V91 HERO COPY WIDER FEWER LINES — user reported vertical clipping and empty
+   right side. Expand copy width toward the product image, reduce title wrapping,
+   and tighten vertical rhythm so the full hero copy remains visible. */
+@media(min-width:761px){
+  .hero .hero-copy {
+    max-width: 88vw !important;
+    padding-top: 52px !important;
+    padding-bottom: 34px !important;
+  }
+  .hero {
+    min-height: 780px !important;
+  }
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 88px !important;
+    line-height: 1.0 !important;
+    margin: 6px 0 8px !important;
+    max-width: 92vw !important;
+  }
+  .hero .hero-copy .eyebrow {
+    margin-bottom: 2px !important;
+  }
+  .hero .hero-copy p {
+    font-size: 23px !important;
+    line-height: 1.32 !important;
+    margin: 8px 0 10px !important;
+    max-width: 980px !important;
+  }
+  .hero .hero-copy .hero-bullets {
+    margin: 8px 0 !important;
+    gap: 6px !important;
+  }
+  .hero .hero-copy .hero-bullets span {
+    font-size: 18px !important;
+    min-height: 36px !important;
+    padding: 5px 12px !important;
+  }
+  .hero .hero-copy .btn {
+    font-size: 18px !important;
+    padding: 12px 24px !important;
+  }
+}
+@media(min-width:1200px){
+  .hero .hero-copy {
+    max-width: 92vw !important;
+  }
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 92px !important;
+  }
+}
+@media(min-width:1500px){
+  .hero .hero-copy {
+    max-width: 96vw !important;
+  }
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 92px !important;
+  }
+}
