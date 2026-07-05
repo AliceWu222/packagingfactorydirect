@@ -78,6 +78,45 @@ function normalizeUrlToWww(url) {
   if (url === LEGACY_SITE_URL) return SITE_URL;
   return url;
 }
+function procurementProfile(item) {
+  const text = `${item.title || item.name || ''} ${item.description || ''} ${item.category || ''} ${item.tags || ''} ${item.search || ''}`.toLowerCase();
+  const isFlexible = /pouch|bag|mylar|film|coffee|valve|spout|zipper|stand[- ]?up/.test(text);
+  const isFood = /food|coffee|tea|bakery|cookie|chocolate|pizza|burger|salad|noodle|cupcake|donut|takeaway|greaseproof/.test(text);
+  const isPharma = /pharma|medical|medicine|steril|datamatrix|gs1|security|anti-counterfeit/.test(text);
+  const isCosmetic = /cosmetic|skincare|beauty|cream|serum|lip|makeup/.test(text);
+  const isGift = /gift|rigid|magnetic|jewelry|drawer|insert|thank you|tissue/.test(text);
+  const materials = isFlexible
+    ? ['PET/PE', 'MOPP/VMPET/PE', 'kraft paper laminate', 'PLA/PBS compostable film options']
+    : ['greyboard', 'art paper', 'kraft paper', 'corrugated board', 'specialty paper'];
+  const applications = [
+    isFood ? 'food and beverage packaging' : '',
+    isPharma ? 'pharmaceutical and medical packaging' : '',
+    isCosmetic ? 'cosmetic and skincare packaging' : '',
+    isGift ? 'gift and premium retail packaging' : '',
+    isFlexible ? 'flexible packaging and refill pouches' : 'retail product packaging'
+  ].filter(Boolean);
+  const industries = [
+    isFood ? 'food' : '',
+    isPharma ? 'pharmaceutical' : '',
+    isCosmetic ? 'cosmetics' : '',
+    isGift ? 'gifts and luxury retail' : '',
+    isFlexible ? 'coffee, tea, pet food and snacks' : 'ecommerce and retail brands'
+  ].filter(Boolean);
+  return {
+    moq: item.moq || '500 PCS',
+    materials: item.materials || materials,
+    printingOptions: item.printingOptions || ['CMYK printing', 'Pantone color matching', 'custom logo printing', isFlexible ? 'gravure/flexographic printing' : 'offset printing'],
+    finishOptions: item.finishOptions || ['matte lamination', 'gloss lamination', 'soft-touch lamination', 'foil stamping', 'embossing/debossing', 'spot UV'],
+    applications: item.applications || Array.from(new Set(applications)),
+    industries: item.industries || Array.from(new Set(industries)),
+    customSize: item.customSize || 'Custom size, structure and dieline supported',
+    leadTime: item.leadTime || 'Sampling and mass production lead time depend on structure, material, finish and order quantity; confirm during RFQ.',
+    sampleAvailable: item.sampleAvailable ?? true,
+    buyerIntentKeywords: item.buyerIntentKeywords || ['custom packaging manufacturer', 'MOQ 500 PCS', 'OEM/ODM packaging', 'factory direct packaging', 'request packaging quote'],
+    rfqContact: item.rfqContact || { contact: 'Linda Wang', email: 'linda@colorprintingpackage.com', whatsapp: '+86 181 6573 0353', url: `${SITE_URL}/contact.html` },
+    relatedGuides: item.relatedGuides || [`${SITE_URL}/factory-capability.html`, `${SITE_URL}/quality-control.html`, `${SITE_URL}/sample-process.html`, `${SITE_URL}/artwork-guidelines.html`, `${SITE_URL}/shipping.html`, `${SITE_URL}/moq-policy.html`]
+  };
+}
 function normalizeProductForFeed(item) {
   if (!item) return item;
   const clone = { ...item };
@@ -93,7 +132,7 @@ function normalizeProductForFeed(item) {
   } else if (clone.image && clone.image.startsWith('/')) {
     clone.image = SITE_URL + clone.image;
   }
-  return clone;
+  return { ...clone, ...procurementProfile(clone) };
 }
 export async function GET() {
   const local = await readLocalFeed();
@@ -109,7 +148,7 @@ export async function GET() {
   }
   const payload = {
     ...local,
-    version: 'v76-www-canonical',
+    version: 'v95-procurement-feed',
     site: SITE_URL,
     contact: 'Linda Wang',
     email: 'linda@colorprintingpackage.com',

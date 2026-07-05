@@ -274,7 +274,7 @@ function getDescription(html, rel) {
   if (rel === 'news.html') return 'Latest updates from Packaging Factory Direct on market trends, new packaging categories, MOQ policy, factory capability and supplier procurement news for B2B custom packaging buyers.';
   if (rel === 'about.html') return 'About Packaging Factory Direct — a Shenzhen-based B2B custom packaging manufacturer serving global brands with OEM/ODM boxes, bags, pouches and printing. MOQ 500 PCS, factory direct pricing.';
   if (rel === 'contact.html') return 'Contact Packaging Factory Direct for a factory-direct quotation. Reach Linda Wang via WhatsApp, email or RFQ form for custom packaging with MOQ 500 PCS, OEM/ODM support and worldwide shipping.';
-  if (kind === 'products') return `${short} — B2B custom packaging manufacturer. MOQ 500 PCS, OEM/ODM, factory direct pricing and worldwide shipping from Shenzhen.`;
+  if (kind === 'products') return `${short} custom packaging manufacturer page for B2B buyers. MOQ 500 PCS, OEM/ODM, factory direct pricing, material/application/industry guidance and RFQ support from Shenzhen.`;
   if (kind === 'blog') return `${short} — technical guide from Packaging Factory Direct. Custom packaging manufacturer, MOQ 500 PCS, OEM/ODM, factory-direct RFQ support.`;
   if (kind === 'news') return `${short} — market update from Packaging Factory Direct, B2B custom packaging manufacturer. MOQ 500 PCS, factory direct, OEM/ODM.`;
   if (kind === 'industry') return `${short} — industry packaging solutions from Packaging Factory Direct. Custom manufacturer, MOQ 500 PCS, OEM/ODM, factory direct.`;
@@ -311,6 +311,16 @@ function extractBody(html, result) {
   body = stripDuplicateBodyAssets(body);
   body = repairCorruptedLogoMarkup(body);
   return result?.source === 'r2' ? rewriteRemoteImageUrls(body, result.sourceUrl) : body;
+}
+
+function normalizeHomepageSemanticH1(bodyHtml, rel) {
+  if (rel !== 'index.html') return bodyHtml;
+  let seen = 0;
+  return bodyHtml.replace(/<h1\b([^>]*)>([\s\S]*?)<\/h1>/gi, (all, attrs, content) => {
+    seen += 1;
+    if (seen === 1) return all;
+    return `<h2${attrs}>${content}</h2>`;
+  });
 }
 export async function generateStaticParams() {
   // Core pages, static SEO category hubs and industry solution pages are prebuilt.
@@ -393,19 +403,27 @@ function firstParagraphText(html) {
 
 function productJsonLd(html, rel, title, description, sourceUrl) {
   const image = firstImageAbsoluteUrl(html, sourceUrl);
+  const cleanName = title.replace(/\s*\|\s*.+$/, '').trim();
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: title.replace(/\s*\|\s*.+$/, '').trim(),
+    name: cleanName,
     description: description,
     image: image,
     brand: { '@type': 'Brand', name: 'Packaging Factory Direct' },
     manufacturer: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL },
     category: 'Custom Packaging',
-    material: 'Greyboard, art paper, specialty paper, kraft paper, PET/PLA, foil',
+    material: 'Greyboard, art paper, kraft paper, corrugated board, PET/PLA film, laminated flexible packaging materials, foil and specialty paper depending on product application',
     additionalProperty: [
       { '@type': 'PropertyValue', name: 'MOQ', value: '500 PCS' },
       { '@type': 'PropertyValue', name: 'Customization', value: 'Yes, OEM/ODM supported' },
+      { '@type': 'PropertyValue', name: 'Custom size support', value: 'Custom size, structure and dieline supported' },
+      { '@type': 'PropertyValue', name: 'Printing options', value: 'Offset printing, digital printing, flexographic printing, CMYK, Pantone color and custom logo printing' },
+      { '@type': 'PropertyValue', name: 'Finish options', value: 'Matte lamination, gloss lamination, soft-touch lamination, foil stamping, embossing, debossing, spot UV and window patching' },
+      { '@type': 'PropertyValue', name: 'Applications', value: 'Retail packaging, ecommerce shipping, food packaging, cosmetic packaging, gift packaging, pharma packaging and branded promotional packaging' },
+      { '@type': 'PropertyValue', name: 'Industries', value: 'Food, beverage, coffee and tea, cosmetics, skincare, apparel, gifts, ecommerce, pharmaceutical, pet food and cannabis where compliant' },
+      { '@type': 'PropertyValue', name: 'OEM/ODM', value: 'OEM and ODM custom packaging manufacturing supported' },
+      { '@type': 'PropertyValue', name: 'RFQ contact', value: 'Send size, quantity, material, printing colors, finish, destination country and artwork file for quotation' },
       { '@type': 'PropertyValue', name: 'Business Model', value: 'B2B, factory direct, RFQ only' }
     ],
     offers: {
@@ -428,7 +446,7 @@ function articleJsonLd(html, rel, title, description, sourceUrl) {
   const modifiedTime = getMeta(html, 'property', 'article:modified_time') || undefined;
   return {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': rel.startsWith('news/') ? 'NewsArticle' : 'BlogPosting',
     headline: title.replace(/\s*\|\s*.+$/, '').trim(),
     description: description,
     image: [image],
@@ -441,6 +459,68 @@ function articleJsonLd(html, rel, title, description, sourceUrl) {
     },
     datePublished: publishedTime,
     dateModified: modifiedTime || publishedTime
+  };
+}
+
+const TRUST_PAGES = {
+  'factory-capability.html': {
+    name: 'Factory Capability',
+    about: 'Factory-direct custom packaging manufacturing capability for B2B buyers, including structure, material, printing, finishing and OEM/ODM production support.'
+  },
+  'quality-control.html': {
+    name: 'Quality Control',
+    about: 'Custom packaging quality control process covering material checks, printing inspection, dieline confirmation, finishing review and pre-shipment checks.'
+  },
+  'sample-process.html': {
+    name: 'Sample Process',
+    about: 'Custom packaging sample process for B2B buyers, including dieline review, artwork check, sample confirmation and mass production approval.'
+  },
+  'shipping.html': {
+    name: 'Shipping and Lead Time',
+    about: 'Worldwide shipping, carton packing, export delivery and lead time guidance for custom packaging orders.'
+  },
+  'moq-policy.html': {
+    name: 'MOQ Policy',
+    about: 'MOQ 500 PCS policy for custom boxes, bags, pouches, labels and paper printing orders from Packaging Factory Direct.'
+  },
+  'artwork-guidelines.html': {
+    name: 'Artwork Guidelines',
+    about: 'Artwork, dieline, color, bleed, font and prepress requirements for custom packaging RFQ and production.'
+  }
+};
+
+function trustPageJsonLd(rel, title, description) {
+  const meta = TRUST_PAGES[rel];
+  if (!meta) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title.replace(/\s*\|\s*.+$/, '').trim() || meta.name,
+    description: description || meta.about,
+    url: `${SITE_URL}/${rel}`,
+    about: meta.about,
+    isPartOf: { '@type': 'WebSite', name: 'Packaging Factory Direct', url: SITE_URL },
+    publisher: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL }
+  };
+}
+
+function faqPageJsonLd(rel) {
+  if (rel !== 'faq.html') return null;
+  const questions = [
+    ['What is the MOQ for custom packaging?', 'MOQ starts from 500 PCS for custom packaging orders, including boxes, bags, pouches, labels and printed paper packaging.'],
+    ['How do I request a custom packaging quote?', 'Send product size, quantity, material, printing colors, finish, destination country and artwork file through the contact form, email or WhatsApp.'],
+    ['Can you make custom size packaging?', 'Yes. Packaging Factory Direct supports custom size, custom structure, custom dieline and OEM/ODM packaging production.'],
+    ['Do you support OEM/ODM packaging?', 'Yes. OEM and ODM custom packaging is supported for B2B buyers, brands, importers, distributors and ecommerce sellers.'],
+    ['How long does sampling take?', 'Sampling time depends on structure, material and finish. A dieline and artwork check is recommended before sample production.']
+  ];
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: questions.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a }
+    }))
   };
 }
 
@@ -514,7 +594,7 @@ function buyerGuideSection(kind, rel) {
 
   // Product detail: only trust links (categories link back would be redundant here since related products already shown)
   if (kind === 'products' && rel !== 'products.html') {
-    return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>Buyer-Guide Pages</h2><p>Complete B2B buyer resources — factory capability, quality control, sample process, MOQ, artwork, shipping and FAQ. MOQ 500 PCS. OEM/ODM only.</p><ul>${trustLis}</ul></div></section>`;
+    return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>What to Send for Quotation</h2><p>For a fast factory-direct RFQ, send product size, order quantity, material, printing colors, finish, destination country and artwork file. MOQ 500 PCS. OEM/ODM custom size packaging is supported.</p><ul><li>Product size and structure or reference photo</li><li>Quantity and target delivery country</li><li>Material, thickness and application industry</li><li>Printing colors, logo file and artwork format</li><li>Finish request: matte, gloss, foil, embossing, spot UV, window or insert</li></ul><h2>Buyer-Guide Pages</h2><p>Complete B2B buyer resources — factory capability, quality control, sample process, MOQ, artwork, shipping and FAQ.</p><ul>${trustLis}</ul></div></section>`;
   }
   // Blog/news detail: trust links + category shortcuts to relevant products
   if ((kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html') {
@@ -530,12 +610,16 @@ export default async function HtmlPage({ params }) {
   const kind = getKindFromRel(rel);
   const title = getTitle(html);
   const description = getDescription(html, rel);
-  const bodyHtml = extractBody(html, result);
+  const bodyHtml = normalizeHomepageSemanticH1(extractBody(html, result), rel);
   const buyerGuide = buyerGuideSection(kind, rel);
+  const trustSchema = trustPageJsonLd(rel, title, description);
+  const faqSchema = faqPageJsonLd(rel);
 
   // Only inject if the underlying HTML does NOT already contain a same-typed JSON-LD
   const injectProduct = kind === 'products' && rel !== 'products.html' && !hasInlineJsonLdOfType(html, 'Product');
   const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(html, 'Article');
+  const injectTrust = trustSchema && !hasInlineJsonLdOfType(html, 'WebPage');
+  const injectFaq = faqSchema && !hasInlineJsonLdOfType(html, 'FAQPage');
 
   return (
     <>
@@ -555,6 +639,18 @@ export default async function HtmlPage({ params }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd(html, rel, title, description, sourceUrl)) }}
+        />
+      ) : null}
+      {injectTrust ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(trustSchema) }}
+        />
+      ) : null}
+      {injectFaq ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       ) : null}
       <main dangerouslySetInnerHTML={{ __html: bodyHtml + buyerGuide }} />

@@ -26,6 +26,9 @@ function normalizeHost(text) {
 
 export async function GET() {
   const raw = await readLocal();
-  const text = normalizeHost(raw);
+  let text = normalizeHost(raw);
+  if (!text.includes(`${CANONICAL_HOST}/sitemap-index.xml`)) {
+    text = text.trimEnd() + `\nSitemap: ${CANONICAL_HOST}/sitemap-index.xml\n`;
+  }
   return new Response(text, { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 's-maxage=3600, stale-while-revalidate' } });
 }

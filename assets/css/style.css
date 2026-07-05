@@ -2267,3 +2267,107 @@ main.hero .slide::before{
     max-width: min(58vw, 860px) !important;
   }
 }
+
+/* V95 DESKTOP HERO UNCROP + BLUE-FRAME COPY RESTORE
+   Keep the approved desktop hero copy scale from the blue-frame screenshot and show
+   the full carousel image instead of cropping the product side. Image files, order,
+   ratio source files, WhatsApp and forms are unchanged. */
+@media(min-width:761px){
+  main.hero{
+    background:#f4f6f3 !important;
+    overflow:hidden !important;
+  }
+  main.hero .slide-img,
+  .hero .slide-img{
+    object-fit:contain !important;
+    object-position:center center !important;
+    background:#f4f6f3 !important;
+  }
+  main.hero .slide > .container{
+    padding-left:clamp(42px, 3.75vw, 72px) !important;
+    padding-right:28px !important;
+    align-items:flex-start !important;
+  }
+  main.hero .hero-copy,
+  .hero .slide > .container .hero-copy{
+    width:min(42vw, 540px) !important;
+    max-width:min(42vw, 540px) !important;
+    padding-top:110px !important;
+    padding-bottom:40px !important;
+    transform:none !important;
+  }
+  main.hero .hero-copy h1,
+  main.hero .hero-copy h2,
+  .hero .slide > .container .hero-copy h1,
+  .hero .slide > .container .hero-copy h2,
+  .hero .slide h2{
+    font-size:52px !important;
+    line-height:1.04 !important;
+    margin:10px 0 18px !important;
+    max-width:540px !important;
+  }
+  main.hero .hero-copy .eyebrow,
+  .hero .slide > .container .hero-copy .eyebrow{
+    font-size:13px !important;
+    margin-bottom:8px !important;
+  }
+  main.hero .hero-copy p,
+  .hero .slide > .container .hero-copy p{
+    font-size:17px !important;
+    line-height:1.55 !important;
+    max-width:520px !important;
+    margin:0 0 18px !important;
+  }
+  main.hero .hero-copy .hero-bullets,
+  .hero .slide > .container .hero-copy .hero-bullets{
+    margin:18px 0 24px !important;
+    gap:12px !important;
+  }
+  main.hero .hero-copy .hero-bullets span,
+  .hero .slide > .container .hero-copy .hero-bullets span{
+    font-size:15px !important;
+    min-height:28px !important;
+    padding:0 !important;
+  }
+  main.hero .hero-copy .hero-bullets b,
+  .hero .slide > .container .hero-copy .hero-bullets b{
+    width:22px !important;
+    height:22px !important;
+    font-size:13px !important;
+  }
+  main.hero .hero-copy .btn,
+  .hero .slide > .container .hero-copy .btn{
+    font-size:15px !important;
+    padding:13px 20px !important;
+  }
+}
+@media(min-width:1200px){
+  main.hero .hero-copy,
+  .hero .slide > .container .hero-copy{
+    width:min(40vw, 560px) !important;
+    max-width:min(40vw, 560px) !important;
+  }
+  main.hero .hero-copy h1,
+  main.hero .hero-copy h2,
+  .hero .slide > .container .hero-copy h1,
+  .hero .slide > .container .hero-copy h2,
+  .hero .slide h2{
+    font-size:52px !important;
+    max-width:560px !important;
+  }
+}
+@media(min-width:1500px){
+  main.hero .hero-copy,
+  .hero .slide > .container .hero-copy{
+    width:540px !important;
+    max-width:540px !important;
+  }
+  main.hero .hero-copy h1,
+  main.hero .hero-copy h2,
+  .hero .slide > .container .hero-copy h1,
+  .hero .slide > .container .hero-copy h2,
+  .hero .slide h2{
+    font-size:56px !important;
+    max-width:560px !important;
+  }
+}

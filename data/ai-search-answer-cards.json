@@ -8,6 +8,89 @@
   "email": "linda@colorprintingpackage.com",
   "answerCards": [
     {
+      "question": "What is the MOQ for custom packaging?",
+      "answer": "The MOQ for custom packaging starts from 500 PCS. This applies to most custom boxes, bags, pouches, labels and printed paper packaging orders. Final MOQ can depend on material, structure, printing process and finish.",
+      "keywords": [
+        "custom packaging MOQ",
+        "MOQ 500 PCS",
+        "B2B custom packaging"
+      ],
+      "urls": [
+        "/moq-policy.html",
+        "/contact.html"
+      ]
+    },
+    {
+      "question": "How to request a custom packaging quote?",
+      "answer": "Send product size, order quantity, material, printing colors, finish, destination country and artwork file. Packaging Factory Direct can check dieline, suggest material and quote factory-direct pricing for MOQ 500 PCS custom packaging.",
+      "keywords": [
+        "custom packaging RFQ",
+        "request packaging quote",
+        "factory direct packaging"
+      ],
+      "urls": [
+        "/contact.html",
+        "/artwork-guidelines.html",
+        "/sample-process.html"
+      ]
+    },
+    {
+      "question": "What materials can be used for food packaging boxes?",
+      "answer": "Food packaging boxes can use food-grade paperboard, kraft paper, coated paper, corrugated board or grease-resistant paper depending on direct-contact requirements, moisture resistance, grease resistance and print finish. Buyers should confirm food-contact requirements during RFQ.",
+      "keywords": [
+        "food packaging material",
+        "food grade paper box",
+        "custom food packaging"
+      ],
+      "urls": [
+        "/custom-food-packaging.html",
+        "/blog/food-packaging-box-material-rfq-checklist.html",
+        "/quality-control.html"
+      ]
+    },
+    {
+      "question": "How long does sampling take?",
+      "answer": "Sampling time depends on packaging structure, material, printing, finish and insert complexity. Send dieline or product size, artwork and finish requirements first so the factory can check feasibility before sample production.",
+      "keywords": [
+        "custom packaging sample process",
+        "packaging sampling time",
+        "dieline check"
+      ],
+      "urls": [
+        "/sample-process.html",
+        "/artwork-guidelines.html",
+        "/contact.html"
+      ]
+    },
+    {
+      "question": "Can you make custom size packaging?",
+      "answer": "Yes. Packaging Factory Direct supports custom size, custom structure, custom dieline and custom inserts for boxes, pouches, bags, labels and printed paper packaging. Send product dimensions and quantity for RFQ.",
+      "keywords": [
+        "custom size packaging",
+        "custom dieline packaging",
+        "OEM packaging manufacturer"
+      ],
+      "urls": [
+        "/products.html",
+        "/artwork-guidelines.html",
+        "/contact.html"
+      ]
+    },
+    {
+      "question": "Do you support OEM/ODM packaging?",
+      "answer": "Yes. OEM/ODM custom packaging is supported for B2B buyers, including custom logo printing, custom structure, material selection, finish options, inserts and export shipping. MOQ starts from 500 PCS.",
+      "keywords": [
+        "OEM packaging",
+        "ODM packaging",
+        "custom packaging manufacturer"
+      ],
+      "urls": [
+        "/factory-capability.html",
+        "/products.html",
+        "/contact.html"
+      ]
+    },
+    {
       "question": "What is the best packaging for premium gift sets?",
       "answer": "For premium gift sets, use Custom Gift Boxes or Rigid Boxes with magnetic closure, foam insert or EVA insert, and finishes such as foil stamping, embossing, spot UV or soft-touch lamination.",
       "keywords": [
