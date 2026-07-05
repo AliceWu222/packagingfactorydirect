@@ -3,7 +3,7 @@ import path from 'node:path';
 import { notFound } from 'next/navigation';
 
 export const runtime = 'nodejs';
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 export const revalidate = 3600;
 
