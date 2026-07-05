@@ -1796,3 +1796,56 @@ main.hero .slide::before{
   .hero .slide .hero-copy h2,
   .hero .slide h2{ font-size:34px !important; }
 }
+
+
+/* V82 HERO COPY DESKTOP-ONLY ENLARGE — user requested bigger text on the 5 desktop hero
+   slides (red-frame size vs current blue-frame size), ~1.35× scale. Only affects hero
+   .hero-copy on screens 761px+. Mobile keeps the existing V55/V61 rules untouched. */
+@media(min-width:761px){
+  /* Title (h1 + all 5 slide h2 aliases): 58 → 80 */
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 80px !important;
+    line-height: 1.02 !important;
+  }
+  /* Eyebrow: 13 → 16, more letter-spacing keeps the small-caps look */
+  .hero .hero-copy .eyebrow {
+    font-size: 16px !important;
+    letter-spacing: .18em !important;
+  }
+  /* Description paragraph: 18 → 22 */
+  .hero .hero-copy p {
+    font-size: 22px !important;
+    line-height: 1.5 !important;
+  }
+  /* Bullet chips (✔ MOQ 500 PCS etc): icon + text scale up */
+  .hero .hero-copy .hero-bullets span {
+    font-size: 18px !important;
+    min-height: 50px !important;
+    padding: 12px 16px !important;
+    gap: 12px !important;
+  }
+  .hero .hero-copy .hero-bullets b {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 16px !important;
+  }
+  /* CTA buttons: bigger padding + font */
+  .hero .hero-copy .btn {
+    font-size: 18px !important;
+    padding: 15px 26px !important;
+  }
+}
+@media(min-width:1200px){
+  /* Very-wide screens: allow another small step up on the headline */
+  .hero .hero-copy h1,
+  .hero .hero-copy h2,
+  .hero .slide .hero-copy h1,
+  .hero .slide .hero-copy h2,
+  .hero .slide h2 {
+    font-size: 84px !important;
+  }
+}
