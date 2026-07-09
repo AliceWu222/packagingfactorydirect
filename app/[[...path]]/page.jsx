@@ -13,6 +13,7 @@ const ISR_SECONDS = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PA
 
 const REMOTE_DETAIL_PREFIXES = ['products/', 'blog/', 'news/'];
 const REMOTE_LISTING_PAGES = new Set(['products.html', 'blog.html', 'news.html']);
+const PRODUCT_LIST_INITIAL_RENDER_LIMIT = Number(process.env.PFD_PRODUCT_LIST_INITIAL_RENDER_LIMIT || 36);
 
 function contentBaseUrl() {
   return (
@@ -203,6 +204,57 @@ async function fetchRemoteManifest(kind) {
   const json = await response.json().catch(() => null);
   return normalizeManifestItems(json, kind);
 }
+function dedupeManifestItems(items, kind) {
+  const seen = new Set();
+  return items.filter((item) => {
+    const href = normalizeRootHref(item.url, kind).toLowerCase();
+    const key = href || `${item.title}|${item.description}`.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+function productListLoaderScript(items, kind) {
+  if (kind !== 'products' || items.length <= PRODUCT_LIST_INITIAL_RENDER_LIMIT) return '';
+  const renderedUrls = items.slice(0, PRODUCT_LIST_INITIAL_RENDER_LIMIT).map(item => normalizeRootHref(item.url, kind));
+  const payload = JSON.stringify({ renderedUrls }).replace(/</g, '\\u003c');
+  return `<script id="pfd-products-rendered" type="application/json">${payload}</script><script>(function(){var done=false;function esc(v){return String(v||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}function abs(u){u=String(u||'');if(!u)return '';if(/^https?:\/\//i.test(u))return u;if(u.charAt(0)==='/')return u;return '/'+u.replace(/^\.\//,'');}function card(p){var href=abs(p.url||'');var title=esc(p.title||'');var desc=esc(p.description||'');var cat=esc(p.category||'OEM & Customize');var img=p.image?'<img alt="'+title+'" decoding="async" loading="lazy" src="'+esc(abs(p.image))+'"/>':'';var search=esc([p.title,p.description,p.category,(p.buyerIntentKeywords||[]).join(' ')].filter(Boolean).join(' '));return '<article class="product-card remote-r2-card" data-search="'+search+'"><a href="'+esc(href)+'">'+img+'<div class="card-body"><span class="tag">'+cat+'</span><h3>'+title+'</h3><p>'+desc+'</p></div></a></article>';}
+function load(){if(done)return;done=true;var grid=document.querySelector('.grid');var state=document.getElementById('pfd-products-rendered');if(!grid||!state)return;var rendered=[];try{rendered=JSON.parse(state.textContent||'{}').renderedUrls||[];}catch(e){}var seen=new Set(rendered.map(function(u){return abs(u).toLowerCase();}));fetch('/product-feed.json',{credentials:'same-origin'}).then(function(r){return r.ok?r.json():null;}).then(function(data){var products=(data&&data.products)||[];var html='';products.forEach(function(p){var href=abs(p.url||'');var key=href.toLowerCase();if(!href||seen.has(key))return;seen.add(key);html+=card(p);});if(html){grid.insertAdjacentHTML('beforeend',html);document.dispatchEvent(new CustomEvent('pfd:products-loaded'));}state.remove();}).catch(function(){});}if('requestIdleCallback'in window){requestIdleCallback(load,{timeout:1800});}else{setTimeout(load,900);}window.addEventListener('scroll',load,{once:true,passive:true});window.addEventListener('mousemove',load,{once:true,passive:true});})();</script>`;
+}
+function productListLoaderScriptForRenderedUrls() {
+  return `<script>(function(){var done=false;function esc(v){return String(v||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}function abs(u){u=String(u||'');if(!u)return '';if(/^https?:\/\//i.test(u))return u;if(u.charAt(0)==='/')return u;return '/'+u.replace(/^\.\//,'');}function card(p){var href=abs(p.url||'');var title=esc(p.title||'');var desc=esc(p.description||'');var cat=esc(p.category||'OEM & Customize');var img=p.image?'<img alt="'+title+'" decoding="async" loading="lazy" src="'+esc(abs(p.image))+'"/>':'';var search=esc([p.title,p.description,p.category,(p.buyerIntentKeywords||[]).join(' ')].filter(Boolean).join(' '));return '<article class="product-card remote-r2-card" data-search="'+search+'"><a href="'+esc(href)+'">'+img+'<div class="card-body"><span class="tag">'+cat+'</span><h3>'+title+'</h3><p>'+desc+'</p></div></a></article>';}
+function load(){if(done)return;done=true;var grid=document.querySelector('.grid');if(!grid)return;var seen=new Set(Array.prototype.map.call(grid.querySelectorAll('a[href]'),function(a){return abs(a.getAttribute('href')).toLowerCase();}));fetch('/product-feed.json',{credentials:'same-origin'}).then(function(r){return r.ok?r.json():null;}).then(function(data){var products=(data&&data.products)||[];var html='';products.forEach(function(p){var href=abs(p.url||'');var key=href.toLowerCase();if(!href||seen.has(key))return;seen.add(key);html+=card(p);});if(html){grid.insertAdjacentHTML('beforeend',html);document.dispatchEvent(new CustomEvent('pfd:products-loaded'));}}).catch(function(){});}if('requestIdleCallback'in window){requestIdleCallback(load,{timeout:1800});}else{setTimeout(load,900);}window.addEventListener('scroll',load,{once:true,passive:true});window.addEventListener('mousemove',load,{once:true,passive:true});})();</script>`;
+}
+function trimProductListingHtml(html) {
+  const cards = Array.from(html.matchAll(/<article\s+class=["']product-card["'][\s\S]*?<\/article>/gi));
+  if (cards.length <= PRODUCT_LIST_INITIAL_RENDER_LIMIT) return html;
+  const renderedUrls = [];
+  let output = '';
+  let lastIndex = 0;
+  cards.forEach((match, index) => {
+    output += html.slice(lastIndex, match.index);
+    const cardHtml = match[0];
+    if (index < PRODUCT_LIST_INITIAL_RENDER_LIMIT) {
+      output += cardHtml;
+      const hrefMatch = cardHtml.match(/<a[^>]+href=["']([^"']+)["']/i);
+      if (hrefMatch) renderedUrls.push(hrefMatch[1]);
+    }
+    lastIndex = match.index + cardHtml.length;
+  });
+  output += html.slice(lastIndex);
+  const loader = productListLoaderScriptForRenderedUrls();
+  if (/<\/body>/i.test(output)) return output.replace(/<\/body>/i, `${loader}</body>`);
+  return output + loader;
+}
+function removeDuplicateFactoryBlogGallery(html) {
+  const orphanDuplicate = /(<\/article>)\s*<h3>\s*<a\s+href=["']blog\/factory-production-showroom-qc-office-trade-show-gallery\.html["'][\s\S]*?<\/h3>\s*<p>[\s\S]*?<\/p>\s*<\/div>\s*<\/article>/i;
+  return html.replace(orphanDuplicate, '$1');
+}
+function optimizeListingOutputHtml(html, rel) {
+  if (rel === 'products.html') return trimProductListingHtml(html);
+  if (rel === 'blog.html') return removeDuplicateFactoryBlogGallery(html);
+  return html;
+}
 function cardForItem(item, kind, sourceUrl) {
   const href = normalizeRootHref(item.url, kind);
   const title = htmlEscape(item.title);
@@ -222,17 +274,19 @@ async function augmentListingHtml(html, rel) {
   const kind = rel === 'products.html' ? 'products' : rel === 'blog.html' ? 'blog' : rel === 'news.html' ? 'news' : null;
   if (!kind) return html;
 
-  const items = await fetchRemoteManifest(kind).catch(() => []);
+  const items = dedupeManifestItems(await fetchRemoteManifest(kind).catch(() => []), kind);
   if (!items.length) return html;
 
-  const cards = items
-    .filter(item => !html.includes(`href="${normalizeRootHref(item.url, kind)}"`) && !html.includes(`href="${item.url}"`))
+  const newItems = items.filter(item => !html.includes(`href="${normalizeRootHref(item.url, kind)}"`) && !html.includes(`href="${item.url}"`));
+  const initialItems = kind === 'products' ? newItems.slice(0, PRODUCT_LIST_INITIAL_RENDER_LIMIT) : newItems;
+  const cards = initialItems
     .map(item => cardForItem(item, kind, manifestUrlFor(kind)))
     .join('');
 
-  if (!cards) return html;
+  const deferred = productListLoaderScript(newItems, kind);
+  if (!cards && !deferred) return html;
 
-  return html.replace(/<div class=["']grid["']>/i, match => `${match}${cards}`);
+  return html.replace(/<div class=["']grid["']>/i, match => `${match}${cards}`) + deferred;
 }
 async function loadHtml(params) {
   const p = await getParamObject(params);
@@ -253,6 +307,9 @@ async function loadHtml(params) {
 
   if (result.source === 'local' && REMOTE_LISTING_PAGES.has(rel)) {
     result.html = await augmentListingHtml(result.html, rel);
+  }
+  if (REMOTE_LISTING_PAGES.has(rel)) {
+    result.html = optimizeListingOutputHtml(result.html, rel);
   }
   return result;
 }
@@ -751,6 +808,7 @@ export default async function HtmlPage({ params }) {
   const injectTrust = Boolean(trustSchema);
   const injectFaq = Boolean(faqSchema);
   const injectCollection = Boolean(collectionSchema);
+  const productsLoaderScript = rel === 'products.html' ? productListLoaderScriptForRenderedUrls() : '';
 
   return (
     <>
@@ -791,6 +849,9 @@ export default async function HtmlPage({ params }) {
         />
       ) : null}
       <main dangerouslySetInnerHTML={{ __html: bodyHtml + buyerGuide }} />
+      {productsLoaderScript ? (
+        <script dangerouslySetInnerHTML={{ __html: productsLoaderScript.replace(/^<script>|<\/script>$/g, '') }} />
+      ) : null}
     </>
   );
 }
