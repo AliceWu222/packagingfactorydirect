@@ -2558,3 +2558,127 @@ main.hero .slide::before{
     object-position:center top !important;
   }
 }
+
+
+/* V100 homepage hero screenshot alignment fix
+   Fixes the desktop header-to-hero visual gap and mobile text-frame scale shown in review screenshots.
+   Image files, image order, product pages, WhatsApp, email links, RFQ form markup and URLs are unchanged. */
+@media(min-width:761px){
+  body > header.header + main.hero,
+  body > header.header + section.mobile-hero-only + main.hero,
+  main.hero{
+    margin-top:0 !important;
+    padding-top:0 !important;
+    height:calc(100vh - 126px) !important;
+    min-height:610px !important;
+  }
+  main.hero .slide-img,
+  body main.hero .slide-img{
+    object-fit:contain !important;
+    object-position:center top !important;
+  }
+  main.hero .hero-copy,
+  body main.hero .slide > .container .hero-copy{
+    top:clamp(24px, 3.2vh, 38px) !important;
+    left:clamp(56px, 5vw, 76px) !important;
+    width:min(38vw, 520px) !important;
+    max-width:min(38vw, 520px) !important;
+  }
+  main.hero .hero-copy h1,
+  main.hero .hero-copy h2,
+  body main.hero .slide > .container .hero-copy h1,
+  body main.hero .slide > .container .hero-copy h2{
+    font-size:clamp(46px, 3.85vw, 54px) !important;
+    line-height:1.03 !important;
+    max-width:520px !important;
+    margin:8px 0 16px !important;
+  }
+  main.hero .hero-copy p,
+  body main.hero .slide > .container .hero-copy p{
+    font-size:16px !important;
+    line-height:1.5 !important;
+    max-width:500px !important;
+    margin:0 0 16px !important;
+  }
+  main.hero .hero-copy .hero-bullets,
+  body main.hero .slide > .container .hero-copy .hero-bullets{
+    margin:16px 0 22px !important;
+    gap:10px !important;
+  }
+}
+@media(max-width:760px){
+  .mobile-hero-only{
+    margin-top:0 !important;
+  }
+  .mobile-hero-slide{
+    aspect-ratio:941 / 1588 !important;
+  }
+  .mobile-hero-eyebrow,
+  .mobile-hero-title,
+  .mobile-hero-desc,
+  .mobile-hero-pills,
+  .mobile-hero-actions{
+    left:7.2% !important;
+    right:10.2% !important;
+  }
+  .mobile-hero-eyebrow{
+    top:5.2% !important;
+    font-size:clamp(10px, 2.55vw, 12px) !important;
+    letter-spacing:.16em !important;
+  }
+  .mobile-hero-title{
+    top:8.5% !important;
+    font-size:clamp(33px, 8.65vw, 43px) !important;
+    line-height:1.02 !important;
+    max-width:78% !important;
+  }
+  .mobile-hero-desc{
+    top:30.6% !important;
+    max-width:72% !important;
+    font-size:clamp(13px, 3.55vw, 16px) !important;
+    line-height:1.46 !important;
+  }
+  .mobile-hero-pills{
+    top:42.6% !important;
+    width:62% !important;
+    right:auto !important;
+    grid-template-columns:1fr !important;
+    gap:7px !important;
+  }
+  .mobile-hero-pill{
+    min-height:28px !important;
+    padding:5px 9px !important;
+    font-size:clamp(12px, 3.35vw, 14px) !important;
+    background:rgba(255,255,255,.78) !important;
+  }
+  .mobile-hero-actions{
+    top:61.2% !important;
+    width:66% !important;
+    right:auto !important;
+    gap:8px !important;
+  }
+  .mobile-hero-btn{
+    min-height:40px !important;
+    font-size:clamp(13px, 3.45vw, 15px) !important;
+    border-radius:7px !important;
+  }
+  .mobile-hero-product{
+    top:41.8% !important;
+    bottom:auto !important;
+    width:100% !important;
+  }
+  .mobile-hero-controls{
+    bottom:3.2% !important;
+  }
+}
+@media(max-width:420px){
+  .mobile-hero-title{
+    font-size:clamp(31px, 8.2vw, 38px) !important;
+  }
+  .mobile-hero-desc{
+    font-size:14px !important;
+  }
+  .mobile-hero-actions{
+    top:62.4% !important;
+  }
+}
