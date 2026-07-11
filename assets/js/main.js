@@ -218,12 +218,78 @@
     window.addEventListener('resize', apply);
   }
 
+  function initRfqForm(){
+    var form = qs('#rfqForm');
+    if(!form) return;
+    var status = qs('#rfqStatus', form);
+    var submit = qs('#rfqSubmit', form);
+    var whatsapp = qs('#rfqWhatsApp', form);
+
+    function getData(){
+      var data = {};
+      qsa('input, select, textarea', form).forEach(function(input){
+        if(input.name) data[input.name] = input.value.trim();
+      });
+      data['Page URL'] = window.location.href;
+      return data;
+    }
+
+    function rfqText(data){
+      return [
+        'Hello Linda, I would like to request a custom packaging quote.',
+        'Product Type: ' + (data['Product Type'] || ''),
+        'Size: ' + (data.Size || ''),
+        'Quantity: ' + (data.Quantity || ''),
+        'Material: ' + (data.Material || ''),
+        'Destination: ' + (data.Destination || ''),
+        'Message: ' + (data.Message || ''),
+        'Page: ' + (data['Page URL'] || '')
+      ].filter(function(line){ return line.indexOf(':') === -1 || line.replace(/^[^:]+:\s*/, '').trim(); }).join('\n');
+    }
+
+    function updateWhatsApp(){
+      if(!whatsapp) return;
+      whatsapp.href = 'https://wa.me/8618165730353?text=' + encodeURIComponent(rfqText(getData()));
+    }
+
+    qsa('input, select, textarea', form).forEach(function(input){
+      input.addEventListener('input', updateWhatsApp);
+      input.addEventListener('change', updateWhatsApp);
+    });
+    updateWhatsApp();
+
+    form.addEventListener('submit', function(event){
+      event.preventDefault();
+      var data = getData();
+      if(status) status.textContent = 'Submitting RFQ...';
+      if(submit) submit.disabled = true;
+      fetch('/api/rfq', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(function(response){
+        return response.json().catch(function(){ return {}; }).then(function(body){ return { ok: response.ok, body: body }; });
+      }).then(function(result){
+        if(result.ok && result.body.ok){
+          if(status) status.textContent = 'RFQ submitted successfully. Linda Wang will reply by email soon.';
+        }else{
+          if(status) status.textContent = (result.body && result.body.message) || 'RFQ could not be submitted. Please use WhatsApp or Email RFQ.';
+        }
+      }).catch(function(){
+        if(status) status.textContent = 'RFQ could not be submitted. Please use WhatsApp or Email RFQ.';
+      }).finally(function(){
+        if(submit) submit.disabled = false;
+      });
+    });
+  }
+
   if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', function(){ initSearch(); initHeroSlider(); initDedicatedMobileHeroSlider(); initMobileHeroFloatingRule(); });
+    document.addEventListener('DOMContentLoaded', function(){ initSearch(); initHeroSlider(); initDedicatedMobileHeroSlider(); initMobileHeroFloatingRule(); initRfqForm(); });
   }else{
     initSearch();
     initHeroSlider();
     initDedicatedMobileHeroSlider();
     initMobileHeroFloatingRule();
+    initRfqForm();
   }
 })();
