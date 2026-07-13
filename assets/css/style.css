@@ -2842,6 +2842,8 @@ main.hero .slide::before{
   }
 }
 
+/* V103 desktop homepage carousel h2 coverage
+   Keep all five desktop hero slides on the restored reference typography. */
 /* V102 desktop homepage carousel reference restore
    Final scoped override for the five desktop homepage hero slides only. */
 @media(min-width:761px){
@@ -2870,7 +2872,9 @@ main.hero .slide::before{
     z-index:4 !important;
   }
   html body main.hero .slide .container .hero-copy h1,
-  html body .hero .slide .container .hero-copy h1{
+  html body .hero .slide .container .hero-copy h1,
+  html body main.hero .slide .container .hero-copy h2,
+  html body .hero .slide .container .hero-copy h2{
     font-size:clamp(40px, 2.95vw, 47px) !important;
     line-height:1.06 !important;
     max-width:520px !important;
@@ -2946,7 +2950,9 @@ main.hero .slide::before{
     max-width:520px !important;
   }
   html body main.hero .slide .container .hero-copy h1,
-  html body .hero .slide .container .hero-copy h1{
+  html body .hero .slide .container .hero-copy h1,
+  html body main.hero .slide .container .hero-copy h2,
+  html body .hero .slide .container .hero-copy h2{
     font-size:45px !important;
   }
 }
