@@ -2682,3 +2682,272 @@ main.hero .slide::before{
     top:62.4% !important;
   }
 }
+
+
+/* V101 desktop homepage carousel copy restore
+   Restore the five desktop hero slides to the provided red-frame reference scale.
+   Only homepage hero copy sizing/position is affected; images, links and forms stay unchanged. */
+@media(min-width:761px){
+  body main.hero .slide > .container .hero-copy,
+  body main.hero .hero-copy,
+  main.hero .slide > .container .hero-copy,
+  main.hero .hero-copy{
+    position:absolute !important;
+    top:clamp(48px, 7.6vh, 76px) !important;
+    left:clamp(52px, 4.4vw, 72px) !important;
+    width:clamp(430px, 34vw, 560px) !important;
+    max-width:clamp(430px, 34vw, 560px) !important;
+    padding:0 !important;
+    margin:0 !important;
+    transform:none !important;
+    z-index:3 !important;
+  }
+  body main.hero .slide > .container .hero-copy h1,
+  body main.hero .slide > .container .hero-copy h2,
+  body main.hero .hero-copy h1,
+  body main.hero .hero-copy h2,
+  main.hero .slide > .container .hero-copy h1,
+  main.hero .slide > .container .hero-copy h2,
+  main.hero .hero-copy h1,
+  main.hero .hero-copy h2{
+    font-size:clamp(38px, 2.75vw, 48px) !important;
+    line-height:1.06 !important;
+    max-width:560px !important;
+    margin:8px 0 18px !important;
+    letter-spacing:0 !important;
+    font-family:Georgia, 'Times New Roman', serif !important;
+    font-weight:700 !important;
+    transform:none !important;
+  }
+  body main.hero .slide > .container .hero-copy .eyebrow,
+  body main.hero .hero-copy .eyebrow,
+  main.hero .slide > .container .hero-copy .eyebrow,
+  main.hero .hero-copy .eyebrow{
+    font-size:13px !important;
+    line-height:1.2 !important;
+    letter-spacing:.22em !important;
+    margin:0 0 12px !important;
+  }
+  body main.hero .slide > .container .hero-copy p,
+  body main.hero .hero-copy p,
+  main.hero .slide > .container .hero-copy p,
+  main.hero .hero-copy p{
+    font-size:15px !important;
+    line-height:1.48 !important;
+    max-width:520px !important;
+    margin:0 0 18px !important;
+  }
+  body main.hero .slide > .container .hero-copy .hero-bullets,
+  body main.hero .hero-copy .hero-bullets,
+  main.hero .slide > .container .hero-copy .hero-bullets,
+  main.hero .hero-copy .hero-bullets{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    margin:16px 0 22px !important;
+    gap:8px !important;
+  }
+  body main.hero .slide > .container .hero-copy .hero-bullets span,
+  body main.hero .hero-copy .hero-bullets span,
+  main.hero .slide > .container .hero-copy .hero-bullets span,
+  main.hero .hero-copy .hero-bullets span,
+  body main.hero .slide > .container .hero-copy .hero-bullets li,
+  body main.hero .hero-copy .hero-bullets li,
+  main.hero .slide > .container .hero-copy .hero-bullets li,
+  main.hero .hero-copy .hero-bullets li{
+    display:flex !important;
+    align-items:center !important;
+    min-height:24px !important;
+    padding:0 !important;
+    border:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    font-size:15px !important;
+    line-height:1.25 !important;
+    font-weight:800 !important;
+    white-space:normal !important;
+  }
+  body main.hero .slide > .container .hero-copy .hero-bullets b,
+  body main.hero .hero-copy .hero-bullets b,
+  main.hero .slide > .container .hero-copy .hero-bullets b,
+  main.hero .hero-copy .hero-bullets b{
+    width:21px !important;
+    height:21px !important;
+    min-width:21px !important;
+    flex:0 0 21px !important;
+    margin-right:9px !important;
+    border-radius:50% !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    background:var(--green) !important;
+    color:#fff !important;
+    font-size:12px !important;
+    line-height:1 !important;
+  }
+  body main.hero .slide > .container .hero-copy .actions,
+  body main.hero .hero-copy .actions,
+  main.hero .slide > .container .hero-copy .actions,
+  main.hero .hero-copy .actions{
+    gap:8px !important;
+    margin-top:0 !important;
+  }
+  body main.hero .slide > .container .hero-copy .btn,
+  body main.hero .hero-copy .btn,
+  main.hero .slide > .container .hero-copy .btn,
+  main.hero .hero-copy .btn{
+    font-size:15px !important;
+    min-height:42px !important;
+    padding:11px 18px !important;
+    border-radius:7px !important;
+  }
+}
+@media(min-width:1400px){
+  body main.hero .slide > .container .hero-copy,
+  body main.hero .hero-copy,
+  main.hero .slide > .container .hero-copy,
+  main.hero .hero-copy{
+    top:64px !important;
+    left:56px !important;
+    width:560px !important;
+    max-width:560px !important;
+  }
+  body main.hero .slide > .container .hero-copy h1,
+  body main.hero .slide > .container .hero-copy h2,
+  body main.hero .hero-copy h1,
+  body main.hero .hero-copy h2,
+  main.hero .slide > .container .hero-copy h1,
+  main.hero .slide > .container .hero-copy h2,
+  main.hero .hero-copy h1,
+  main.hero .hero-copy h2{
+    font-size:46px !important;
+  }
+}
+@media(min-width:761px) and (max-width:1180px){
+  body main.hero .slide > .container .hero-copy,
+  body main.hero .hero-copy,
+  main.hero .slide > .container .hero-copy,
+  main.hero .hero-copy{
+    width:420px !important;
+    max-width:420px !important;
+  }
+  body main.hero .slide > .container .hero-copy h1,
+  body main.hero .slide > .container .hero-copy h2,
+  body main.hero .hero-copy h1,
+  body main.hero .hero-copy h2,
+  main.hero .slide > .container .hero-copy h1,
+  main.hero .slide > .container .hero-copy h2,
+  main.hero .hero-copy h1,
+  main.hero .hero-copy h2{
+    font-size:38px !important;
+  }
+}
+
+/* V102 desktop homepage carousel reference restore
+   Final scoped override for the five desktop homepage hero slides only. */
+@media(min-width:761px){
+  html body main.hero,
+  html body .hero{
+    min-height:650px !important;
+    height:calc(100vh - 112px) !important;
+  }
+  html body main.hero .slide .container,
+  html body .hero .slide .container{
+    position:relative !important;
+    height:100% !important;
+    max-width:none !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+  html body main.hero .slide .container .hero-copy,
+  html body .hero .slide .container .hero-copy{
+    position:absolute !important;
+    top:clamp(54px, 7.4vh, 72px) !important;
+    left:clamp(52px, 3.6vw, 70px) !important;
+    width:clamp(430px, 31vw, 520px) !important;
+    max-width:520px !important;
+    padding:0 !important;
+    margin:0 !important;
+    z-index:4 !important;
+  }
+  html body main.hero .slide .container .hero-copy h1,
+  html body .hero .slide .container .hero-copy h1{
+    font-size:clamp(40px, 2.95vw, 47px) !important;
+    line-height:1.06 !important;
+    max-width:520px !important;
+    margin:8px 0 18px !important;
+    letter-spacing:0 !important;
+    font-family:Georgia, 'Times New Roman', serif !important;
+    font-weight:700 !important;
+  }
+  html body main.hero .slide .container .hero-copy .eyebrow,
+  html body .hero .slide .container .hero-copy .eyebrow{
+    font-size:13px !important;
+    line-height:1.2 !important;
+    letter-spacing:.24em !important;
+    margin:0 0 12px !important;
+  }
+  html body main.hero .slide .container .hero-copy p,
+  html body .hero .slide .container .hero-copy p{
+    font-size:15px !important;
+    line-height:1.48 !important;
+    max-width:500px !important;
+    margin:0 0 18px !important;
+  }
+  html body main.hero .slide .container .hero-copy .hero-bullets,
+  html body .hero .slide .container .hero-copy .hero-bullets{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+    margin:16px 0 22px !important;
+  }
+  html body main.hero .slide .container .hero-copy .hero-bullets span,
+  html body .hero .slide .container .hero-copy .hero-bullets span{
+    display:flex !important;
+    align-items:center !important;
+    min-height:24px !important;
+    padding:0 !important;
+    border:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    font-size:15px !important;
+    line-height:1.25 !important;
+    font-weight:800 !important;
+  }
+  html body main.hero .slide .container .hero-copy .hero-bullets b,
+  html body .hero .slide .container .hero-copy .hero-bullets b{
+    width:21px !important;
+    height:21px !important;
+    min-width:21px !important;
+    flex:0 0 21px !important;
+    margin-right:9px !important;
+    border-radius:50% !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    background:var(--green) !important;
+    color:#fff !important;
+    font-size:12px !important;
+    line-height:1 !important;
+  }
+  html body main.hero .slide .container .hero-copy .btn,
+  html body .hero .slide .container .hero-copy .btn{
+    font-size:15px !important;
+    min-height:42px !important;
+    padding:11px 18px !important;
+    border-radius:7px !important;
+  }
+}
+@media(min-width:1400px){
+  html body main.hero .slide .container .hero-copy,
+  html body .hero .slide .container .hero-copy{
+    top:58px !important;
+    left:54px !important;
+    width:520px !important;
+    max-width:520px !important;
+  }
+  html body main.hero .slide .container .hero-copy h1,
+  html body .hero .slide .container .hero-copy h1{
+    font-size:45px !important;
+  }
+}
+
