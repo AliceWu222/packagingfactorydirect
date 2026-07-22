@@ -1,3 +1,8 @@
+export const metadata = {
+  title: '404 - Page Not Found | Packaging Factory Direct',
+  robots: { index: false, follow: true }
+};
+
 export default function NotFound() {
   return (
     <main style={{ padding: '60px', fontFamily: 'Arial, sans-serif' }}>

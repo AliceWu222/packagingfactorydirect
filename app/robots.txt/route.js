@@ -24,9 +24,38 @@ function normalizeHost(text) {
   return text.replaceAll(LEGACY_HOST + '/', CANONICAL_HOST + '/').replaceAll(LEGACY_HOST + '\n', CANONICAL_HOST + '\n');
 }
 
+function ensureLine(text, line) {
+  return text.includes(line) ? text : `${text.trimEnd()}\n${line}\n`;
+}
+
+function protectInternalFiles(text) {
+  const rules = [
+    'Disallow: /*.md$',
+    'Disallow: /*.lock$',
+    'Disallow: /*.log$',
+    'Disallow: /README*',
+    'Disallow: /ISR*',
+    'Disallow: /R2_CMS*',
+    'Disallow: /PFD_V*',
+    'Disallow: /OPEN_THIS*',
+    'Disallow: /DOWNLOAD_NOTE*',
+    'Disallow: /package.json',
+    'Disallow: /package-lock.json',
+    'Disallow: /vercel.json',
+    'Disallow: /.git/',
+    'Disallow: /.vercel/',
+    'Disallow: /node_modules/',
+    'Disallow: /test-results/',
+    'Disallow: /deliveries/'
+  ];
+  return rules.reduce((out, rule) => ensureLine(out, rule), text);
+}
+
 export async function GET() {
   const raw = await readLocal();
-  let text = normalizeHost(raw);
+  let text = protectInternalFiles(normalizeHost(raw));
+  text = ensureLine(text, `Allow: ${CANONICAL_HOST}/ai-discovery.json`.replace(CANONICAL_HOST, ''));
+  text = ensureLine(text, `Allow: /.well-known/ai-site.json`);
   if (!text.includes(`${CANONICAL_HOST}/sitemap-index.xml`)) {
     text = text.trimEnd() + `\nSitemap: ${CANONICAL_HOST}/sitemap-index.xml\n`;
   }

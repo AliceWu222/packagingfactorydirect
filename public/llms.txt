@@ -79,6 +79,7 @@ color, foil color, material, and shipping country.
 ## Machine-readable data feeds
 
 - Sitemap: https://www.packagingfactorydirect.com/sitemap.xml
+- AI discovery: https://www.packagingfactorydirect.com/ai-discovery.json
 - Product feed (JSON): https://www.packagingfactorydirect.com/product-feed.json
 - AI index (JSON): https://www.packagingfactorydirect.com/ai-index.json
 - Answer cards (JSON): https://www.packagingfactorydirect.com/data/ai-search-answer-cards.json

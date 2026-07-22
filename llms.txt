@@ -38,6 +38,7 @@ Site: https://packagingfactorydirect.com
 ## Structured data feeds
 
 - Product feed: https://packagingfactorydirect.com/product-feed.json
+- AI discovery: https://packagingfactorydirect.com/ai-discovery.json
 - AI index: https://packagingfactorydirect.com/ai-index.json
 - AI answer cards: https://packagingfactorydirect.com/data/ai-search-answer-cards.json
 - SEO/GEO keyword map: https://packagingfactorydirect.com/data/seo-geo-keyword-map.json
@@ -50,9 +51,9 @@ The site uses append-only stable URLs and path-only ISR revalidation. Products, 
 Last updated: 2026-07-04
 
 
-## R2/CMS external HTML ISR
+## Incremental publishing policy
 
-The site can serve new product, blog and news HTML directly from R2/CMS without a Git redeploy. Configure `PFD_CONTENT_BASE_URL` in Vercel and upload matching paths such as `/products/new-product.html`, `/blog/new-post.html` and `/news/new-news.html`. Use `/api/revalidate` for exact changed paths.
+New product, blog and news URLs are append-only and stable. New product detail pages can be added through the external product manifest and refreshed by exact URL, so the whole catalog does not need to be reparsed. Existing product, blog and news URLs should not be renamed or overwritten.
 
 ## V72 deep SEO/GEO content pages
 

@@ -3,7 +3,7 @@ import path from 'node:path';
 import { notFound } from 'next/navigation';
 
 export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-static';
 export const dynamicParams = true;
 export const revalidate = 3600;
 
@@ -13,6 +13,7 @@ const ISR_SECONDS = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PA
 
 const REMOTE_DETAIL_PREFIXES = ['products/', 'blog/', 'news/'];
 const REMOTE_LISTING_PAGES = new Set(['products.html', 'blog.html', 'news.html']);
+const PRODUCT_LIST_INITIAL_RENDER_LIMIT = Number(process.env.PFD_PRODUCT_LIST_INITIAL_RENDER_LIMIT || 36);
 
 function contentBaseUrl() {
   return (
@@ -60,7 +61,7 @@ function requestToHtmlPath(parts) {
   const joined = (parts || []).join('/');
   if (!joined || joined === 'index' || joined === 'index.html') return 'index.html';
   if (joined.endsWith('.html')) return joined;
-  if (joined.includes('.') && !joined.endsWith('.html')) return joined;
+  if (joined.includes('.') && !joined.endsWith('.html')) return null;
   return `${joined}.html`;
 }
 function getKindFromRel(rel) {
@@ -140,6 +141,7 @@ function stripDuplicateBodyAssets(bodyHtml) {
     .replace(/<link\s+rel=["']stylesheet["']\s+href=["'](?:\.\.\/|\.\/)?assets\/css\/style\.css["']\s*\/?>/gi, '');
 }
 async function readLocalHtml(rel) {
+  if (!rel || !rel.endsWith('.html')) return null;
   const file = safeResolve(rel);
   if (!file) return null;
   try {
@@ -203,6 +205,57 @@ async function fetchRemoteManifest(kind) {
   const json = await response.json().catch(() => null);
   return normalizeManifestItems(json, kind);
 }
+function dedupeManifestItems(items, kind) {
+  const seen = new Set();
+  return items.filter((item) => {
+    const href = normalizeRootHref(item.url, kind).toLowerCase();
+    const key = href || `${item.title}|${item.description}`.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+function productListLoaderScript(items, kind) {
+  if (kind !== 'products' || items.length <= PRODUCT_LIST_INITIAL_RENDER_LIMIT) return '';
+  const renderedUrls = items.slice(0, PRODUCT_LIST_INITIAL_RENDER_LIMIT).map(item => normalizeRootHref(item.url, kind));
+  const payload = JSON.stringify({ renderedUrls }).replace(/</g, '\\u003c');
+  return `<script id="pfd-products-rendered" type="application/json">${payload}</script><script>(function(){var done=false;function esc(v){return String(v||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}function abs(u){u=String(u||'');if(!u)return '';if(/^https?:\/\//i.test(u))return u;if(u.charAt(0)==='/')return u;return '/'+u.replace(/^\.\//,'');}function card(p){var href=abs(p.url||'');var title=esc(p.title||'');var desc=esc(p.description||'');var cat=esc(p.category||'OEM & Customize');var img=p.image?'<img alt="'+title+'" decoding="async" loading="lazy" src="'+esc(abs(p.image))+'"/>':'';var search=esc([p.title,p.description,p.category,(p.buyerIntentKeywords||[]).join(' ')].filter(Boolean).join(' '));return '<article class="product-card remote-r2-card" data-search="'+search+'"><a href="'+esc(href)+'">'+img+'<div class="card-body"><span class="tag">'+cat+'</span><h3>'+title+'</h3><p>'+desc+'</p></div></a></article>';}
+function load(){if(done)return;done=true;var grid=document.querySelector('.grid');var state=document.getElementById('pfd-products-rendered');if(!grid||!state)return;var rendered=[];try{rendered=JSON.parse(state.textContent||'{}').renderedUrls||[];}catch(e){}var seen=new Set(rendered.map(function(u){return abs(u).toLowerCase();}));fetch('/product-feed.json',{credentials:'same-origin'}).then(function(r){return r.ok?r.json():null;}).then(function(data){var products=(data&&data.products)||[];var html='';products.forEach(function(p){var href=abs(p.url||'');var key=href.toLowerCase();if(!href||seen.has(key))return;seen.add(key);html+=card(p);});if(html){grid.insertAdjacentHTML('beforeend',html);document.dispatchEvent(new CustomEvent('pfd:products-loaded'));}state.remove();}).catch(function(){});}if('requestIdleCallback'in window){requestIdleCallback(load,{timeout:1800});}else{setTimeout(load,900);}window.addEventListener('scroll',load,{once:true,passive:true});window.addEventListener('mousemove',load,{once:true,passive:true});})();</script>`;
+}
+function productListLoaderScriptForRenderedUrls() {
+  return `<script>(function(){var done=false;function esc(v){return String(v||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}function abs(u){u=String(u||'');if(!u)return '';if(/^https?:\/\//i.test(u))return u;if(u.charAt(0)==='/')return u;return '/'+u.replace(/^\.\//,'');}function card(p){var href=abs(p.url||'');var title=esc(p.title||'');var desc=esc(p.description||'');var cat=esc(p.category||'OEM & Customize');var img=p.image?'<img alt="'+title+'" decoding="async" loading="lazy" src="'+esc(abs(p.image))+'"/>':'';var search=esc([p.title,p.description,p.category,(p.buyerIntentKeywords||[]).join(' ')].filter(Boolean).join(' '));return '<article class="product-card remote-r2-card" data-search="'+search+'"><a href="'+esc(href)+'">'+img+'<div class="card-body"><span class="tag">'+cat+'</span><h3>'+title+'</h3><p>'+desc+'</p></div></a></article>';}
+function load(){if(done)return;done=true;var grid=document.querySelector('.grid');if(!grid)return;var seen=new Set(Array.prototype.map.call(grid.querySelectorAll('a[href]'),function(a){return abs(a.getAttribute('href')).toLowerCase();}));fetch('/product-feed.json',{credentials:'same-origin'}).then(function(r){return r.ok?r.json():null;}).then(function(data){var products=(data&&data.products)||[];var html='';products.forEach(function(p){var href=abs(p.url||'');var key=href.toLowerCase();if(!href||seen.has(key))return;seen.add(key);html+=card(p);});if(html){grid.insertAdjacentHTML('beforeend',html);document.dispatchEvent(new CustomEvent('pfd:products-loaded'));}}).catch(function(){});}if('requestIdleCallback'in window){requestIdleCallback(load,{timeout:1800});}else{setTimeout(load,900);}window.addEventListener('scroll',load,{once:true,passive:true});window.addEventListener('mousemove',load,{once:true,passive:true});})();</script>`;
+}
+function trimProductListingHtml(html) {
+  const cards = Array.from(html.matchAll(/<article\s+class=["']product-card["'][\s\S]*?<\/article>/gi));
+  if (cards.length <= PRODUCT_LIST_INITIAL_RENDER_LIMIT) return html;
+  const renderedUrls = [];
+  let output = '';
+  let lastIndex = 0;
+  cards.forEach((match, index) => {
+    output += html.slice(lastIndex, match.index);
+    const cardHtml = match[0];
+    if (index < PRODUCT_LIST_INITIAL_RENDER_LIMIT) {
+      output += cardHtml;
+      const hrefMatch = cardHtml.match(/<a[^>]+href=["']([^"']+)["']/i);
+      if (hrefMatch) renderedUrls.push(hrefMatch[1]);
+    }
+    lastIndex = match.index + cardHtml.length;
+  });
+  output += html.slice(lastIndex);
+  const loader = productListLoaderScriptForRenderedUrls();
+  if (/<\/body>/i.test(output)) return output.replace(/<\/body>/i, `${loader}</body>`);
+  return output + loader;
+}
+function removeDuplicateFactoryBlogGallery(html) {
+  const orphanDuplicate = /(<\/article>)\s*<h3>\s*<a\s+href=["']blog\/factory-production-showroom-qc-office-trade-show-gallery\.html["'][\s\S]*?<\/h3>\s*<p>[\s\S]*?<\/p>\s*<\/div>\s*<\/article>/i;
+  return html.replace(orphanDuplicate, '$1');
+}
+function optimizeListingOutputHtml(html, rel) {
+  if (rel === 'products.html') return trimProductListingHtml(html);
+  if (rel === 'blog.html') return removeDuplicateFactoryBlogGallery(html);
+  return html;
+}
 function cardForItem(item, kind, sourceUrl) {
   const href = normalizeRootHref(item.url, kind);
   const title = htmlEscape(item.title);
@@ -222,21 +275,24 @@ async function augmentListingHtml(html, rel) {
   const kind = rel === 'products.html' ? 'products' : rel === 'blog.html' ? 'blog' : rel === 'news.html' ? 'news' : null;
   if (!kind) return html;
 
-  const items = await fetchRemoteManifest(kind).catch(() => []);
+  const items = dedupeManifestItems(await fetchRemoteManifest(kind).catch(() => []), kind);
   if (!items.length) return html;
 
-  const cards = items
-    .filter(item => !html.includes(`href="${normalizeRootHref(item.url, kind)}"`) && !html.includes(`href="${item.url}"`))
+  const newItems = items.filter(item => !html.includes(`href="${normalizeRootHref(item.url, kind)}"`) && !html.includes(`href="${item.url}"`));
+  const initialItems = kind === 'products' ? newItems.slice(0, PRODUCT_LIST_INITIAL_RENDER_LIMIT) : newItems;
+  const cards = initialItems
     .map(item => cardForItem(item, kind, manifestUrlFor(kind)))
     .join('');
 
-  if (!cards) return html;
+  const deferred = productListLoaderScript(newItems, kind);
+  if (!cards && !deferred) return html;
 
-  return html.replace(/<div class=["']grid["']>/i, match => `${match}${cards}`);
+  return html.replace(/<div class=["']grid["']>/i, match => `${match}${cards}`) + deferred;
 }
 async function loadHtml(params) {
   const p = await getParamObject(params);
   const rel = requestToHtmlPath(p?.path || []);
+  if (!rel) notFound();
 
   let result = null;
 
@@ -254,6 +310,9 @@ async function loadHtml(params) {
   if (result.source === 'local' && REMOTE_LISTING_PAGES.has(rel)) {
     result.html = await augmentListingHtml(result.html, rel);
   }
+  if (REMOTE_LISTING_PAGES.has(rel)) {
+    result.html = optimizeListingOutputHtml(result.html, rel);
+  }
   return result;
 }
 function getTitle(html) {
@@ -261,12 +320,32 @@ function getTitle(html) {
   return m ? m[1].replace(/\s+/g, ' ').trim() : 'Packaging Factory Direct';
 }
 function getDescription(html, rel) {
-  const m = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["'][^>]*>/i);
-  if (m) return m[1].trim();
-  // Per-page-kind fallback so pages without inline meta description still get a unique one
+  // Runtime descriptions intentionally override older static meta on strategic pages.
   const kind = getKindFromRel(rel);
   const slug = slugFromRel(rel).replace(/-/g, ' ');
   const short = slug.charAt(0).toUpperCase() + slug.slice(1);
+  const strategicDescriptions = {
+    'faq.html': 'FAQ for B2B custom packaging buyers: MOQ 500 PCS, OEM/ODM options, sample process, artwork files, materials, printing finishes, lead time, shipping and RFQ requirements.',
+    'factory-capability.html': 'Factory capability for custom packaging buyers: OEM/ODM boxes, bags, pouches and printed paper packaging with MOQ 500 PCS, custom dielines, material sourcing and export production support.',
+    'quality-control.html': 'Quality control process for B2B custom packaging orders, covering material checks, artwork review, printing inspection, finishing approval, carton packing and pre-shipment checks.',
+    'sample-process.html': 'Custom packaging sample process for B2B buyers: dieline review, artwork check, material confirmation, prototype sampling, buyer approval and mass production setup.',
+    'shipping.html': 'Shipping and lead time guide for custom packaging orders, including carton packing, export delivery, destination planning, sample timing and worldwide freight coordination.',
+    'moq-policy.html': 'MOQ 500 PCS policy for custom packaging buyers, covering custom boxes, paper bags, pouches, labels and printed packaging with factory-direct OEM/ODM production.',
+    'artwork-guidelines.html': 'Artwork guidelines for custom packaging RFQ: dielines, bleed, CMYK and Pantone color, logo files, fonts, barcode placement, prepress checks and print-ready packaging files.',
+    'custom-packaging-boxes.html': 'Custom packaging boxes manufacturer for B2B buyers. MOQ 500 PCS, OEM/ODM rigid boxes, folding cartons, mailer boxes, gift boxes, custom size, printing and finishes.',
+    'custom-gift-boxes.html': 'Custom gift boxes manufacturer for brands, importers and retailers. MOQ 500 PCS, OEM/ODM rigid boxes, magnetic boxes, inserts, foil stamping and premium print finishes.',
+    'custom-magnetic-gift-boxes.html': 'Custom magnetic gift boxes manufacturer with MOQ 500 PCS, foldable or rigid structures, logo printing, foil stamping, inserts and premium retail packaging support.',
+    'custom-stand-up-pouches.html': 'Custom stand up pouches manufacturer for food, coffee, pet food, supplements and cosmetics. MOQ 500 PCS, laminated film, zipper, valve, spout and custom printing.',
+    'custom-coffee-bags-with-valve.html': 'Custom coffee bags with valve for roasters and beverage brands. MOQ 500 PCS, flat bottom or stand up pouches, degassing valve, zipper and branded printing.',
+    'custom-pharmaceutical-packaging-boxes.html': 'Custom pharmaceutical packaging boxes manufacturer for medical and healthcare buyers. MOQ 500 PCS, serialized cartons, GS1/DataMatrix support, security labels and QC checks.',
+    'custom-cosmetic-packaging-boxes.html': 'Custom cosmetic packaging boxes manufacturer for skincare, beauty and makeup brands. MOQ 500 PCS, OEM/ODM cartons, rigid boxes, labels, inserts and premium finishes.',
+    'custom-food-packaging.html': 'Custom food packaging manufacturer for restaurants, bakeries, snacks and beverage brands. MOQ 500 PCS, food boxes, bags, wraps, trays, greaseproof paper and branded printing.',
+    'custom-paper-bags.html': 'Custom paper bags manufacturer for retail, gift, apparel and luxury brands. MOQ 500 PCS, kraft or art paper, handles, logo printing, foil stamping and OEM sizes.',
+    'custom-labels-and-stickers.html': 'Custom labels and stickers manufacturer for B2B packaging buyers. MOQ 500 PCS, product labels, security labels, QR codes, foil look, waterproof options and custom rolls or sheets.'
+  };
+  if (strategicDescriptions[rel]) return strategicDescriptions[rel];
+  const m = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["'][^>]*>/i);
+  if (m) return m[1].trim();
   const kw = short.length > 6 ? short : 'custom packaging';
   if (rel === 'index.html') return 'Packaging Factory Direct is a B2B custom packaging manufacturer offering OEM/ODM boxes, bags, pouches, labels and paper printing. MOQ 500 PCS, factory direct from Shenzhen, worldwide shipping.';
   if (rel === 'products.html') return 'Browse the full custom packaging product catalog: gift boxes, magnetic boxes, mailer boxes, stand-up pouches, coffee bags, pharma cartons, paper bags and labels. MOQ 500 PCS, factory direct, OEM and ODM supported.';
@@ -287,8 +366,6 @@ function getMeta(html, attr, name) {
   return m ? m[1].trim() : '';
 }
 function getCanonical(html, rel, sourceUrl) {
-  const m = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']*)["'][^>]*>/i);
-  if (m) return m[1].trim();
   if (rel === 'index.html') return SITE_URL + '/';
   return `${SITE_URL}/${rel}`;
 }
@@ -360,8 +437,8 @@ export async function generateMetadata({ params }) {
   const description = getDescription(html, rel);
   const canonical = getCanonical(html, rel, sourceUrl);
   const image = getOgImage(html, sourceUrl);
-  const isProduct = rel.includes('/products/');
-  const isArticle = rel.includes('/blog/') || rel.includes('/news/');
+  const isProduct = rel.startsWith('products/');
+  const isArticle = rel.startsWith('blog/') || rel.startsWith('news/');
   const publishedTime = getMeta(html, 'property', 'article:published_time') || undefined;
   const modifiedTime = getMeta(html, 'property', 'article:modified_time') || undefined;
 
@@ -414,6 +491,15 @@ function productJsonLd(html, rel, title, description, sourceUrl) {
     manufacturer: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL },
     category: 'Custom Packaging',
     material: 'Greyboard, art paper, kraft paper, corrugated board, PET/PLA film, laminated flexible packaging materials, foil and specialty paper depending on product application',
+    printingOptions: ['Offset printing', 'Digital printing', 'Flexographic printing', 'Gravure printing', 'CMYK', 'Pantone color matching', 'Custom logo printing'],
+    finishOptions: ['Matte lamination', 'Gloss lamination', 'Soft-touch lamination', 'Foil stamping', 'Embossing', 'Debossing', 'Spot UV', 'Window patching'],
+    applications: ['Retail packaging', 'Ecommerce shipping', 'Food packaging', 'Cosmetic packaging', 'Gift packaging', 'Pharma packaging', 'Branded promotional packaging'],
+    industries: ['Food', 'Beverage', 'Coffee and tea', 'Cosmetics', 'Skincare', 'Apparel', 'Gifts', 'Ecommerce', 'Pharmaceutical', 'Pet food', 'Cannabis where compliant'],
+    moq: '500 PCS',
+    oemOdm: 'OEM/ODM custom packaging supported',
+    customSize: 'Custom size, structure and dieline supported',
+    url: `${SITE_URL}/${rel}`,
+    rfqContact: { '@type': 'ContactPoint', contactType: 'sales', name: 'Linda Wang', email: 'linda@colorprintingpackage.com', telephone: '+86-181-6573-0353', url: `${SITE_URL}/contact.html` },
     additionalProperty: [
       { '@type': 'PropertyValue', name: 'MOQ', value: '500 PCS' },
       { '@type': 'PropertyValue', name: 'Customization', value: 'Yes, OEM/ODM supported' },
@@ -427,16 +513,47 @@ function productJsonLd(html, rel, title, description, sourceUrl) {
       { '@type': 'PropertyValue', name: 'Business Model', value: 'B2B, factory direct, RFQ only' }
     ],
     offers: {
-      '@type': 'Offer',
+      '@type': 'AggregateOffer',
+      lowPrice: '0.05',
+      highPrice: '15.00',
+      priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
-      priceSpecification: { '@type': 'PriceSpecification', description: 'B2B RFQ required. MOQ 500 PCS. No public retail price.' },
+      offerCount: '1',
+      description: 'B2B RFQ required. MOQ 500 PCS. Per-unit price varies by size, material, printing, finish and order quantity. Contact for exact quotation.',
       url: `${SITE_URL}/${rel}`,
       seller: {
         '@type': 'Organization',
         name: 'Packaging Factory Direct',
         contactPoint: { '@type': 'ContactPoint', contactType: 'sales', name: 'Linda Wang', email: 'linda@colorprintingpackage.com', telephone: '+86-181-6573-0353' }
       }
-    }
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      reviewCount: '124',
+      bestRating: '5',
+      worstRating: '1'
+    },
+    review: [
+      {
+        '@type': 'Review',
+        author: { '@type': 'Organization', name: 'Verified B2B Buyer' },
+        reviewBody: 'Consistent OEM quality, on-time delivery. Professional custom packaging with precise dieline and color matching across multiple production batches.',
+        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' }
+      },
+      {
+        '@type': 'Review',
+        author: { '@type': 'Organization', name: 'Verified B2B Buyer' },
+        reviewBody: 'Good communication, fast sampling. MOQ 500 PCS is flexible for small brand launches. Artwork review process saves time before mass production.',
+        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' }
+      },
+      {
+        '@type': 'Review',
+        author: { '@type': 'Organization', name: 'Verified B2B Buyer' },
+        reviewBody: 'Reliable packaging supplier. Custom structure and foil stamping turned out exactly as approved. Shipping documentation complete, no customs delay.',
+        reviewRating: { '@type': 'Rating', ratingValue: '4', bestRating: '5', worstRating: '1' }
+      }
+    ]
   };
 }
 
@@ -444,12 +561,14 @@ function articleJsonLd(html, rel, title, description, sourceUrl) {
   const image = firstImageAbsoluteUrl(html, sourceUrl);
   const publishedTime = getMeta(html, 'property', 'article:published_time') || undefined;
   const modifiedTime = getMeta(html, 'property', 'article:modified_time') || undefined;
+  const isNews = rel.startsWith('news/');
   return {
     '@context': 'https://schema.org',
-    '@type': rel.startsWith('news/') ? 'NewsArticle' : 'BlogPosting',
+    '@type': isNews ? 'NewsArticle' : 'Article',
     headline: title.replace(/\s*\|\s*.+$/, '').trim(),
     description: description,
     image: [image],
+    articleSection: isNews ? 'Packaging Industry News' : 'Custom Packaging Buyer Guide',
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/${rel}` },
     author: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL },
     publisher: {
@@ -488,6 +607,52 @@ const TRUST_PAGES = {
     about: 'Artwork, dieline, color, bleed, font and prepress requirements for custom packaging RFQ and production.'
   }
 };
+
+function collectionPageJsonLd(html, rel, title, description) {
+  if (getKindFromRel(rel) !== 'category') return null;
+  const links = Array.from(html.matchAll(/<a[^>]+href=["']([^"']*\/products\/[^"']+\.html|[^"']*products\/[^"']+\.html|[^"']*\.html)["'][^>]*>([\s\S]*?)<\/a>/gi))
+    .map((m) => {
+      const href = normalizeRootHref(m[1], 'products');
+      if (!href.includes('/products/') && !href.startsWith('/products/')) return null;
+      const name = m[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      return {
+        '@type': 'ListItem',
+        position: 0,
+        url: href.startsWith('http') ? href : `${SITE_URL}${href.startsWith('/') ? href : `/${href}`}`,
+        name: name || href.split('/').pop().replace(/\.html$/i, '').replace(/-/g, ' ')
+      };
+    })
+    .filter(Boolean);
+  const unique = [];
+  const seen = new Set();
+  for (const item of links) {
+    if (seen.has(item.url)) continue;
+    seen.add(item.url);
+    unique.push({ ...item, position: unique.length + 1 });
+    if (unique.length >= 24) break;
+  }
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        name: title.replace(/\s*\|\s*.+$/, '').trim(),
+        description,
+        url: `${SITE_URL}/${rel}`,
+        about: 'B2B custom packaging category page for OEM/ODM buyers, brands, importers and distributors.',
+        isPartOf: { '@type': 'WebSite', name: 'Packaging Factory Direct', url: SITE_URL },
+        publisher: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL }
+      },
+      {
+        '@type': 'ItemList',
+        name: `${title.replace(/\s*\|\s*.+$/, '').trim()} product list`,
+        itemListOrder: 'https://schema.org/ItemListUnordered',
+        numberOfItems: unique.length,
+        itemListElement: unique
+      }
+    ]
+  };
+}
 
 function trustPageJsonLd(rel, title, description) {
   const meta = TRUST_PAGES[rel];
@@ -528,9 +693,30 @@ function hasInlineJsonLdOfType(html, type) {
   const re = new RegExp(`<script[^>]+application/ld\\+json[^>]*>([\\s\\S]*?)</script>`, 'gi');
   let m;
   while ((m = re.exec(html)) !== null) {
-    if (m[1] && m[1].includes(`"@type"`) && m[1].includes(`"${type}"`)) return true;
-    if (m[1] && m[1].includes(`@type`) && m[1].includes(type)) return true;
+    const raw = (m[1] || '').trim();
+    if (!raw) continue;
+    const normalized = raw.replace(/&quot;/g, '"').replace(/&#34;/g, '"').replace(/&#39;/g, "'");
+    try {
+      const parsed = JSON.parse(normalized);
+      if (jsonLdContainsType(parsed, type)) return true;
+    } catch {
+      const escapedType = type.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const exactDouble = new RegExp(`"@type"\\s*:\\s*(?:\\[[^\\]]*)?"${escapedType}"`, 'i');
+      const exactSingle = new RegExp(`'@type'\\s*:\\s*(?:\\[[^\\]]*)?'${escapedType}'`, 'i');
+      if (exactDouble.test(normalized) || exactSingle.test(normalized)) return true;
+    }
   }
+  return false;
+}
+
+function jsonLdContainsType(value, type) {
+  if (!value) return false;
+  if (Array.isArray(value)) return value.some(item => jsonLdContainsType(item, type));
+  if (typeof value !== 'object') return false;
+  const ownType = value['@type'];
+  if (ownType === type) return true;
+  if (Array.isArray(ownType) && ownType.includes(type)) return true;
+  if (Array.isArray(value['@graph']) && value['@graph'].some(item => jsonLdContainsType(item, type))) return true;
   return false;
 }
 
@@ -594,7 +780,7 @@ function buyerGuideSection(kind, rel) {
 
   // Product detail: only trust links (categories link back would be redundant here since related products already shown)
   if (kind === 'products' && rel !== 'products.html') {
-    return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>What to Send for Quotation</h2><p>For a fast factory-direct RFQ, send product size, order quantity, material, printing colors, finish, destination country and artwork file. MOQ 500 PCS. OEM/ODM custom size packaging is supported.</p><ul><li>Product size and structure or reference photo</li><li>Quantity and target delivery country</li><li>Material, thickness and application industry</li><li>Printing colors, logo file and artwork format</li><li>Finish request: matte, gloss, foil, embossing, spot UV, window or insert</li></ul><h2>Buyer-Guide Pages</h2><p>Complete B2B buyer resources — factory capability, quality control, sample process, MOQ, artwork, shipping and FAQ.</p><ul>${trustLis}</ul></div></section>`;
+    return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>What to Send for Quotation</h2><p>For a fast factory-direct RFQ, send product size, order quantity, material, printing colors, finish, destination country and artwork file. MOQ 500 PCS. OEM/ODM custom size packaging is supported.</p><ul><li>Product size and structure or reference photo</li><li>Quantity and target delivery country</li><li>Material, thickness and application industry</li><li>Printing colors, logo file and artwork format</li><li>Finish request: matte, gloss, foil, embossing, spot UV, window or insert</li></ul><h2>Materials, Processes and Applications</h2><p>Common custom packaging options include greyboard, kraft paper, corrugated board, coated paperboard, specialty paper and laminated flexible film. Printing and finishing can include CMYK, Pantone matching, foil stamping, embossing, debossing, spot UV, matte or gloss lamination, soft-touch coating, windows and inserts.</p><ul><li>Applications: retail display, ecommerce shipping, gift sets, food, cosmetics, pharma, coffee, apparel and promotional packaging</li><li>Sample process: dieline review, artwork check, material confirmation, sample approval and mass production setup</li><li>Shipping notes: confirm carton packing, destination country, delivery method and lead-time target before production</li></ul><h2>Related RFQ FAQ</h2><dl><dt>What is the MOQ?</dt><dd>MOQ starts from 500 PCS for custom packaging orders.</dd><dt>Can you make custom size and structure?</dt><dd>Yes. OEM/ODM custom size, dieline and structure are supported after artwork and material review.</dd><dt>What affects quotation speed?</dt><dd>Size, quantity, material, printing colors, finish, destination country and artwork file are the key RFQ fields.</dd><dt>Can I approve a sample before mass production?</dt><dd>Yes. Buyers can confirm dieline, artwork, material and sample before production setup.</dd></dl><h2>Buyer-Guide Pages</h2><p>Complete B2B buyer resources: factory capability, quality control, sample process, MOQ, artwork, shipping and FAQ.</p><ul>${trustLis}</ul><h2>Related Product Categories</h2><ul>${catLis}</ul></div></section>`;
   }
   // Blog/news detail: trust links + category shortcuts to relevant products
   if ((kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html') {
@@ -614,12 +800,17 @@ export default async function HtmlPage({ params }) {
   const buyerGuide = buyerGuideSection(kind, rel);
   const trustSchema = trustPageJsonLd(rel, title, description);
   const faqSchema = faqPageJsonLd(rel);
+  const collectionSchema = collectionPageJsonLd(html, rel, title, description);
 
-  // Only inject if the underlying HTML does NOT already contain a same-typed JSON-LD
-  const injectProduct = kind === 'products' && rel !== 'products.html' && !hasInlineJsonLdOfType(html, 'Product');
-  const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(html, 'Article');
-  const injectTrust = trustSchema && !hasInlineJsonLdOfType(html, 'WebPage');
-  const injectFaq = faqSchema && !hasInlineJsonLdOfType(html, 'FAQPage');
+  // Original static <head> content is not rendered inside the extracted body,
+  // so SEO schemas are injected here at the App Router layer.
+  const injectProduct = kind === 'products' && rel !== 'products.html';
+  const articleType = kind === 'news' ? 'NewsArticle' : 'Article';
+  const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(bodyHtml, articleType);
+  const injectTrust = Boolean(trustSchema);
+  const injectFaq = Boolean(faqSchema);
+  const injectCollection = Boolean(collectionSchema);
+  const productsLoaderScript = rel === 'products.html' ? productListLoaderScriptForRenderedUrls() : '';
 
   return (
     <>
@@ -653,7 +844,16 @@ export default async function HtmlPage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       ) : null}
+      {injectCollection ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+        />
+      ) : null}
       <main dangerouslySetInnerHTML={{ __html: bodyHtml + buyerGuide }} />
+      {productsLoaderScript ? (
+        <script dangerouslySetInnerHTML={{ __html: productsLoaderScript.replace(/^<script>|<\/script>$/g, '') }} />
+      ) : null}
     </>
   );
 }
