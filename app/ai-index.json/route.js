@@ -83,6 +83,25 @@ function deepNormalizeHost(value) {
   }
   return value;
 }
+function removeInternalFields(value) {
+  const blocked = new Set([
+    'r2CmsEnv',
+    'remoteManifestDefaults',
+    'environmentVariables',
+    'env',
+    'secrets'
+  ]);
+  if (Array.isArray(value)) return value.map(removeInternalFields);
+  if (value && typeof value === 'object') {
+    const out = {};
+    for (const key of Object.keys(value)) {
+      if (blocked.has(key)) continue;
+      out[key] = removeInternalFields(value[key]);
+    }
+    return out;
+  }
+  return value;
+}
 function classifiedPages(remoteProducts, remoteBlog, remoteNews) {
   const core = (url, title, type, buyerIntent) => ({ url: SITE_URL + url, title, type, buyerIntent });
   const localBlogGuides = [
@@ -129,7 +148,7 @@ function classifiedPages(remoteProducts, remoteBlog, remoteNews) {
 }
 export async function GET() {
   const raw = await readLocalIndex();
-  const local = deepNormalizeHost(raw);
+  const local = removeInternalFields(deepNormalizeHost(raw));
   const remoteProducts = await remoteItems('products');
   const remoteBlog = await remoteItems('blog');
   const remoteNews = await remoteItems('news');
