@@ -1,0 +1,12 @@
+{
+  "currency": "USD",
+  "products": {
+    "products/example-product.html": {
+      "price": "9.99 USD",
+      "availability": "in_stock",
+      "brand": "Packaging Factory Direct",
+      "mpn": "example-product",
+      "googleProductCategory": "Business & Industrial > Packaging Supplies"
+    }
+  }
+}

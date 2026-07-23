@@ -102,6 +102,7 @@ export default function RootLayout({ children }) {
         <link rel="alternate" type="application/json" href="/answer-engine.json" title="Packaging Factory Direct answer engine index" />
         <link rel="alternate" type="application/json" href="/ai-index.json" title="Packaging Factory Direct AI index" />
         <link rel="alternate" type="application/json" href="/product-feed.json" title="Packaging Factory Direct product feed" />
+        <link rel="alternate" type="application/xml" href="/google-merchant-feed.xml" title="Packaging Factory Direct Google Merchant feed" />
         <link rel="stylesheet" href="/assets/css/style.css?v=v97-seo-geo-sitemap-json" />
         <script src="/assets/js/main.js?v=v97-seo-geo-sitemap-json" defer></script>
         {measurementId ? <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script> : null}
@@ -140,6 +141,52 @@ gtag('config', '${measurementId}', { send_page_view: true });
     var label = form && (form.getAttribute('aria-label') || form.getAttribute('name') || form.id || form.action || 'rfq_form');
     emit('rfq_form_submit', { form_name: String(label).slice(0, 120) });
   }, true);
+})();
+` }} />
+        <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  if (!('PerformanceObserver' in window)) return;
+  if (Math.random() > 0.15) return;
+  var endpoint = '/api/web-vitals';
+  var pageType = location.pathname === '/' ? 'home' : location.pathname.indexOf('/products/') === 0 ? 'product-detail' : location.pathname === '/products.html' ? 'product-list' : 'page';
+  function rating(name, value){
+    if (name === 'LCP') return value <= 2500 ? 'good' : value <= 4000 ? 'needs-improvement' : 'poor';
+    if (name === 'CLS') return value <= 0.1 ? 'good' : value <= 0.25 ? 'needs-improvement' : 'poor';
+    if (name === 'INP') return value <= 200 ? 'good' : value <= 500 ? 'needs-improvement' : 'poor';
+    return '';
+  }
+  function send(name, value, id){
+    var metric = { name:name, value:Math.round(value * 1000) / 1000, rating:rating(name, value), path:location.pathname, pageType:pageType, id:id || '', ts:Date.now() };
+    var body = JSON.stringify(metric);
+    if (navigator.sendBeacon) {
+      try { if (navigator.sendBeacon(endpoint, new Blob([body], { type:'application/json' }))) return; } catch(e) {}
+    }
+    try { fetch(endpoint, { method:'POST', headers:{ 'Content-Type':'application/json' }, body:body, keepalive:true }); } catch(e) {}
+  }
+  try {
+    var lcp;
+    new PerformanceObserver(function(list){
+      var entries = list.getEntries();
+      lcp = entries[entries.length - 1];
+    }).observe({ type:'largest-contentful-paint', buffered:true });
+    addEventListener('visibilitychange', function(){ if (document.visibilityState === 'hidden' && lcp) send('LCP', lcp.startTime, lcp.id); }, { once:true });
+  } catch(e) {}
+  try {
+    var cls = 0;
+    new PerformanceObserver(function(list){
+      list.getEntries().forEach(function(entry){ if (!entry.hadRecentInput) cls += entry.value; });
+    }).observe({ type:'layout-shift', buffered:true });
+    addEventListener('visibilitychange', function(){ if (document.visibilityState === 'hidden') send('CLS', cls, 'cls-' + Date.now()); }, { once:true });
+  } catch(e) {}
+  try {
+    var maxInp = 0, inpId = '';
+    new PerformanceObserver(function(list){
+      list.getEntries().forEach(function(entry){
+        if (entry.interactionId && entry.duration > maxInp) { maxInp = entry.duration; inpId = String(entry.interactionId); }
+      });
+    }).observe({ type:'event', buffered:true, durationThreshold:40 });
+    addEventListener('pagehide', function(){ if (maxInp) send('INP', maxInp, inpId); }, { once:true });
+  } catch(e) {}
 })();
 ` }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />

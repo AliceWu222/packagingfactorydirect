@@ -82,6 +82,8 @@ const payload = {
     aiIndex: `${SITE_URL}/ai-index.json`,
     productFeed: `${SITE_URL}/product-feed.json`,
     fullProductFeed: `${SITE_URL}/product-feed.json?full=1`,
+    googleMerchantFeed: `${SITE_URL}/google-merchant-feed.xml`,
+    merchantFeedDiagnostics: `${SITE_URL}/merchant-feed-diagnostics.json`,
     answerCards: `${SITE_URL}/data/ai-search-answer-cards.json`,
     keywordMap: `${SITE_URL}/data/seo-geo-keyword-map.json`,
     sitemap: `${SITE_URL}/sitemap.xml`,

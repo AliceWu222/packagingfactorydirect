@@ -17,7 +17,7 @@ async function readLocal() {
     const t = await fs.readFile(p, 'utf8').catch(() => '');
     if (t && t.trim().length > 0) return t;
   }
-  return 'User-agent: *\nUser-agent: Googlebot\nUser-agent: Googlebot-Image\nUser-agent: GPTBot\nUser-agent: OAI-SearchBot\nUser-agent: ChatGPT-User\nUser-agent: ClaudeBot\nUser-agent: Claude-SearchBot\nUser-agent: Claude-User\nUser-agent: PerplexityBot\nUser-agent: Google-Extended\nAllow: /\nAllow: /llms.txt\nAllow: /answer-engine.json\nAllow: /ai-index.json\nAllow: /product-feed.json\nAllow: /data/ai-search-answer-cards.json\nAllow: /data/seo-geo-keyword-map.json\nSitemap: https://www.packagingfactorydirect.com/sitemap.xml\n';
+  return 'User-agent: *\nUser-agent: Googlebot\nUser-agent: Googlebot-Image\nUser-agent: GPTBot\nUser-agent: OAI-SearchBot\nUser-agent: ChatGPT-User\nUser-agent: ClaudeBot\nUser-agent: Claude-SearchBot\nUser-agent: Claude-User\nUser-agent: PerplexityBot\nUser-agent: Google-Extended\nAllow: /\nAllow: /llms.txt\nAllow: /answer-engine.json\nAllow: /ai-index.json\nAllow: /product-feed.json\nAllow: /google-merchant-feed.xml\nAllow: /merchant-feed-diagnostics.json\nAllow: /data/ai-search-answer-cards.json\nAllow: /data/seo-geo-keyword-map.json\nSitemap: https://www.packagingfactorydirect.com/sitemap.xml\n';
 }
 
 function normalizeHost(text) {
@@ -56,6 +56,8 @@ export async function GET() {
   let text = protectInternalFiles(normalizeHost(raw));
   text = ensureLine(text, `Allow: ${CANONICAL_HOST}/ai-discovery.json`.replace(CANONICAL_HOST, ''));
   text = ensureLine(text, `Allow: /answer-engine.json`);
+  text = ensureLine(text, `Allow: /google-merchant-feed.xml`);
+  text = ensureLine(text, `Allow: /merchant-feed-diagnostics.json`);
   text = ensureLine(text, `Allow: /.well-known/ai-site.json`);
   if (!text.includes(`${CANONICAL_HOST}/sitemap-index.xml`)) {
     text = text.trimEnd() + `\nSitemap: ${CANONICAL_HOST}/sitemap-index.xml\n`;

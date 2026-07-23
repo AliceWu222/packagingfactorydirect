@@ -219,11 +219,11 @@ function productListLoaderScript(items, kind) {
   if (kind !== 'products' || items.length <= PRODUCT_LIST_INITIAL_RENDER_LIMIT) return '';
   const renderedUrls = items.slice(0, PRODUCT_LIST_INITIAL_RENDER_LIMIT).map(item => normalizeRootHref(item.url, kind));
   const payload = JSON.stringify({ renderedUrls }).replace(/</g, '\\u003c');
-  return `<script id="pfd-products-rendered" type="application/json">${payload}</script><script>(function(){var done=false;function esc(v){return String(v||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}function abs(u){u=String(u||'');if(!u)return '';if(/^https?:\/\//i.test(u))return u;if(u.charAt(0)==='/')return u;return '/'+u.replace(/^\.\//,'');}function card(p){var href=abs(p.url||'');var title=esc(p.title||'');var desc=esc(p.description||'');var cat=esc(p.category||'OEM & Customize');var img=p.image?'<img alt="'+title+'" decoding="async" loading="lazy" src="'+esc(abs(p.image))+'"/>':'';var search=esc([p.title,p.description,p.category,(p.buyerIntentKeywords||[]).join(' ')].filter(Boolean).join(' '));return '<article class="product-card remote-r2-card" data-search="'+search+'"><a href="'+esc(href)+'">'+img+'<div class="card-body"><span class="tag">'+cat+'</span><h3>'+title+'</h3><p>'+desc+'</p></div></a></article>';}
+  return `<script id="pfd-products-rendered" type="application/json">${payload}</script><script>(function(){var done=false;function esc(v){return String(v||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}function abs(u){u=String(u||'');if(!u)return '';if(/^https?:\/\//i.test(u))return u;if(u.charAt(0)==='/')return u;return '/'+u.replace(/^\.\//,'');}function card(p){var href=abs(p.url||'');var title=esc(p.title||'');var desc=esc(p.description||'');var cat=esc(p.category||'OEM & Customize');var img=p.image?'<img alt="'+title+'" decoding="async" loading="lazy" fetchpriority="low" width="800" height="800" src="'+esc(abs(p.image))+'"/>':'';var search=esc([p.title,p.description,p.category,(p.buyerIntentKeywords||[]).join(' ')].filter(Boolean).join(' '));return '<article class="product-card remote-r2-card" data-search="'+search+'"><a href="'+esc(href)+'">'+img+'<div class="card-body"><span class="tag">'+cat+'</span><h3>'+title+'</h3><p>'+desc+'</p></div></a></article>';}
 function load(){if(done)return;done=true;var grid=document.querySelector('.grid');var state=document.getElementById('pfd-products-rendered');if(!grid||!state)return;var rendered=[];try{rendered=JSON.parse(state.textContent||'{}').renderedUrls||[];}catch(e){}var seen=new Set(rendered.map(function(u){return abs(u).toLowerCase();}));fetch('/product-feed.json',{credentials:'same-origin'}).then(function(r){return r.ok?r.json():null;}).then(function(data){var products=(data&&data.products)||[];var html='';products.forEach(function(p){var href=abs(p.url||'');var key=href.toLowerCase();if(!href||seen.has(key))return;seen.add(key);html+=card(p);});if(html){grid.insertAdjacentHTML('beforeend',html);document.dispatchEvent(new CustomEvent('pfd:products-loaded'));}state.remove();}).catch(function(){});}if('requestIdleCallback'in window){requestIdleCallback(load,{timeout:1800});}else{setTimeout(load,900);}window.addEventListener('scroll',load,{once:true,passive:true});window.addEventListener('mousemove',load,{once:true,passive:true});})();</script>`;
 }
 function productListLoaderScriptForRenderedUrls() {
-  return `<script>(function(){var done=false;function esc(v){return String(v||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}function abs(u){u=String(u||'');if(!u)return '';if(/^https?:\/\//i.test(u))return u;if(u.charAt(0)==='/')return u;return '/'+u.replace(/^\.\//,'');}function card(p){var href=abs(p.url||'');var title=esc(p.title||'');var desc=esc(p.description||'');var cat=esc(p.category||'OEM & Customize');var img=p.image?'<img alt="'+title+'" decoding="async" loading="lazy" src="'+esc(abs(p.image))+'"/>':'';var search=esc([p.title,p.description,p.category,(p.buyerIntentKeywords||[]).join(' ')].filter(Boolean).join(' '));return '<article class="product-card remote-r2-card" data-search="'+search+'"><a href="'+esc(href)+'">'+img+'<div class="card-body"><span class="tag">'+cat+'</span><h3>'+title+'</h3><p>'+desc+'</p></div></a></article>';}
+  return `<script>(function(){var done=false;function esc(v){return String(v||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}function abs(u){u=String(u||'');if(!u)return '';if(/^https?:\/\//i.test(u))return u;if(u.charAt(0)==='/')return u;return '/'+u.replace(/^\.\//,'');}function card(p){var href=abs(p.url||'');var title=esc(p.title||'');var desc=esc(p.description||'');var cat=esc(p.category||'OEM & Customize');var img=p.image?'<img alt="'+title+'" decoding="async" loading="lazy" fetchpriority="low" width="800" height="800" src="'+esc(abs(p.image))+'"/>':'';var search=esc([p.title,p.description,p.category,(p.buyerIntentKeywords||[]).join(' ')].filter(Boolean).join(' '));return '<article class="product-card remote-r2-card" data-search="'+search+'"><a href="'+esc(href)+'">'+img+'<div class="card-body"><span class="tag">'+cat+'</span><h3>'+title+'</h3><p>'+desc+'</p></div></a></article>';}
 function load(){if(done)return;done=true;var grid=document.querySelector('.grid');if(!grid)return;var seen=new Set(Array.prototype.map.call(grid.querySelectorAll('a[href]'),function(a){return abs(a.getAttribute('href')).toLowerCase();}));fetch('/product-feed.json',{credentials:'same-origin'}).then(function(r){return r.ok?r.json():null;}).then(function(data){var products=(data&&data.products)||[];var html='';products.forEach(function(p){var href=abs(p.url||'');var key=href.toLowerCase();if(!href||seen.has(key))return;seen.add(key);html+=card(p);});if(html){grid.insertAdjacentHTML('beforeend',html);document.dispatchEvent(new CustomEvent('pfd:products-loaded'));}}).catch(function(){});}if('requestIdleCallback'in window){requestIdleCallback(load,{timeout:1800});}else{setTimeout(load,900);}window.addEventListener('scroll',load,{once:true,passive:true});window.addEventListener('mousemove',load,{once:true,passive:true});})();</script>`;
 }
 function trimProductListingHtml(html) {
@@ -265,7 +265,7 @@ function cardForItem(item, kind, sourceUrl) {
 
   if (kind === 'products') {
     const search = htmlEscape([item.title, item.description, item.category, item.keywords].filter(Boolean).join(' '));
-    const imgHtml = image ? `<img alt="${title}" decoding="async" loading="lazy" src="${htmlEscape(image)}"/>` : '';
+    const imgHtml = image ? `<img alt="${title}" decoding="async" loading="lazy" fetchpriority="low" width="800" height="800" src="${htmlEscape(image)}"/>` : '';
     return `<article class="product-card remote-r2-card" data-search="${search}"><a href="${htmlEscape(href)}">${imgHtml}<div class="card-body"><span class="tag">${category}</span><h3>${title}</h3><p>${desc}</p></div></a></article>`;
   }
 
@@ -382,11 +382,35 @@ function repairCorruptedLogoMarkup(bodyHtml) {
     .replace(/<span class=["']logo-mark["']>[^<]{0,12}锟[^<]*<span>/gi, '<span class="logo-mark">▱</span><span>')
     .replace(/<span class=["']logo-mark["']>[^<]{0,12}\ufffd[^<]*<span>/gi, '<span class="logo-mark">▱</span><span>');
 }
+function addMissingImgAttr(tag, name, value) {
+  if (new RegExp(`\\s${name}=`, 'i').test(tag)) return tag;
+  return tag.replace(/<img\b/i, `<img ${name}="${value}"`);
+}
+function enhanceImagePerformance(bodyHtml, rel) {
+  if (!rel.startsWith('products/') && rel !== 'products.html') return bodyHtml;
+  let imageIndex = 0;
+  return bodyHtml.replace(/<img\b[^>]*>/gi, (tag) => {
+    imageIndex += 1;
+    let out = tag;
+    out = addMissingImgAttr(out, 'decoding', 'async');
+    out = addMissingImgAttr(out, 'width', '800');
+    out = addMissingImgAttr(out, 'height', '800');
+    if (rel.startsWith('products/')) {
+      out = addMissingImgAttr(out, 'loading', imageIndex === 1 ? 'eager' : 'lazy');
+      out = addMissingImgAttr(out, 'fetchpriority', imageIndex === 1 ? 'high' : 'low');
+    } else {
+      out = addMissingImgAttr(out, 'loading', imageIndex <= 4 ? 'eager' : 'lazy');
+      out = addMissingImgAttr(out, 'fetchpriority', imageIndex <= 4 ? 'high' : 'low');
+    }
+    return out;
+  });
+}
 function extractBody(html, result) {
   const m = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
   let body = m ? m[1] : html;
   body = stripDuplicateBodyAssets(body);
   body = repairCorruptedLogoMarkup(body);
+  body = enhanceImagePerformance(body, result?.rel || '');
   return result?.source === 'r2' ? rewriteRemoteImageUrls(body, result.sourceUrl) : body;
 }
 
@@ -732,7 +756,120 @@ function breadcrumbJsonLd(rel) {
   return { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items };
 }
 
-function buyerGuideSection(kind, rel) {
+function productSignals(title, description, rel, html) {
+  const text = `${title} ${description} ${rel} ${html.replace(/<[^>]+>/g, ' ')}`.toLowerCase();
+  const flags = {
+    flexible: /pouch|bag|mylar|film|coffee|valve|spout|zipper|stand[- ]?up|laminate/.test(text),
+    food: /food|coffee|tea|bakery|cookie|chocolate|pizza|burger|salad|snack|pet food|grease|beverage/.test(text),
+    pharma: /pharma|medical|medicine|syringe|steril|datamatrix|gs1|tamper|serialization|healthcare/.test(text),
+    cosmetic: /cosmetic|skincare|beauty|cream|serum|lip|makeup|fragrance/.test(text),
+    gift: /gift|rigid|magnetic|jewelry|drawer|insert|luxury|candle|unboxing/.test(text),
+    mailer: /mailer|corrugated|ecommerce|shipping|subscription/.test(text),
+    label: /label|sticker|adhesive|roll|barcode|qr/.test(text),
+    paperBag: /paper bag|shopping bag|handle|rope handle|carry bag/.test(text)
+  };
+  if (flags.pharma) return {
+    family: 'pharma and medical packaging',
+    materials: ['SBS/art paper carton', 'tamper-evident paperboard', 'security label stock', 'traceability-ready print area'],
+    checks: ['GS1/DataMatrix readability after varnish or lamination', 'batch and lot code placement', 'tamper-evident opening test', 'carton scuff and edge-crush review'],
+    comparison: [
+      ['Serialized carton', 'Best for traceability, batch control and regulated distribution'],
+      ['Security label', 'Best for tamper evidence and anti-counterfeit sealing'],
+      ['Rigid presentation box', 'Best for premium medical aesthetic kits, but costs and freight are higher']
+    ],
+    rfq: ['barcode type and minimum scan grade', 'carton size and syringe/device fit', 'batch/lot printing area', 'tamper-evident seal requirement', 'destination compliance notes']
+  };
+  if (flags.flexible || flags.food) return {
+    family: flags.flexible ? 'flexible food and pouch packaging' : 'food contact paper packaging',
+    materials: flags.flexible ? ['PET/PE laminate', 'MOPP/VMPET/PE barrier film', 'kraft paper laminate', 'recyclable or compostable film options'] : ['food-grade paperboard', 'kraft paper', 'coated paper', 'grease-resistant paper', 'corrugated board'],
+    checks: ['seal strength or glue strength test', 'grease/moisture resistance review', 'odor check before packing', 'carton packing compression check'],
+    comparison: [
+      ['High-barrier laminate', 'Best for coffee, tea, pet food and products needing aroma or moisture protection'],
+      ['Kraft paper look', 'Best for natural branding, but barrier layer must be confirmed for oily or wet products'],
+      ['Paperboard food box', 'Best for display and takeaway structure, less compact than pouches for shipping']
+    ],
+    rfq: ['food-contact requirement', 'product weight and shelf-life target', 'barrier requirement', 'zipper/valve/window choice', 'packing temperature and destination country']
+  };
+  if (flags.cosmetic) return {
+    family: 'cosmetic and skincare packaging',
+    materials: ['SBS paperboard', 'specialty paper', 'greyboard rigid box', 'PVC/PET window material', 'label stock'],
+    checks: ['Pantone color drawdown before mass print', 'soft-touch scratch resistance', 'insert fit against bottle or jar tolerance', 'foil and embossing registration'],
+    comparison: [
+      ['Folding carton', 'Best for cost-efficient retail shelf display'],
+      ['Rigid gift box', 'Best for launch kits and premium sets with higher unboxing value'],
+      ['Label plus carton', 'Best when bottle decoration and secondary box must match']
+    ],
+    rfq: ['bottle or jar dimensions', 'Pantone/brand color target', 'finish sample reference', 'insert material', 'retail display or ecommerce shipping use']
+  };
+  if (flags.gift) return {
+    family: 'premium gift and rigid packaging',
+    materials: ['greyboard', 'art paper wrap', 'specialty paper', 'EVA/EPE/foam insert', 'ribbon or magnetic closure hardware'],
+    checks: ['greyboard thickness and corner finish', 'magnet pull force or closure alignment', 'insert cavity tolerance', 'foil stamping and embossing registration'],
+    comparison: [
+      ['Rigid magnetic box', 'Best for premium unboxing and retail gifting'],
+      ['Collapsible magnetic box', 'Best when freight volume matters'],
+      ['Drawer box', 'Best for layered reveal and small product sets']
+    ],
+    rfq: ['product size and weight', 'assembled or flat-pack shipping choice', 'insert cavity drawing', 'paper wrap and finish sample', 'target unboxing experience']
+  };
+  if (flags.mailer) return {
+    family: 'ecommerce mailer and shipping packaging',
+    materials: ['E-flute corrugated board', 'B-flute corrugated board', 'kraft liner', 'white kraft liner', 'protective insert paperboard'],
+    checks: ['folding line strength', 'edge crush and corner protection', 'tape or locking tab fit', 'drop-test requirement for destination shipping'],
+    comparison: [
+      ['Corrugated mailer', 'Best for shipping protection and subscription boxes'],
+      ['Cardstock product box', 'Best for retail shelf presentation, usually needs outer carton for shipping'],
+      ['Mailer plus insert', 'Best for fragile or multi-piece ecommerce kits']
+    ],
+    rfq: ['product weight', 'shipping method', 'board flute preference', 'drop-test target', 'inside product protection requirement']
+  };
+  if (flags.label) return {
+    family: 'labels and stickers',
+    materials: ['paper label stock', 'PP/PET waterproof film', 'security label stock', 'roll label liner'],
+    checks: ['adhesive match to bottle, pouch or box surface', 'roll direction and core size', 'water/oil resistance', 'barcode and QR scan test'],
+    comparison: [
+      ['Paper label', 'Best for dry retail boxes and kraft branding'],
+      ['PP/PET label', 'Best for cosmetics, beverages and wet handling'],
+      ['Security label', 'Best for tamper evidence and traceability']
+    ],
+    rfq: ['label size', 'surface material', 'roll or sheet format', 'adhesive requirement', 'barcode/QR scan requirement']
+  };
+  if (flags.paperBag) return {
+    family: 'retail paper bags',
+    materials: ['kraft paper', 'art paper', 'cotton rope handle', 'ribbon handle', 'reinforced bottom board'],
+    checks: ['handle pull strength', 'bottom reinforcement', 'folding crease accuracy', 'ink rub resistance'],
+    comparison: [
+      ['Kraft paper bag', 'Best for natural retail branding and heavier daily use'],
+      ['Art paper bag', 'Best for vivid color and luxury retail finish'],
+      ['Gift bag with ribbon', 'Best for premium gift presentation']
+    ],
+    rfq: ['bag size', 'paper GSM', 'handle type', 'load weight', 'finish and bottom reinforcement']
+  };
+  return {
+    family: 'custom printed packaging',
+    materials: ['greyboard', 'art paper', 'kraft paper', 'corrugated board', 'specialty paper', 'laminated film where required'],
+    checks: ['dieline fit against product dimensions', 'material thickness confirmation', 'print color approval', 'finish and packing method review'],
+    comparison: [
+      ['Folding carton', 'Best for retail shelf display and cost control'],
+      ['Rigid box', 'Best for premium presentation and gift sets'],
+      ['Flexible pouch or bag', 'Best for compact shipping and refill products']
+    ],
+    rfq: ['product dimensions', 'quantity', 'material and thickness', 'printing colors', 'finish option', 'destination country']
+  };
+}
+function htmlList(items) {
+  return items.map(item => `<li>${htmlEscape(item)}</li>`).join('');
+}
+function comparisonRows(rows) {
+  return rows.map(([option, use]) => `<tr><th>${htmlEscape(option)}</th><td>${htmlEscape(use)}</td></tr>`).join('');
+}
+function productProcurementSection(title, description, rel, html, trustLis, catLis) {
+  const signals = productSignals(title, description, rel, html);
+  const cleanTitle = title.replace(/\s*\|\s*.+$/, '').trim();
+  return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>Procurement Notes for ${htmlEscape(cleanTitle)}</h2><p>This ${htmlEscape(signals.family)} page is useful for buyers comparing structure, material, production risk and RFQ details before requesting a factory quote. Use the notes below to reduce sampling revisions and make the quotation faster.</p><h2>Key Parameters to Confirm</h2><table class="spec-table"><tbody><tr><th>Typical materials</th><td>${htmlEscape(signals.materials.join(', '))}</td></tr><tr><th>MOQ</th><td>500 PCS for most custom packaging orders</td></tr><tr><th>Customization</th><td>Custom size, structure, dieline, logo printing, finish and insert options</td></tr><tr><th>RFQ fields</th><td>${htmlEscape(signals.rfq.join(', '))}</td></tr></tbody></table><h2>Buyer Decision Comparison</h2><table class="spec-table"><tbody>${comparisonRows(signals.comparison)}</tbody></table><h2>Factory Checks Before Mass Production</h2><ul>${htmlList(signals.checks)}</ul><h2>Real Production Proof to Review</h2><p>Before confirming mass production, review factory photos, QC workflow, sample process and packing guidance. These pages help buyers verify whether the supplier has real production, inspection and export handling experience.</p><ul><li><a href="/about.html#factory-visual-proof">Factory photo proof and production areas</a></li><li><a href="/blog/factory-production-showroom-qc-office-trade-show-gallery.html">Production, showroom, QC and trade show gallery</a></li><li><a href="/quality-control.html">Quality control workflow</a></li><li><a href="/sample-process.html">Sample approval process</a></li></ul><h2>What to Send for Quotation</h2><p>For a fast factory-direct RFQ, send product size, order quantity, material, printing colors, finish, destination country and artwork file. Include product weight, packing method and compliance notes when relevant.</p><ul>${htmlList(signals.rfq)}</ul><h2>Buyer-Guide Pages</h2><ul>${trustLis}</ul><h2>Related Product Categories</h2><ul>${catLis}</ul></div></section>`;
+}
+
+function buyerGuideSection(kind, rel, title, description, html) {
   // Additive-only buyer guide links, rendered AFTER the original body.
   // Never appears on: homepage (index.html), products list, blog list, news list, or the 7 trust pages themselves.
   // Product detail: append a compact buyer-guide box.
@@ -763,7 +900,7 @@ function buyerGuideSection(kind, rel) {
 
   // Product detail: only trust links (categories link back would be redundant here since related products already shown)
   if (kind === 'products' && rel !== 'products.html') {
-    return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>What to Send for Quotation</h2><p>For a fast factory-direct RFQ, send product size, order quantity, material, printing colors, finish, destination country and artwork file. MOQ 500 PCS. OEM/ODM custom size packaging is supported.</p><ul><li>Product size and structure or reference photo</li><li>Quantity and target delivery country</li><li>Material, thickness and application industry</li><li>Printing colors, logo file and artwork format</li><li>Finish request: matte, gloss, foil, embossing, spot UV, window or insert</li></ul><h2>Materials, Processes and Applications</h2><p>Common custom packaging options include greyboard, kraft paper, corrugated board, coated paperboard, specialty paper and laminated flexible film. Printing and finishing can include CMYK, Pantone matching, foil stamping, embossing, debossing, spot UV, matte or gloss lamination, soft-touch coating, windows and inserts.</p><ul><li>Applications: retail display, ecommerce shipping, gift sets, food, cosmetics, pharma, coffee, apparel and promotional packaging</li><li>Sample process: dieline review, artwork check, material confirmation, sample approval and mass production setup</li><li>Shipping notes: confirm carton packing, destination country, delivery method and lead-time target before production</li></ul><h2>Related RFQ FAQ</h2><dl><dt>What is the MOQ?</dt><dd>MOQ starts from 500 PCS for custom packaging orders.</dd><dt>Can you make custom size and structure?</dt><dd>Yes. OEM/ODM custom size, dieline and structure are supported after artwork and material review.</dd><dt>What affects quotation speed?</dt><dd>Size, quantity, material, printing colors, finish, destination country and artwork file are the key RFQ fields.</dd><dt>Can I approve a sample before mass production?</dt><dd>Yes. Buyers can confirm dieline, artwork, material and sample before production setup.</dd></dl><h2>Buyer-Guide Pages</h2><p>Complete B2B buyer resources: factory capability, quality control, sample process, MOQ, artwork, shipping and FAQ.</p><ul>${trustLis}</ul><h2>Related Product Categories</h2><ul>${catLis}</ul></div></section>`;
+    return productProcurementSection(title, description, rel, html, trustLis, catLis);
   }
   // Blog/news detail: trust links + category shortcuts to relevant products
   if ((kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html') {
@@ -780,7 +917,7 @@ export default async function HtmlPage({ params }) {
   const title = getTitle(html);
   const description = getDescription(html, rel);
   const bodyHtml = normalizeHomepageSemanticH1(extractBody(html, result), rel);
-  const buyerGuide = buyerGuideSection(kind, rel);
+  const buyerGuide = buyerGuideSection(kind, rel, title, description, html);
   const trustSchema = trustPageJsonLd(rel, title, description);
   const faqSchema = faqPageJsonLd(rel);
   const collectionSchema = collectionPageJsonLd(html, rel, title, description);
