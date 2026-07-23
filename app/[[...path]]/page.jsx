@@ -447,7 +447,7 @@ export async function generateMetadata({ params }) {
     description,
     alternates: { canonical },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
-    openGraph: { title, description, url: canonical, siteName: 'Packaging Factory Direct', type: isProduct ? 'product' : (isArticle ? 'article' : 'website'), images: [{ url: image }], publishedTime, modifiedTime },
+    openGraph: { title, description, url: canonical, siteName: 'Packaging Factory Direct', type: isArticle ? 'article' : 'website', images: [{ url: image }], publishedTime, modifiedTime },
     twitter: { card: 'summary_large_image', title, description, images: [image] },
     other: { 'x-pfd-content-source': result.source, 'x-pfd-isr-tags': cacheTagsForRel(rel).join(',') }
   };
