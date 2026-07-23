@@ -16,8 +16,8 @@ Allow: /ai-index.json
 Allow: /ai-discovery.json
 Allow: /.well-known/ai-site.json
 Allow: /product-feed.json
-Allow: /google-merchant-feed.xml
-Allow: /merchant-feed-diagnostics.json
+Allow: /product-case-evidence.json
+Allow: /search-console-indexing-plan.json
 Allow: /data/ai-search-answer-cards.json
 Allow: /data/seo-geo-keyword-map.json
 Disallow: /*.md$

@@ -1,0 +1,87 @@
+{
+  "version": "v102-product-case-evidence",
+  "generatedAt": "2026-07-23",
+  "policy": "Append-only product detail evidence. These cases are injected below product detail content and never change product listing or homepage layout.",
+  "cases": {
+    "custom-tamper-evident-hyaluronic-acid-injection-box-gs1-datamatrix-pre-filled-syringes": {
+      "caseTitle": "Serialized injection box RFQ case reference",
+      "photo": "/assets/img/products/custom-tamper-evident-hyaluronic-acid-injection-box-gs1-datamatrix-pre-filled-syringes-1.webp",
+      "dimension": "Custom syringe carton dieline; cavity and leaflet space confirmed from the buyer's syringe tray or reference sample.",
+      "material": "300gsm-400gsm SBS/C1S pharmaceutical carton board with tamper-evident closure area.",
+      "industry": "Medical aesthetics, hyaluronic acid injections, pre-filled syringe distribution.",
+      "sampleBefore": "Initial artwork normally arrives with barcode, batch and expiry zones but no verified carton locking tolerance.",
+      "sampleAfter": "Sampling focuses on GS1/DataMatrix scan readability, tamper-evident closure fit, insert compatibility and clean medical print finish.",
+      "decisionTip": "Confirm barcode grade, syringe tray size and regulatory text zones before plate making."
+    },
+    "child-resistant-secure-sliding-drawer-box-serialized-track-trace-meso-cocktails": {
+      "caseTitle": "Child-resistant drawer box sample reference",
+      "photo": "/assets/img/products/child-resistant-secure-sliding-drawer-box-serialized-track-trace-meso-cocktails-1.webp",
+      "dimension": "Custom drawer box size; inner tray and pull clearance are adjusted around vial, ampoule or meso-cocktail kit dimensions.",
+      "material": "Rigid greyboard with printed art paper wrap and optional security label area.",
+      "industry": "Clinic presentation packs, meso-cocktails, ampoule kits and serialized medical aesthetic sets.",
+      "sampleBefore": "Early samples often need locking pressure, pull-tab position and tray tolerance adjustments.",
+      "sampleAfter": "Approved samples check drawer sliding force, child-resistant feature alignment, code placement and product cavity stability.",
+      "decisionTip": "Send product weight and intended locking method so the drawer does not feel loose or too tight."
+    },
+    "premium-anti-counterfeiting-magnetic-gift-box-destructible-void-seal-luxury-medical-aesthetics": {
+      "caseTitle": "Anti-counterfeit magnetic gift box case reference",
+      "photo": "/assets/img/products/premium-anti-counterfeiting-magnetic-gift-box-destructible-void-seal-luxury-medical-aesthetics-1.webp",
+      "dimension": "Custom rigid box size; insert cavity is matched to bottle, vial, syringe or medical aesthetic kit components.",
+      "material": "1200gsm-1800gsm greyboard, wrapped specialty paper, magnetic closure and destructible void seal option.",
+      "industry": "Luxury medical aesthetics, premium clinic gifting, skincare and anti-counterfeit retail kits.",
+      "sampleBefore": "Concept samples usually compare magnetic closure strength, insert fit and security label position.",
+      "sampleAfter": "Final sample approval checks seal break behavior, foil/embossing registration, lid alignment and unboxing presentation.",
+      "decisionTip": "Choose assembled or collapsible structure early because it changes freight volume and cost."
+    },
+    "wholesale-reverse-tuck-end-pharmaceutical-cartons-integrated-tamper-evident-tear-strip": {
+      "caseTitle": "Tamper-evident reverse tuck carton case reference",
+      "photo": "/assets/img/products/wholesale-reverse-tuck-end-pharmaceutical-cartons-integrated-tamper-evident-tear-strip-1.webp",
+      "dimension": "Custom reverse tuck carton dieline; panel width and tear-strip position are set around tablet, capsule or OTC product size.",
+      "material": "300gsm-400gsm ivory board, SBS or pharmaceutical carton board.",
+      "industry": "OTC medicine, supplement cartons, tablet boxes and capsule packaging.",
+      "sampleBefore": "Before approval, buyers usually need dosage panel spacing, batch/expiry area and tear-strip direction checked.",
+      "sampleAfter": "Approved sample validates opening force, text legibility, barcode area and packing speed on the buyer's line.",
+      "decisionTip": "Provide final regulatory copy before sampling to avoid changing panel layout after print proof."
+    },
+    "gs1-compliant-straight-tuck-tamper-proof-medicine-box-eye-drops-clinical-vials": {
+      "caseTitle": "GS1 medicine carton case reference",
+      "photo": "/assets/img/products/gs1-compliant-straight-tuck-tamper-proof-medicine-box-eye-drops-clinical-vials-1.webp",
+      "dimension": "Custom straight tuck carton for eye-drop bottle, vial or small clinical kit dimensions.",
+      "material": "350gsm SBS/C1S pharmaceutical paperboard with medical clean print finish.",
+      "industry": "Eye drops, clinical vials, ophthalmic care and small medical kits.",
+      "sampleBefore": "Initial dieline checks focus on bottle height, leaflet space and GS1 code panel placement.",
+      "sampleAfter": "Final sample verifies tuck lock strength, code readability, anti-scuff finish and carton squareness after assembly.",
+      "decisionTip": "Send bottle dimensions and barcode file together; this reduces prepress revisions."
+    },
+    "eco-friendly-tamper-evident-mailer-box-self-sealing-tear-strip-supplement-ecommerce": {
+      "caseTitle": "Supplement ecommerce mailer case reference",
+      "photo": "/assets/img/products/eco-friendly-tamper-evident-mailer-box-self-sealing-tear-strip-supplement-ecommerce-1.webp",
+      "dimension": "Custom corrugated mailer size; inside clearance depends on bottle count, dunnage and shipping method.",
+      "material": "E-flute/F-flute corrugated board with kraft or white outer liner and self-seal tear strip.",
+      "industry": "Supplements, vitamins, wellness kits and ecommerce shipments.",
+      "sampleBefore": "Prototype checks usually compare box depth, tear strip direction and bottle movement during transit.",
+      "sampleAfter": "Approved sample confirms self-seal adhesion, opening experience, edge crush resistance and inside print alignment.",
+      "decisionTip": "Confirm product weight and shipping lane before choosing board flute."
+    },
+    "serialized-book-style-multi-pack-presentation-box-premium-collagen-health-supplements": {
+      "caseTitle": "Book-style supplement kit case reference",
+      "photo": "/assets/img/products/serialized-book-style-multi-pack-presentation-box-premium-collagen-health-supplements-1.webp",
+      "dimension": "Custom book-style rigid box; multi-pack cavity layout is based on sachet, vial, bottle or ampoule count.",
+      "material": "Rigid greyboard with specialty paper wrap, ribbon pull and optional foam/EVA/paper insert.",
+      "industry": "Premium collagen, wellness supplements, clinic gift sets and health product bundles.",
+      "sampleBefore": "Before approval, insert cavity depth and flap closure feel are usually adjusted.",
+      "sampleAfter": "Final sample checks lid alignment, serialized code placement, insert retention and premium finish consistency.",
+      "decisionTip": "Send exact product count and display order so the insert layout supports the intended unboxing sequence."
+    },
+    "serialized-medical-device-hanging-box-security-perforation-line-diagnostic-kits": {
+      "caseTitle": "Medical device hanging box case reference",
+      "photo": "/assets/img/products/serialized-medical-device-hanging-box-security-perforation-line-diagnostic-kits-1.webp",
+      "dimension": "Custom hanging carton size with euro slot; perforation line and panel strength are matched to retail display weight.",
+      "material": "300gsm-400gsm SBS/C1S white board with optional tamper label area.",
+      "industry": "Diagnostic kits, rapid tests, medical device accessories and retail health products.",
+      "sampleBefore": "Early samples verify euro slot strength, perforation line position and device accessory fit.",
+      "sampleAfter": "Approved sample checks hanging load, barcode/QR readability, carton locking and retail display presentation.",
+      "decisionTip": "Provide product hanging weight and shelf display method before finalizing board thickness."
+    }
+  }
+}

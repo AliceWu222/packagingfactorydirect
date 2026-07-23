@@ -205,6 +205,19 @@ async function fetchRemoteManifest(kind) {
   const json = await response.json().catch(() => null);
   return normalizeManifestItems(json, kind);
 }
+async function readProductCaseEvidence(rel) {
+  if (!rel || !rel.startsWith('products/')) return null;
+  const file = safeResolve('data/product-case-evidence.json');
+  if (!file) return null;
+  const text = await fs.readFile(file, 'utf8').catch(() => '');
+  if (!text) return null;
+  try {
+    const json = JSON.parse(text);
+    return json?.cases?.[slugFromRel(rel)] || null;
+  } catch {
+    return null;
+  }
+}
 function dedupeManifestItems(items, kind) {
   const seen = new Set();
   return items.filter((item) => {
@@ -863,13 +876,18 @@ function htmlList(items) {
 function comparisonRows(rows) {
   return rows.map(([option, use]) => `<tr><th>${htmlEscape(option)}</th><td>${htmlEscape(use)}</td></tr>`).join('');
 }
-function productProcurementSection(title, description, rel, html, trustLis, catLis) {
+function caseEvidenceHtml(caseEvidence) {
+  if (!caseEvidence) return '';
+  const photo = caseEvidence.photo ? `<figure class="gallery-main" style="max-width:520px;margin:18px 0;"><img src="${htmlEscape(caseEvidence.photo)}" alt="${htmlEscape(caseEvidence.caseTitle || 'Product case photo')}" loading="lazy" decoding="async" width="800" height="800"/></figure>` : '';
+  return `<h2>Real Product Case Reference</h2><p>${htmlEscape(caseEvidence.caseTitle || 'Custom packaging case reference')}</p>${photo}<table class="spec-table"><tbody><tr><th>Size / dieline</th><td>${htmlEscape(caseEvidence.dimension || 'Custom size confirmed by dieline and product fit sample')}</td></tr><tr><th>Material</th><td>${htmlEscape(caseEvidence.material || 'Material confirmed during sampling')}</td></tr><tr><th>Application industry</th><td>${htmlEscape(caseEvidence.industry || 'B2B custom packaging')}</td></tr><tr><th>Before sampling</th><td>${htmlEscape(caseEvidence.sampleBefore || 'Buyer sends size, artwork, material request and reference sample')}</td></tr><tr><th>After sample adjustment</th><td>${htmlEscape(caseEvidence.sampleAfter || 'Factory checks dieline fit, print color, finish, insert tolerance and packing method')}</td></tr><tr><th>Procurement tip</th><td>${htmlEscape(caseEvidence.decisionTip || 'Confirm size, material, finish, quantity and destination before mass production')}</td></tr></tbody></table>`;
+}
+function productProcurementSection(title, description, rel, html, trustLis, catLis, caseEvidence) {
   const signals = productSignals(title, description, rel, html);
   const cleanTitle = title.replace(/\s*\|\s*.+$/, '').trim();
-  return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>Procurement Notes for ${htmlEscape(cleanTitle)}</h2><p>This ${htmlEscape(signals.family)} page is useful for buyers comparing structure, material, production risk and RFQ details before requesting a factory quote. Use the notes below to reduce sampling revisions and make the quotation faster.</p><h2>Key Parameters to Confirm</h2><table class="spec-table"><tbody><tr><th>Typical materials</th><td>${htmlEscape(signals.materials.join(', '))}</td></tr><tr><th>MOQ</th><td>500 PCS for most custom packaging orders</td></tr><tr><th>Customization</th><td>Custom size, structure, dieline, logo printing, finish and insert options</td></tr><tr><th>RFQ fields</th><td>${htmlEscape(signals.rfq.join(', '))}</td></tr></tbody></table><h2>Buyer Decision Comparison</h2><table class="spec-table"><tbody>${comparisonRows(signals.comparison)}</tbody></table><h2>Factory Checks Before Mass Production</h2><ul>${htmlList(signals.checks)}</ul><h2>Real Production Proof to Review</h2><p>Before confirming mass production, review factory photos, QC workflow, sample process and packing guidance. These pages help buyers verify whether the supplier has real production, inspection and export handling experience.</p><ul><li><a href="/about.html#factory-visual-proof">Factory photo proof and production areas</a></li><li><a href="/blog/factory-production-showroom-qc-office-trade-show-gallery.html">Production, showroom, QC and trade show gallery</a></li><li><a href="/quality-control.html">Quality control workflow</a></li><li><a href="/sample-process.html">Sample approval process</a></li></ul><h2>What to Send for Quotation</h2><p>For a fast factory-direct RFQ, send product size, order quantity, material, printing colors, finish, destination country and artwork file. Include product weight, packing method and compliance notes when relevant.</p><ul>${htmlList(signals.rfq)}</ul><h2>Buyer-Guide Pages</h2><ul>${trustLis}</ul><h2>Related Product Categories</h2><ul>${catLis}</ul></div></section>`;
+  return `<section class="section" data-injected="buyer-guide"><div class="container"><h2>Procurement Notes for ${htmlEscape(cleanTitle)}</h2><p>This ${htmlEscape(signals.family)} page is useful for buyers comparing structure, material, production risk and RFQ details before requesting a factory quote. Use the notes below to reduce sampling revisions and make the quotation faster.</p>${caseEvidenceHtml(caseEvidence)}<h2>Key Parameters to Confirm</h2><table class="spec-table"><tbody><tr><th>Typical materials</th><td>${htmlEscape(signals.materials.join(', '))}</td></tr><tr><th>MOQ</th><td>500 PCS for most custom packaging orders</td></tr><tr><th>Customization</th><td>Custom size, structure, dieline, logo printing, finish and insert options</td></tr><tr><th>RFQ fields</th><td>${htmlEscape(signals.rfq.join(', '))}</td></tr></tbody></table><h2>Buyer Decision Comparison</h2><table class="spec-table"><tbody>${comparisonRows(signals.comparison)}</tbody></table><h2>Factory Checks Before Mass Production</h2><ul>${htmlList(signals.checks)}</ul><h2>Real Production Proof to Review</h2><p>Before confirming mass production, review factory photos, QC workflow, sample process and packing guidance. These pages help buyers verify whether the supplier has real production, inspection and export handling experience.</p><ul><li><a href="/about.html#factory-visual-proof">Factory photo proof and production areas</a></li><li><a href="/blog/factory-production-showroom-qc-office-trade-show-gallery.html">Production, showroom, QC and trade show gallery</a></li><li><a href="/quality-control.html">Quality control workflow</a></li><li><a href="/sample-process.html">Sample approval process</a></li></ul><h2>What to Send for Quotation</h2><p>For a fast factory-direct RFQ, send product size, order quantity, material, printing colors, finish, destination country and artwork file. Include product weight, packing method and compliance notes when relevant.</p><ul>${htmlList(signals.rfq)}</ul><h2>Buyer-Guide Pages</h2><ul>${trustLis}</ul><h2>Related Product Categories</h2><ul>${catLis}</ul></div></section>`;
 }
 
-function buyerGuideSection(kind, rel, title, description, html) {
+function buyerGuideSection(kind, rel, title, description, html, caseEvidence) {
   // Additive-only buyer guide links, rendered AFTER the original body.
   // Never appears on: homepage (index.html), products list, blog list, news list, or the 7 trust pages themselves.
   // Product detail: append a compact buyer-guide box.
@@ -900,7 +918,7 @@ function buyerGuideSection(kind, rel, title, description, html) {
 
   // Product detail: only trust links (categories link back would be redundant here since related products already shown)
   if (kind === 'products' && rel !== 'products.html') {
-    return productProcurementSection(title, description, rel, html, trustLis, catLis);
+    return productProcurementSection(title, description, rel, html, trustLis, catLis, caseEvidence);
   }
   // Blog/news detail: trust links + category shortcuts to relevant products
   if ((kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html') {
@@ -917,7 +935,8 @@ export default async function HtmlPage({ params }) {
   const title = getTitle(html);
   const description = getDescription(html, rel);
   const bodyHtml = normalizeHomepageSemanticH1(extractBody(html, result), rel);
-  const buyerGuide = buyerGuideSection(kind, rel, title, description, html);
+  const caseEvidence = await readProductCaseEvidence(rel);
+  const buyerGuide = buyerGuideSection(kind, rel, title, description, html, caseEvidence);
   const trustSchema = trustPageJsonLd(rel, title, description);
   const faqSchema = faqPageJsonLd(rel);
   const collectionSchema = collectionPageJsonLd(html, rel, title, description);

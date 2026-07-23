@@ -82,8 +82,7 @@ color, foil color, material, and shipping country.
 - AI discovery: https://www.packagingfactorydirect.com/ai-discovery.json
 - Answer engine: https://www.packagingfactorydirect.com/answer-engine.json
 - Product feed (JSON): https://www.packagingfactorydirect.com/product-feed.json
-- Google Merchant feed: https://www.packagingfactorydirect.com/google-merchant-feed.xml
-- Merchant feed diagnostics: https://www.packagingfactorydirect.com/merchant-feed-diagnostics.json
+- Product case evidence: https://www.packagingfactorydirect.com/product-case-evidence.json
 - AI index (JSON): https://www.packagingfactorydirect.com/ai-index.json
 - Answer cards (JSON): https://www.packagingfactorydirect.com/data/ai-search-answer-cards.json
 - Keyword map (JSON): https://www.packagingfactorydirect.com/data/seo-geo-keyword-map.json

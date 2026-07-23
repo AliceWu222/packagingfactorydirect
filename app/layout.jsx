@@ -102,7 +102,6 @@ export default function RootLayout({ children }) {
         <link rel="alternate" type="application/json" href="/answer-engine.json" title="Packaging Factory Direct answer engine index" />
         <link rel="alternate" type="application/json" href="/ai-index.json" title="Packaging Factory Direct AI index" />
         <link rel="alternate" type="application/json" href="/product-feed.json" title="Packaging Factory Direct product feed" />
-        <link rel="alternate" type="application/xml" href="/google-merchant-feed.xml" title="Packaging Factory Direct Google Merchant feed" />
         <link rel="stylesheet" href="/assets/css/style.css?v=v97-seo-geo-sitemap-json" />
         <script src="/assets/js/main.js?v=v97-seo-geo-sitemap-json" defer></script>
         {measurementId ? <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script> : null}

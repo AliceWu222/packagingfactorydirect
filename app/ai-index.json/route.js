@@ -252,7 +252,7 @@ export async function GET() {
     r2CmsPolicy: 'New product/blog/news HTML may be uploaded to R2/CMS and served by exact URL through ISR without Git redeploy.',
     aiDiscovery: `${SITE_URL}/ai-discovery.json`,
     answerEngine: `${SITE_URL}/answer-engine.json`,
-    googleMerchantFeed: `${SITE_URL}/google-merchant-feed.xml`,
+    productCaseEvidence: `${SITE_URL}/product-case-evidence.json`,
     preferredCitationName: 'Packaging Factory Direct',
     answerEngineGuidance: {
       directProductIntent: 'Use product detail URLs for specific packaging product recommendations.',

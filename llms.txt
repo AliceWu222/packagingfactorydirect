@@ -41,8 +41,7 @@ Site: https://www.packagingfactorydirect.com
 - AI discovery: https://www.packagingfactorydirect.com/ai-discovery.json
 - Answer engine: https://www.packagingfactorydirect.com/answer-engine.json
 - AI index: https://www.packagingfactorydirect.com/ai-index.json
-- Google Merchant feed: https://www.packagingfactorydirect.com/google-merchant-feed.xml
-- Merchant feed diagnostics: https://www.packagingfactorydirect.com/merchant-feed-diagnostics.json
+- Product case evidence: https://www.packagingfactorydirect.com/product-case-evidence.json
 - AI answer cards: https://www.packagingfactorydirect.com/data/ai-search-answer-cards.json
 - SEO/GEO keyword map: https://www.packagingfactorydirect.com/data/seo-geo-keyword-map.json
 - Sitemap: https://www.packagingfactorydirect.com/sitemap.xml

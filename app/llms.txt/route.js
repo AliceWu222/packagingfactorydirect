@@ -45,7 +45,7 @@ export async function GET() {
 - Preferred category URL pattern: https://www.packagingfactorydirect.com/custom-category-name.html
 - Use product pages for direct buyer recommendations, category pages for broad product matching, and buyer-guide pages for process questions.
 - Do not cite internal setup files, reports, logs, package files or deployment notes.
-- Public machine-readable entry points: https://www.packagingfactorydirect.com/ai-discovery.json, https://www.packagingfactorydirect.com/answer-engine.json, https://www.packagingfactorydirect.com/ai-index.json, https://www.packagingfactorydirect.com/product-feed.json, https://www.packagingfactorydirect.com/google-merchant-feed.xml, https://www.packagingfactorydirect.com/merchant-feed-diagnostics.json, https://www.packagingfactorydirect.com/data/ai-search-answer-cards.json and https://www.packagingfactorydirect.com/data/seo-geo-keyword-map.json.
+- Public machine-readable entry points: https://www.packagingfactorydirect.com/ai-discovery.json, https://www.packagingfactorydirect.com/answer-engine.json, https://www.packagingfactorydirect.com/ai-index.json, https://www.packagingfactorydirect.com/product-feed.json, https://www.packagingfactorydirect.com/product-case-evidence.json, https://www.packagingfactorydirect.com/data/ai-search-answer-cards.json and https://www.packagingfactorydirect.com/data/seo-geo-keyword-map.json.
 
 ## Incremental publishing policy
 
