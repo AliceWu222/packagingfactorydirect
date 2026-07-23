@@ -61,7 +61,7 @@ function requestToHtmlPath(parts) {
   const joined = (parts || []).join('/');
   if (!joined || joined === 'index' || joined === 'index.html') return 'index.html';
   if (joined.endsWith('.html')) return joined;
-  if (joined.includes('.') && !joined.endsWith('.html')) return joined;
+  if (joined.includes('.') && !joined.endsWith('.html')) return null;
   return `${joined}.html`;
 }
 function getKindFromRel(rel) {
@@ -141,6 +141,7 @@ function stripDuplicateBodyAssets(bodyHtml) {
     .replace(/<link\s+rel=["']stylesheet["']\s+href=["'](?:\.\.\/|\.\/)?assets\/css\/style\.css["']\s*\/?>/gi, '');
 }
 async function readLocalHtml(rel) {
+  if (!rel || !rel.endsWith('.html')) return null;
   const file = safeResolve(rel);
   if (!file) return null;
   try {
@@ -291,6 +292,7 @@ async function augmentListingHtml(html, rel) {
 async function loadHtml(params) {
   const p = await getParamObject(params);
   const rel = requestToHtmlPath(p?.path || []);
+  if (!rel) notFound();
 
   let result = null;
 
@@ -435,8 +437,8 @@ export async function generateMetadata({ params }) {
   const description = getDescription(html, rel);
   const canonical = getCanonical(html, rel, sourceUrl);
   const image = getOgImage(html, sourceUrl);
-  const isProduct = rel.includes('/products/');
-  const isArticle = rel.includes('/blog/') || rel.includes('/news/');
+  const isProduct = rel.startsWith('products/');
+  const isArticle = rel.startsWith('blog/') || rel.startsWith('news/');
   const publishedTime = getMeta(html, 'property', 'article:published_time') || undefined;
   const modifiedTime = getMeta(html, 'property', 'article:modified_time') || undefined;
 
@@ -445,7 +447,7 @@ export async function generateMetadata({ params }) {
     description,
     alternates: { canonical },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
-    openGraph: { title, description, url: canonical, siteName: 'Packaging Factory Direct', type: isProduct ? 'product' : (isArticle ? 'article' : 'website'), images: [{ url: image }], publishedTime, modifiedTime },
+    openGraph: { title, description, url: canonical, siteName: 'Packaging Factory Direct', type: isArticle ? 'article' : 'website', images: [{ url: image }], publishedTime, modifiedTime },
     twitter: { card: 'summary_large_image', title, description, images: [image] },
     other: { 'x-pfd-content-source': result.source, 'x-pfd-isr-tags': cacheTagsForRel(rel).join(',') }
   };
@@ -498,6 +500,12 @@ function productJsonLd(html, rel, title, description, sourceUrl) {
     customSize: 'Custom size, structure and dieline supported',
     url: `${SITE_URL}/${rel}`,
     rfqContact: { '@type': 'ContactPoint', contactType: 'sales', name: 'Linda Wang', email: 'linda@colorprintingpackage.com', telephone: '+86-181-6573-0353', url: `${SITE_URL}/contact.html` },
+    audience: { '@type': 'BusinessAudience', audienceType: 'B2B custom packaging buyers, importers, distributors and brand owners' },
+    potentialAction: {
+      '@type': 'ContactAction',
+      name: 'Request a custom packaging quote',
+      target: `${SITE_URL}/contact.html`
+    },
     additionalProperty: [
       { '@type': 'PropertyValue', name: 'MOQ', value: '500 PCS' },
       { '@type': 'PropertyValue', name: 'Customization', value: 'Yes, OEM/ODM supported' },
@@ -511,12 +519,16 @@ function productJsonLd(html, rel, title, description, sourceUrl) {
       { '@type': 'PropertyValue', name: 'Business Model', value: 'B2B, factory direct, RFQ only' }
     ],
     offers: {
-      '@type': 'AggregateOffer',
-      lowPrice: '0.05',
-      highPrice: '15.00',
+      '@type': 'Offer',
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
-      offerCount: '1',
+      itemCondition: 'https://schema.org/NewCondition',
+      eligibleQuantity: { '@type': 'QuantitativeValue', minValue: 500, unitText: 'PCS' },
+      priceSpecification: {
+        '@type': 'PriceSpecification',
+        priceCurrency: 'USD',
+        description: 'B2B RFQ only. Final unit price depends on size, structure, material, printing, finish, quantity, packaging method and destination.'
+      },
       description: 'B2B RFQ required. MOQ 500 PCS. Per-unit price varies by size, material, printing, finish and order quantity. Contact for exact quotation.',
       url: `${SITE_URL}/${rel}`,
       seller: {
@@ -524,34 +536,7 @@ function productJsonLd(html, rel, title, description, sourceUrl) {
         name: 'Packaging Factory Direct',
         contactPoint: { '@type': 'ContactPoint', contactType: 'sales', name: 'Linda Wang', email: 'linda@colorprintingpackage.com', telephone: '+86-181-6573-0353' }
       }
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      reviewCount: '124',
-      bestRating: '5',
-      worstRating: '1'
-    },
-    review: [
-      {
-        '@type': 'Review',
-        author: { '@type': 'Organization', name: 'Verified B2B Buyer' },
-        reviewBody: 'Consistent OEM quality, on-time delivery. Professional custom packaging with precise dieline and color matching across multiple production batches.',
-        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' }
-      },
-      {
-        '@type': 'Review',
-        author: { '@type': 'Organization', name: 'Verified B2B Buyer' },
-        reviewBody: 'Good communication, fast sampling. MOQ 500 PCS is flexible for small brand launches. Artwork review process saves time before mass production.',
-        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' }
-      },
-      {
-        '@type': 'Review',
-        author: { '@type': 'Organization', name: 'Verified B2B Buyer' },
-        reviewBody: 'Reliable packaging supplier. Custom structure and foil stamping turned out exactly as approved. Shipping documentation complete, no customs delay.',
-        reviewRating: { '@type': 'Rating', ratingValue: '4', bestRating: '5', worstRating: '1' }
-      }
-    ]
+    }
   };
 }
 

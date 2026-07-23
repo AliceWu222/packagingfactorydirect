@@ -18,6 +18,7 @@ export const metadata = {
 const orgJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': 'https://www.packagingfactorydirect.com/#organization',
   name: 'Packaging Factory Direct',
   url: 'https://www.packagingfactorydirect.com',
   logo: 'https://www.packagingfactorydirect.com/logo.png',
@@ -38,14 +39,43 @@ const orgJsonLd = {
     telephone: '+86-181-6573-0353',
     availableLanguage: ['en', 'zh']
   }],
+  areaServed: 'Worldwide',
+  knowsAbout: [
+    'custom packaging boxes',
+    'custom gift boxes',
+    'magnetic rigid boxes',
+    'mailer boxes',
+    'stand up pouches',
+    'coffee bags with valve',
+    'food packaging',
+    'cosmetic packaging',
+    'pharmaceutical packaging boxes',
+    'paper bags',
+    'labels and stickers',
+    'custom dielines',
+    'packaging sampling',
+    'packaging quality control'
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Custom Packaging Manufacturing Services',
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Custom packaging boxes manufacturing' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Custom gift boxes and magnetic rigid boxes' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Custom stand up pouches and coffee bags' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Custom paper bags, labels and stickers' } }
+    ]
+  },
   sameAs: []
 };
 
 const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': 'https://www.packagingfactorydirect.com/#website',
   name: 'Packaging Factory Direct',
   url: 'https://www.packagingfactorydirect.com',
+  publisher: { '@id': 'https://www.packagingfactorydirect.com/#organization' },
   potentialAction: {
     '@type': 'SearchAction',
     target: {
@@ -67,6 +97,11 @@ export default function RootLayout({ children }) {
         <meta name="format-detection" content="telephone=yes,email=yes,address=yes" />
         <link rel="preload" as="image" href="/assets/img/hero/hero-1.webp" fetchPriority="high" />
         <link rel="preload" as="image" href="/assets/img/hero/mobile-vertical-slide-1.webp" fetchPriority="high" media="(max-width: 760px)" />
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="Packaging Factory Direct LLM summary" />
+        <link rel="alternate" type="application/json" href="/ai-discovery.json" title="Packaging Factory Direct AI discovery" />
+        <link rel="alternate" type="application/json" href="/answer-engine.json" title="Packaging Factory Direct answer engine index" />
+        <link rel="alternate" type="application/json" href="/ai-index.json" title="Packaging Factory Direct AI index" />
+        <link rel="alternate" type="application/json" href="/product-feed.json" title="Packaging Factory Direct product feed" />
         <link rel="stylesheet" href="/assets/css/style.css?v=v97-seo-geo-sitemap-json" />
         <script src="/assets/js/main.js?v=v97-seo-geo-sitemap-json" defer></script>
         {measurementId ? <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script> : null}

@@ -157,16 +157,19 @@
       ]
     },
     {
-      "question": "What should be refreshed in ISR when a new product is published?",
-      "answer": "Refresh only the new product detail page, products.html, homepage related sections, sitemap.xml, product-feed.json and ai-index.json. Do not rebuild old product pages or reset old canonical URLs.",
+      "question": "How are new products discovered without changing old product URLs?",
+      "answer": "New products are added as append-only stable URLs and exposed through the sitemap, product feed and AI index. Existing product, blog and news URLs should not be renamed, overwritten or reset.",
       "keywords": [
-        "Next.js ISR",
-        "product page ISR",
-        "sitemap ISR",
+        "new product discovery",
+        "stable product URLs",
+        "sitemap product feed",
         "SEO weight protection"
       ],
       "urls": [
-        "/R2_CMS_ISR_SETUP.md"
+        "/products.html",
+        "/sitemap.xml",
+        "/product-feed.json",
+        "/ai-index.json"
       ]
     }
   ],

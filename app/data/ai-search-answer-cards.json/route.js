@@ -11,8 +11,23 @@ async function readJson() {
   return JSON.parse(text);
 }
 
+function isInternalUrl(url) {
+  return /(^|\/)(README|ISR_|R2_CMS|PFD_V|OPEN_THIS|DOWNLOAD_NOTE)|\.(md|lock|log)$/i.test(String(url || ''));
+}
+
+function sanitizePayload(payload) {
+  const cards = Array.isArray(payload.answerCards) ? payload.answerCards : [];
+  return {
+    ...payload,
+    answerCards: cards.map(card => ({
+      ...card,
+      urls: Array.isArray(card.urls) ? card.urls.filter(url => !isInternalUrl(url)) : []
+    }))
+  };
+}
+
 export async function GET() {
-  const payload = await readJson();
+  const payload = sanitizePayload(await readJson());
   return Response.json(payload, {
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
