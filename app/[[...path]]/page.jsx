@@ -315,13 +315,36 @@ async function loadHtml(params) {
   }
   return result;
 }
-function getTitle(html) {
+function getTitle(html, rel) {
+  const strategic = STRATEGIC_META[rel];
+  if (strategic?.title) return strategic.title;
   const m = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
   return m ? m[1].replace(/\s+/g, ' ').trim() : 'Packaging Factory Direct';
 }
+
+const STRATEGIC_META = {
+  'index.html': {
+    title: 'Custom Packaging Manufacturer | Packaging Factory Direct',
+    description: 'Custom packaging manufacturer for boxes, pouches, paper bags and labels. MOQ 500 PCS, OEM/ODM, custom printing and worldwide shipping. Request a factory quote.'
+  },
+  'products/hyaluronic-acid-dermal-filler-packaging-boxes-medical-aesthetic.html': {
+    title: 'Dermal Filler Packaging Boxes Manufacturer | MOQ 500 PCS',
+    description: 'Custom dermal filler packaging boxes for aesthetic clinics and medical brands. MOQ 500 PCS with vial inserts, QR codes, batch panels and custom printing.'
+  },
+  'products/luxury-rigid-gift-boxes-magnetic-ribbon-eva-inserts.html': {
+    title: 'Luxury Rigid Gift Boxes Manufacturer | MOQ 500 PCS',
+    description: 'Luxury rigid gift boxes with magnetic closures, ribbon and EVA inserts. MOQ 500 PCS with custom sizes, logo printing, foil, embossing and export packing.'
+  },
+  'products/foldable-magnetic-boxes.html': {
+    title: 'Foldable Magnetic Boxes Manufacturer | MOQ 500 PCS',
+    description: 'Foldable magnetic boxes for premium retail and gift packaging. MOQ 500 PCS with custom sizes, greyboard, inserts, foil stamping and soft-touch finishes.'
+  }
+};
+
 function getDescription(html, rel) {
   // Runtime descriptions intentionally override older static meta on strategic pages.
   const kind = getKindFromRel(rel);
+  if (STRATEGIC_META[rel]?.description) return STRATEGIC_META[rel].description;
   const slug = slugFromRel(rel).replace(/-/g, ' ');
   const short = slug.charAt(0).toUpperCase() + slug.slice(1);
   const strategicDescriptions = {
@@ -399,10 +422,24 @@ function normalizeHomepageSemanticH1(bodyHtml, rel) {
     return `<h2${attrs}>${content}</h2>`;
   });
 }
+async function localDetailParams(directory) {
+  const dir = safeResolve(directory);
+  if (!dir) return [];
+  try {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+    return entries
+      .filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.html'))
+      .map(entry => ({ path: [directory, entry.name] }));
+  } catch {
+    return [];
+  }
+}
+
 export async function generateStaticParams() {
   // Core pages, static SEO category hubs and industry solution pages are prebuilt.
-  // Product/blog/news detail pages are still ISR-generated per path to avoid full catalog rebuilds.
-  return [
+  // Local detail pages are also prebuilt so crawlers receive a warm static response on first visit.
+  // dynamicParams remains enabled for future R2/CMS detail pages that are not in this build.
+  const coreParams = [
     { path: [] },
     { path: ['index.html'] },
     { path: ['products.html'] },
@@ -429,11 +466,21 @@ export async function generateStaticParams() {
     { path: ['industry', 'ecommerce-mailer-packaging-solutions.html'] },
     { path: ['industry', 'luxury-gift-packaging-solutions.html'] }
   ];
+  const detailParams = (
+    await Promise.all(['products', 'blog', 'news', 'industry'].map(localDetailParams))
+  ).flat();
+  const seen = new Set();
+  return [...coreParams, ...detailParams].filter(item => {
+    const key = (item.path || []).join('/');
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 export async function generateMetadata({ params }) {
   const result = await loadHtml(params);
   const { html, rel, sourceUrl } = result;
-  const title = getTitle(html);
+  const title = getTitle(html, rel);
   const description = getDescription(html, rel);
   const canonical = getCanonical(html, rel, sourceUrl);
   const image = getOgImage(html, sourceUrl);
@@ -794,7 +841,7 @@ export default async function HtmlPage({ params }) {
   const { html, rel, sourceUrl } = result;
   const bc = breadcrumbJsonLd(rel);
   const kind = getKindFromRel(rel);
-  const title = getTitle(html);
+  const title = getTitle(html, rel);
   const description = getDescription(html, rel);
   const bodyHtml = normalizeHomepageSemanticH1(extractBody(html, result), rel);
   const buyerGuide = buyerGuideSection(kind, rel);

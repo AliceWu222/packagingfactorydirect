@@ -218,12 +218,68 @@
     window.addEventListener('resize', apply);
   }
 
+  function initRfqLinks(){
+    var form = qs('#rfqForm');
+    if(!form) return;
+    var whatsapp = qs('#rfqWhatsApp', form);
+    var email = qs('a[href^="mailto:"]', form);
+    if(!whatsapp) return;
+
+    function fieldValue(name){
+      var field = form.elements && form.elements[name];
+      return field ? String(field.value || '').trim() : '';
+    }
+
+    function buildMessage(){
+      var fields = [
+        ['Product type', fieldValue('Product Type')],
+        ['Size', fieldValue('Size')],
+        ['Quantity', fieldValue('Quantity')],
+        ['Material', fieldValue('Material')],
+        ['Destination country', fieldValue('Destination')],
+        ['Artwork / finish / notes', fieldValue('Message')]
+      ];
+      var lines = ['Hello Linda, I need a custom packaging quotation.'];
+      fields.forEach(function(item){
+        if(item[1]) lines.push(item[0] + ': ' + item[1]);
+      });
+      lines.push('Please confirm the recommended material, sampling options, lead time and shipping details.');
+      return lines.join('\n');
+    }
+
+    function updateLinks(){
+      var message = buildMessage();
+      whatsapp.setAttribute('href', 'https://wa.me/8618165730353?text=' + encodeURIComponent(message));
+      whatsapp.setAttribute('rel', 'noopener');
+      whatsapp.setAttribute('aria-label', 'Send completed RFQ on WhatsApp');
+      if(email){
+        email.setAttribute(
+          'href',
+          'mailto:linda@colorprintingpackage.com?subject=' +
+            encodeURIComponent('Packaging RFQ') +
+            '&body=' +
+            encodeURIComponent(message)
+        );
+      }
+    }
+
+    form.addEventListener('input', updateLinks);
+    form.addEventListener('change', updateLinks);
+    form.addEventListener('submit', function(event){
+      event.preventDefault();
+      updateLinks();
+      window.open(whatsapp.href, '_blank', 'noopener');
+    });
+    updateLinks();
+  }
+
   if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', function(){ initSearch(); initHeroSlider(); initDedicatedMobileHeroSlider(); initMobileHeroFloatingRule(); });
+    document.addEventListener('DOMContentLoaded', function(){ initSearch(); initHeroSlider(); initDedicatedMobileHeroSlider(); initMobileHeroFloatingRule(); initRfqLinks(); });
   }else{
     initSearch();
     initHeroSlider();
     initDedicatedMobileHeroSlider();
     initMobileHeroFloatingRule();
+    initRfqLinks();
   }
 })();
