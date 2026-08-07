@@ -447,6 +447,7 @@ export async function generateStaticParams() {
     { path: ['blog.html'] },
     { path: ['news.html'] },
     { path: ['contact.html'] },
+    { path: ['procurement-guides.html'] },
     { path: ['custom-packaging-boxes.html'] },
     { path: ['custom-gift-boxes.html'] },
     { path: ['custom-magnetic-gift-boxes.html'] },
@@ -838,6 +839,7 @@ function buyerGuideSection(kind, rel) {
   // Product detail: append a compact buyer-guide box.
   // Blog/news detail: append related product-category shortcuts + buyer-guide links.
   const TRUST_LINKS = [
+    ['/procurement-guides.html', 'Packaging Procurement Guides'],
     ['/factory-capability.html', 'Factory Capability'],
     ['/quality-control.html', 'Quality Control'],
     ['/sample-process.html', 'Sample Process'],

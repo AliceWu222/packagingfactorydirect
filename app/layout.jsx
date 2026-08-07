@@ -1,3 +1,5 @@
+import InquiryAnalytics from './inquiry-analytics';
+
 export const viewport = { width: 'device-width', initialScale: 1, maximumScale: 5 };
 
 export const metadata = {
@@ -183,7 +185,7 @@ cite, cite *, blockquote em, blockquote i, dfn, address i { font-style: italic !
 })();
 ` }} />
       </head>
-      <body>{children}</body>
+      <body>{children}<InquiryAnalytics /></body>
     </html>
   );
 }

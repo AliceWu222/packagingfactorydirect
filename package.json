@@ -10,6 +10,7 @@
     "check:routes": "node --check next.config.mjs && find app -name 'route.js' -print -exec node --check {} \\;"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest"
