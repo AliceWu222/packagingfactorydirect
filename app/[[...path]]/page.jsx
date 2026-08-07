@@ -558,48 +558,6 @@ function productJsonLd(html, rel, title, description, sourceUrl) {
       { '@type': 'PropertyValue', name: 'OEM/ODM', value: 'OEM and ODM custom packaging manufacturing supported' },
       { '@type': 'PropertyValue', name: 'RFQ contact', value: 'Send size, quantity, material, printing colors, finish, destination country and artwork file for quotation' },
       { '@type': 'PropertyValue', name: 'Business Model', value: 'B2B, factory direct, RFQ only' }
-    ],
-    offers: {
-      '@type': 'AggregateOffer',
-      lowPrice: '0.05',
-      highPrice: '15.00',
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
-      offerCount: '1',
-      description: 'B2B RFQ required. MOQ 500 PCS. Per-unit price varies by size, material, printing, finish and order quantity. Contact for exact quotation.',
-      url: `${SITE_URL}/${rel}`,
-      seller: {
-        '@type': 'Organization',
-        name: 'Packaging Factory Direct',
-        contactPoint: { '@type': 'ContactPoint', contactType: 'sales', name: 'Linda Wang', email: 'linda@colorprintingpackage.com', telephone: '+86-181-6573-0353' }
-      }
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      reviewCount: '124',
-      bestRating: '5',
-      worstRating: '1'
-    },
-    review: [
-      {
-        '@type': 'Review',
-        author: { '@type': 'Organization', name: 'Verified B2B Buyer' },
-        reviewBody: 'Consistent OEM quality, on-time delivery. Professional custom packaging with precise dieline and color matching across multiple production batches.',
-        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' }
-      },
-      {
-        '@type': 'Review',
-        author: { '@type': 'Organization', name: 'Verified B2B Buyer' },
-        reviewBody: 'Good communication, fast sampling. MOQ 500 PCS is flexible for small brand launches. Artwork review process saves time before mass production.',
-        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' }
-      },
-      {
-        '@type': 'Review',
-        author: { '@type': 'Organization', name: 'Verified B2B Buyer' },
-        reviewBody: 'Reliable packaging supplier. Custom structure and foil stamping turned out exactly as approved. Shipping documentation complete, no customs delay.',
-        reviewRating: { '@type': 'Rating', ratingValue: '4', bestRating: '5', worstRating: '1' }
-      }
     ]
   };
 }
@@ -655,12 +613,84 @@ const TRUST_PAGES = {
   }
 };
 
+const REVIEW_DATE = '2026-08-07';
+const CATEGORY_REVIEW = {
+  'custom-packaging-boxes.html': [
+    ['ISO 12647-2 offset print process reference', 'https://www.iso.org/standard/57833.html'],
+    ['ISO 18601 packaging and environment reference', 'https://www.iso.org/standard/55869.html']
+  ],
+  'custom-gift-boxes.html': [
+    ['ISO 12647-2 offset print process reference', 'https://www.iso.org/standard/57833.html'],
+    ['ISO 18601 packaging and environment reference', 'https://www.iso.org/standard/55869.html']
+  ],
+  'custom-stand-up-pouches.html': [
+    ['FDA Packaging & Food Contact Substances', 'https://www.fda.gov/food/food-ingredients-packaging/packaging-food-contact-substances-fcs'],
+    ['European Commission Food Contact Materials', 'https://food.ec.europa.eu/food-safety/chemical-safety/food-contact-materials_en']
+  ],
+  'custom-cosmetic-packaging-boxes.html': [
+    ['FDA Cosmetics Labeling', 'https://www.fda.gov/cosmetics/cosmetics-labeling'],
+    ['ISO 12647-2 offset print process reference', 'https://www.iso.org/standard/57833.html']
+  ],
+  'custom-pharmaceutical-packaging-boxes.html': [
+    ['GS1 2D barcodes in healthcare', 'https://www.gs1.org/industries/healthcare/2d-barcode-healthcare'],
+    ['FDA Drug Supply Chain Security Act', 'https://www.fda.gov/drugs/drug-supply-chain-security-act-dscsa/title-ii-drug-quality-and-security-act']
+  ]
+};
+
+function categoryFaqJsonLd(html, rel) {
+  if (!CATEGORY_REVIEW[rel]) return null;
+  const faqStart = html.search(/<h2[^>]*>\s*(?:Frequently asked questions|Buyer FAQ|FAQ)\s*<\/h2>/i);
+  if (faqStart < 0) return null;
+  const faqEnd = html.indexOf('</section>', faqStart);
+  const faqRegion = html.slice(faqStart, faqEnd >= 0 ? faqEnd : undefined);
+  const pairs = Array.from(faqRegion.matchAll(/<h3[^>]*>([\s\S]*?)<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/gi))
+    .map(match => ({
+      question: match[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
+      answer: match[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+    }))
+    .filter(item => item.question && item.answer)
+    .slice(0, 8);
+  if (pairs.length < 2) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: pairs.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer }
+    }))
+  };
+}
+
+function categoryReviewSection(rel) {
+  const sources = CATEGORY_REVIEW[rel];
+  if (!sources) return '';
+  const links = sources.map(([label, url]) => `<li><a href="${url}" rel="noopener noreferrer">${label}</a></li>`).join('');
+  return `<section class="section" data-injected="content-review"><div class="container"><h2>Content Review and Primary Sources</h2><p><strong>Content owner:</strong> Packaging Factory Direct. <strong>Last reviewed:</strong> <time datetime="${REVIEW_DATE}">August 7, 2026</time>.</p><ul>${links}</ul><p>These sources are buyer-side specification references, not claims that Packaging Factory Direct holds a certification. Project compliance and supporting documents must be verified for the selected material, production route and destination market before ordering.</p></div></section>`;
+}
+
+function sanitizeUnverifiedClaims(html) {
+  const replacements = [
+    ["<h3>Global Compliance</h3><p>FSC, ISO, BRC, GMP and GS1 serialization solutions available.</p>", "<h3>Project-Specific Compliance</h3><p>Material documentation, print controls and serialization options are reviewed against each project's destination-market requirements.</p>"],
+    ["China's Leading One-Stop Custom Packaging Solutions", 'One-Stop Custom Packaging Solutions'],
+    ['ISO Print Quality', 'Print Quality Controls'],
+    ['Food-grade paper and coating (FDA/EU 1935/2004 compliant)', 'Paper and coating selected against the documented food-contact requirements for the intended use and destination market'],
+    ['Food-grade / FDA / EU 1935/2004 material certificate check for food and pharma packaging', 'Project-specific material and food-contact documentation check for the intended use and destination market'],
+    ['<h2>Certifications & Compliance</h2><p>We support FSC, ISO 9001, FDA-compliant food-grade material, EU 1935/2004 food contact, REACH, GS1 DataMatrix / pharma serialization and buyer-requested third-party inspection (SGS, BV, Intertek) on RFQ.</p>', '<h2>Project-Specific Compliance Review</h2><p>FSC, ISO 9001, food-contact, REACH, GS1 DataMatrix and third-party inspection references are included only when supported by verified documents for the selected supplier, material, production route and destination market.</p>'],
+    ['Food-grade material certificate included', 'Supporting documentation confirmed per selected material and destination market'],
+    ['Yes. We use FDA-compliant and EU 1935/2004 food-contact certified paper, coating and film for food packaging, coffee bags with valve, restaurant takeaway boxes and grease-resistant liners. Certificates provided on request.', 'Food-contact suitability is project-specific. Confirm the food type, contact conditions and destination market before material selection; supporting documents are included only when verified for the selected material and production route.'],
+    ['Yes. Commercial invoice, packing list, certificate of origin, FSC certificate (for FSC-paper orders), FDA/EU 1935/2004 food-grade certificate, ISO 9001 certificate, MSDS and REACH declaration all available on request.', 'Commercial invoice and packing list are provided for confirmed orders. Certificates, declarations and country-of-origin documents are included only when applicable and verified for the selected material, supplier, production route and destination market.'],
+    ['Stand-up pouch with certified child-resistant zipper and bottom gusset', 'Stand-up pouch with a project-specified child-resistant zipper and bottom gusset; destination-market test evidence must be confirmed before ordering']
+  ];
+  return replacements.reduce((output, [from, to]) => output.replaceAll(from, to), html);
+}
+
 function collectionPageJsonLd(html, rel, title, description) {
   if (getKindFromRel(rel) !== 'category') return null;
   const links = Array.from(html.matchAll(/<a[^>]+href=["']([^"']*\/products\/[^"']+\.html|[^"']*products\/[^"']+\.html|[^"']*\.html)["'][^>]*>([\s\S]*?)<\/a>/gi))
     .map((m) => {
-      const href = normalizeRootHref(m[1], 'products');
-      if (!href.includes('/products/') && !href.startsWith('/products/')) return null;
+      const href = new URL(m[1], `${SITE_URL}/${rel}`).pathname;
+      if (!href.startsWith('/products/') || !href.endsWith('.html')) return null;
       const name = m[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
       return {
         '@type': 'ListItem',
@@ -678,6 +708,7 @@ function collectionPageJsonLd(html, rel, title, description) {
     unique.push({ ...item, position: unique.length + 1 });
     if (unique.length >= 24) break;
   }
+  const reviewSources = CATEGORY_REVIEW[rel] || [];
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -688,7 +719,12 @@ function collectionPageJsonLd(html, rel, title, description) {
         url: `${SITE_URL}/${rel}`,
         about: 'B2B custom packaging category page for OEM/ODM buyers, brands, importers and distributors.',
         isPartOf: { '@type': 'WebSite', name: 'Packaging Factory Direct', url: SITE_URL },
-        publisher: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL }
+        publisher: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL },
+        ...(reviewSources.length ? {
+          author: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL },
+          dateModified: REVIEW_DATE,
+          citation: reviewSources.map(([, url]) => url)
+        } : {})
       },
       {
         '@type': 'ItemList',
@@ -843,10 +879,12 @@ export default async function HtmlPage({ params }) {
   const kind = getKindFromRel(rel);
   const title = getTitle(html, rel);
   const description = getDescription(html, rel);
-  const bodyHtml = normalizeHomepageSemanticH1(extractBody(html, result), rel);
+  const bodyHtml = sanitizeUnverifiedClaims(normalizeHomepageSemanticH1(extractBody(html, result), rel));
   const buyerGuide = buyerGuideSection(kind, rel);
+  const contentReview = categoryReviewSection(rel);
   const trustSchema = trustPageJsonLd(rel, title, description);
   const faqSchema = faqPageJsonLd(rel);
+  const categoryFaqSchema = categoryFaqJsonLd(bodyHtml, rel);
   const collectionSchema = collectionPageJsonLd(html, rel, title, description);
 
   // Original static <head> content is not rendered inside the extracted body,
@@ -855,7 +893,7 @@ export default async function HtmlPage({ params }) {
   const articleType = kind === 'news' ? 'NewsArticle' : 'Article';
   const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(bodyHtml, articleType);
   const injectTrust = Boolean(trustSchema);
-  const injectFaq = Boolean(faqSchema);
+  const injectFaq = Boolean(faqSchema || categoryFaqSchema);
   const injectCollection = Boolean(collectionSchema);
   const productsLoaderScript = rel === 'products.html' ? productListLoaderScriptForRenderedUrls() : '';
 
@@ -888,7 +926,7 @@ export default async function HtmlPage({ params }) {
       {injectFaq ? (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema || categoryFaqSchema) }}
         />
       ) : null}
       {injectCollection ? (
@@ -897,7 +935,7 @@ export default async function HtmlPage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
         />
       ) : null}
-      <main dangerouslySetInnerHTML={{ __html: bodyHtml + buyerGuide }} />
+      <main dangerouslySetInnerHTML={{ __html: bodyHtml + contentReview + buyerGuide }} />
       {productsLoaderScript ? (
         <script dangerouslySetInnerHTML={{ __html: productsLoaderScript.replace(/^<script>|<\/script>$/g, '') }} />
       ) : null}
