@@ -51,13 +51,20 @@ function protectInternalFiles(text) {
   return rules.reduce((out, rule) => ensureLine(out, rule), text);
 }
 
+function keepSingleSitemapIndex(text) {
+  const withoutSitemaps = text
+    .split(/\r?\n/)
+    .filter(line => !/^\s*Sitemap\s*:/i.test(line))
+    .join('\n')
+    .trimEnd();
+  return `${withoutSitemaps}\nSitemap: ${CANONICAL_HOST}/sitemap-index.xml\n`;
+}
+
 export async function GET() {
   const raw = await readLocal();
   let text = protectInternalFiles(normalizeHost(raw));
   text = ensureLine(text, `Allow: ${CANONICAL_HOST}/ai-discovery.json`.replace(CANONICAL_HOST, ''));
   text = ensureLine(text, `Allow: /.well-known/ai-site.json`);
-  if (!text.includes(`${CANONICAL_HOST}/sitemap-index.xml`)) {
-    text = text.trimEnd() + `\nSitemap: ${CANONICAL_HOST}/sitemap-index.xml\n`;
-  }
+  text = keepSingleSitemapIndex(text);
   return new Response(text, { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 's-maxage=3600, stale-while-revalidate' } });
 }

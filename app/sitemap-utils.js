@@ -3,7 +3,7 @@ import path from 'node:path';
 
 export const SITE_URL = 'https://www.packagingfactorydirect.com';
 const LEGACY_SITE_URL = 'https://packagingfactorydirect.com';
-const TODAY = '2026-07-05';
+const TODAY = new Date().toISOString().slice(0, 10);
 const ISR_SECONDS = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PAGE_REVALIDATE_SECONDS || 3600);
 const REMOTE_KINDS = ['products', 'blog', 'news'];
 
@@ -245,7 +245,7 @@ export function sitemapXml(entries) {
 }
 
 export function sitemapIndexXml() {
-  const files = ['sitemap.xml', 'sitemap-pages.xml', 'sitemap-products.xml', 'sitemap-blog.xml', 'sitemap-news.xml'];
+  const files = ['sitemap-pages.xml', 'sitemap-products.xml', 'sitemap-blog.xml', 'sitemap-news.xml', 'sitemap-images.xml'];
   const body = files.map(file => `  <sitemap>\n    <loc>${SITE_URL}/${file}</loc>\n    <lastmod>${TODAY}</lastmod>\n  </sitemap>`).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</sitemapindex>\n`;
 }

@@ -29,7 +29,9 @@ const nextConfig = {
     ];
   },
   async redirects() {
-    return [];
+    return [
+      { source: '/index.html', destination: '/', permanent: true }
+    ];
   },
   async headers() {
     return [
