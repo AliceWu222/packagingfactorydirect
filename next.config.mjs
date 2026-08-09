@@ -121,17 +121,17 @@ const nextConfig = {
           { key: 'X-Robots-Tag', value: 'noindex, follow' }
         ]
       },
-      // CSS and JS: short browser cache, always revalidate to pick up patches quickly
+      // Versioned CSS and JS: cache in the browser and at the edge for faster repeat visits.
       {
         source: '/assets/:path*.css',
         headers: [
-          { key: 'Cache-Control', value: `public, max-age=60, s-maxage=3600, must-revalidate` }
+          { key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400' }
         ]
       },
       {
         source: '/assets/:path*.js',
         headers: [
-          { key: 'Cache-Control', value: `public, max-age=60, s-maxage=3600, must-revalidate` }
+          { key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400' }
         ]
       },
       {

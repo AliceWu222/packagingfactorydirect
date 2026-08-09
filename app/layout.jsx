@@ -97,8 +97,29 @@ export default function RootLayout({ children }) {
       <head>
         <meta name="theme-color" content="#0f3f2c" />
         <meta name="format-detection" content="telephone=yes,email=yes,address=yes" />
-        <link rel="preload" as="image" href="/assets/img/hero/hero-1.webp" fetchPriority="high" />
+        <link rel="preload" as="image" href="/assets/img/hero/hero-1.webp" fetchPriority="high" media="(min-width: 761px)" />
         <link rel="preload" as="image" href="/assets/img/hero/mobile-vertical-slide-1.webp" fetchPriority="high" media="(max-width: 760px)" />
+        <style dangerouslySetInnerHTML={{ __html: `
+@media (max-width: 760px) {
+  html.pfd-mobile-lcp-lock .mobile-hero-slide { display: none !important; }
+  html.pfd-mobile-lcp-lock .mobile-hero-slide:first-child { display: block !important; }
+}
+` }} />
+        <script dangerouslySetInnerHTML={{ __html: `
+(function(){
+  if (!window.matchMedia || !window.matchMedia('(max-width: 760px)').matches) return;
+  var root = document.documentElement;
+  var events = ['pointerdown', 'touchstart', 'keydown'];
+  root.classList.add('pfd-mobile-lcp-lock');
+  function release(){
+    root.classList.remove('pfd-mobile-lcp-lock');
+    events.forEach(function(type){ window.removeEventListener(type, release, true); });
+  }
+  events.forEach(function(type){
+    window.addEventListener(type, release, { capture: true, passive: type !== 'keydown', once: true });
+  });
+})();
+` }} />
         <link rel="alternate" type="text/plain" href="/llms.txt" title="Packaging Factory Direct LLM summary" />
         <link rel="alternate" type="application/json" href="/ai-discovery.json" title="Packaging Factory Direct AI discovery" />
         <link rel="alternate" type="application/json" href="/ai-index.json" title="Packaging Factory Direct AI index" />
