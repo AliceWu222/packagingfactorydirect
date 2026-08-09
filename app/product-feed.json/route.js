@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { readLocalHtmlInventory } from '../content-inventory.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-static';
@@ -137,6 +138,7 @@ function normalizeProductForFeed(item) {
 export async function GET() {
   const local = await readLocalFeed();
   const remote = await remoteItems('products');
+  const localHtmlProducts = await readLocalHtmlInventory('products');
   const byUrl = new Map();
   for (const product of (local.products || [])) {
     const norm = normalizeProductForFeed(product);
@@ -146,9 +148,15 @@ export async function GET() {
     const url = normalizeUrlToWww(absoluteSiteUrl(item.url, 'products'));
     byUrl.set(url, { ...item, url, source: 'r2-cms' });
   }
+  // Existing feed order is preserved. Local HTML products missing from legacy
+  // JSON feeds are appended, so no product URL or existing product position moves.
+  for (const item of localHtmlProducts) {
+    const normalized = normalizeProductForFeed(item);
+    if (!byUrl.has(normalized.url)) byUrl.set(normalized.url, normalized);
+  }
   const payload = {
     ...local,
-    version: 'v95-procurement-feed',
+    version: 'v100-complete-local-product-feed',
     site: SITE_URL,
     contact: 'Linda Wang',
     email: 'linda@colorprintingpackage.com',

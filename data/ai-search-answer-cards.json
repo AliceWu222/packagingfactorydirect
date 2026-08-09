@@ -1,6 +1,6 @@
 {
   "version": "v72-seo-geo-cwv-isr",
-  "generatedAt": "2026-07-04",
+  "generatedAt": "2026-08-09",
   "site": "Packaging Factory Direct",
   "domain": "packagingfactorydirect.com",
   "moq": "500 PCS",
@@ -167,6 +167,61 @@
       ],
       "urls": [
         "/R2_CMS_ISR_SETUP.md"
+      ]
+    },
+    {
+      "question": "What should a buyer include in a dermal filler secondary packaging RFQ?",
+      "answer": "Specify the filled product and primary container dimensions, carton count, required label copy, coding area, tamper-evidence requirement, insert or tray, artwork status, destination market, quantity and requested verification documents. The brand or regulatory applicant must approve all medical claims and market-specific labeling.",
+      "keywords": [
+        "dermal filler packaging boxes supplier",
+        "hyaluronic acid packaging box",
+        "pre-filled syringe carton"
+      ],
+      "urls": [
+        "/blog/dermal-filler-secondary-packaging-rfq-guide.html",
+        "/custom-pharmaceutical-packaging-boxes.html",
+        "/contact.html"
+      ]
+    },
+    {
+      "question": "How should a beauty brand specify a PR kit box?",
+      "answer": "List every product and its dimensions, define the presentation order, choose an insert based on weight and fragility, confirm the box structure and closure, separate print and finish artwork layers, and test the complete packed kit against the intended shipping route before production approval.",
+      "keywords": [
+        "beauty PR kit packaging supplier",
+        "cosmetic gift box with insert",
+        "skincare launch packaging"
+      ],
+      "urls": [
+        "/blog/beauty-pr-kit-packaging-specification-guide.html",
+        "/custom-cosmetic-packaging-boxes.html",
+        "/custom-magnetic-gift-boxes.html"
+      ]
+    },
+    {
+      "question": "What information is required to specify OTR and WVTR for a flexible pouch?",
+      "answer": "State the product, target shelf life, filling and sealing process, storage temperature and humidity, distribution route, pouch dimensions, closure, and the test method and conditions used for any OTR or WVTR target. Barrier numbers are not comparable when test conditions or methods differ.",
+      "keywords": [
+        "flexible packaging OTR WVTR",
+        "high barrier pouch specification",
+        "stand up pouch RFQ"
+      ],
+      "urls": [
+        "/blog/flexible-pouch-barrier-otr-wvtr-rfq-guide.html",
+        "/custom-stand-up-pouches.html"
+      ]
+    },
+    {
+      "question": "How can an overseas buyer verify a China custom packaging supplier?",
+      "answer": "Verify the legal company identity, factory address, production scope, recent facility evidence, sample-to-production controls, defect definitions, inspection plan, subcontracting disclosure, export documents and project-specific certificates. Check each document with its issuer instead of relying on logos or unsupported website claims.",
+      "keywords": [
+        "how to verify China packaging manufacturer",
+        "packaging supplier audit checklist",
+        "Shenzhen packaging factory"
+      ],
+      "urls": [
+        "/blog/china-custom-packaging-supplier-audit-evidence-checklist.html",
+        "/factory-capability.html",
+        "/quality-control.html"
       ]
     }
   ],

@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { notFound } from 'next/navigation';
+import { readLocalHtmlInventory } from '../content-inventory.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-static';
@@ -271,11 +272,20 @@ function cardForItem(item, kind, sourceUrl) {
 
   return `<article class="card remote-r2-card"><div class="card-body"><span class="tag">${category}</span><h3><a href="${htmlEscape(href)}">${title}</a></h3><p>${desc}</p></div></article>`;
 }
+function appendBlogCards(html, cards) {
+  if (!cards) return html;
+  return html.replace(
+    /<\/div>\s*<\/section>\s*(?=<div class=["']floating["'])/i,
+    `${cards}</div></section>`
+  );
+}
 async function augmentListingHtml(html, rel) {
   const kind = rel === 'products.html' ? 'products' : rel === 'blog.html' ? 'blog' : rel === 'news.html' ? 'news' : null;
   if (!kind) return html;
 
-  const items = dedupeManifestItems(await fetchRemoteManifest(kind).catch(() => []), kind);
+  const remoteItems = await fetchRemoteManifest(kind).catch(() => []);
+  const localItems = kind === 'blog' ? await readLocalHtmlInventory('blog') : [];
+  const items = dedupeManifestItems([...remoteItems, ...localItems], kind);
   if (!items.length) return html;
 
   const newItems = items.filter(item => !html.includes(`href="${normalizeRootHref(item.url, kind)}"`) && !html.includes(`href="${item.url}"`));
@@ -287,6 +297,7 @@ async function augmentListingHtml(html, rel) {
   const deferred = productListLoaderScript(newItems, kind);
   if (!cards && !deferred) return html;
 
+  if (kind === 'blog') return appendBlogCards(html, cards) + deferred;
   return html.replace(/<div class=["']grid["']>/i, match => `${match}${cards}`) + deferred;
 }
 async function loadHtml(params) {
