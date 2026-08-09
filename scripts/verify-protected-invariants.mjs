@@ -2,14 +2,23 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 
-const BASE_REF = process.env.PFD_BASE_REF || '29d4e69';
+const BASE_REF = process.env.PFD_BASE_REF || '8f3bf151363f5eff43383f2ae7ded5b373fe14dd';
 const ROOT = process.cwd();
+const APPENDED_BLOGS = [
+  'blog/custom-packaging-landed-cost-dimensional-weight-moq-guide.html',
+  'blog/packaging-color-matching-pantone-cmyk-delta-e-proof-guide.html',
+  'blog/ecommerce-packaging-transit-test-ista-3a-mailer-box-guide.html',
+  'blog/food-pouch-odor-migration-food-contact-document-checklist.html'
+];
 const NEW_BLOGS = new Set([
   'blog/dermal-filler-secondary-packaging-rfq-guide.html',
   'blog/beauty-pr-kit-packaging-specification-guide.html',
   'blog/flexible-pouch-barrier-otr-wvtr-rfq-guide.html',
-  'blog/china-custom-packaging-supplier-audit-evidence-checklist.html'
+  'blog/china-custom-packaging-supplier-audit-evidence-checklist.html',
+  ...APPENDED_BLOGS
 ]);
+const BLOG_APPEND_BEGIN = '<!-- BEGIN 2026-08-10 FORUM PAIN-POINT GUIDES -->';
+const BLOG_APPEND_END = '<!-- END 2026-08-10 FORUM PAIN-POINT GUIDES -->';
 
 function git(args, encoding = 'utf8') {
   return execFileSync('git', ['-c', `safe.directory=${ROOT.replaceAll('\\', '/')}`, ...args], {
@@ -19,6 +28,10 @@ function git(args, encoding = 'utf8') {
   });
 }
 
+function normalizeLineEndings(value) {
+  return value.replace(/\r\n/g, '\n');
+}
+
 function trackedAtBase() {
   return git(['ls-tree', '-r', '--name-only', BASE_REF])
     .split(/\r?\n/)
@@ -26,7 +39,7 @@ function trackedAtBase() {
 }
 
 function isProtected(file) {
-  if (['index.html', 'products.html', 'blog.html', 'news.html', 'contact.html', 'robots.txt', 'sitemap.xml'].includes(file)) return true;
+  if (['index.html', 'products.html', 'news.html', 'contact.html', 'robots.txt', 'sitemap.xml'].includes(file)) return true;
   if (/^app\/(?:robots\.txt|sitemap(?:-[^/]+)?\.xml)\/route\.js$/.test(file)) return true;
   if (file.startsWith('products/')) return true;
   if (file.startsWith('news/')) return true;
@@ -51,6 +64,26 @@ for (const file of baseFiles.filter(isProtected)) {
   if (changedFiles.has(file)) violations.push(`${file}: content changed`);
 }
 
+const baseBlog = git(['show', `${BASE_REF}:blog.html`]);
+const currentBlog = readFileSync(path.join(ROOT, 'blog.html'), 'utf8');
+const appendPattern = new RegExp(`${BLOG_APPEND_BEGIN}[\\s\\S]*?${BLOG_APPEND_END}`, 'g');
+const appendMatches = currentBlog.match(appendPattern) || [];
+if (appendMatches.length !== 1) {
+  violations.push(`blog.html: expected one marked append-only block, found ${appendMatches.length}`);
+} else {
+  const blogWithoutAppend = currentBlog.replace(appendPattern, '');
+  if (normalizeLineEndings(blogWithoutAppend) !== normalizeLineEndings(baseBlog)) {
+    violations.push('blog.html: content outside the marked append-only block changed');
+  }
+  const appendedHrefs = [...appendMatches[0].matchAll(/href="(blog\/[^"]+\.html)"/g)].map(match => match[1]);
+  if (JSON.stringify(appendedHrefs) !== JSON.stringify(APPENDED_BLOGS)) {
+    violations.push(`blog.html: appended card order or URLs changed (${appendedHrefs.join(', ')})`);
+  }
+  if (!currentBlog.includes(`${BLOG_APPEND_END}</div></section><div class="floating">`)) {
+    violations.push('blog.html: append-only block is not at the end of the existing card grid');
+  }
+}
+
 const productFiles = readdirSync(path.join(ROOT, 'products')).filter(name => name.endsWith('.html'));
 const blogFiles = readdirSync(path.join(ROOT, 'blog')).filter(name => name.endsWith('.html'));
 const newsFiles = readdirSync(path.join(ROOT, 'news')).filter(name => name.endsWith('.html'));
@@ -65,7 +98,7 @@ for (const file of NEW_BLOGS) {
 }
 
 if (productFiles.length !== 182) violations.push(`products: expected 182 HTML files, found ${productFiles.length}`);
-if (blogFiles.length !== 38) violations.push(`blog: expected 38 HTML files, found ${blogFiles.length}`);
+if (blogFiles.length !== 42) violations.push(`blog: expected 42 HTML files, found ${blogFiles.length}`);
 if (newsFiles.length !== 18) violations.push(`news: expected 18 HTML files, found ${newsFiles.length}`);
 
 if (violations.length) {
@@ -81,5 +114,6 @@ console.log(JSON.stringify({
   blogHtmlFiles: blogFiles.length,
   newsHtmlFiles: newsFiles.length,
   protectedFilesChanged: 0,
+  blogListingAppendOnly: true,
   desktopFourColumnRulePresent: true
 }, null, 2));
