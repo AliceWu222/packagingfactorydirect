@@ -537,39 +537,59 @@ function firstParagraphText(html) {
   return p[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 500);
 }
 
-function productJsonLd(html, rel, title, description, sourceUrl) {
+function productRfqServiceJsonLd(html, rel, title, description, sourceUrl) {
   const image = firstImageAbsoluteUrl(html, sourceUrl);
   const cleanName = title.replace(/\s*\|\s*.+$/, '').trim();
+  const pageUrl = `${SITE_URL}/${rel}`;
+  const webpageId = `${pageUrl}#webpage`;
+  const serviceId = `${pageUrl}#service`;
+  const imageId = `${pageUrl}#primaryimage`;
   return {
     '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: cleanName,
-    description: description,
-    image: image,
-    brand: { '@type': 'Brand', name: 'Packaging Factory Direct' },
-    manufacturer: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL },
-    category: 'Custom Packaging',
-    material: 'Greyboard, art paper, kraft paper, corrugated board, PET/PLA film, laminated flexible packaging materials, foil and specialty paper depending on product application',
-    printingOptions: ['Offset printing', 'Digital printing', 'Flexographic printing', 'Gravure printing', 'CMYK', 'Pantone color matching', 'Custom logo printing'],
-    finishOptions: ['Matte lamination', 'Gloss lamination', 'Soft-touch lamination', 'Foil stamping', 'Embossing', 'Debossing', 'Spot UV', 'Window patching'],
-    applications: ['Retail packaging', 'Ecommerce shipping', 'Food packaging', 'Cosmetic packaging', 'Gift packaging', 'Pharma packaging', 'Branded promotional packaging'],
-    industries: ['Food', 'Beverage', 'Coffee and tea', 'Cosmetics', 'Skincare', 'Apparel', 'Gifts', 'Ecommerce', 'Pharmaceutical', 'Pet food', 'Cannabis where compliant'],
-    moq: '500 PCS',
-    oemOdm: 'OEM/ODM custom packaging supported',
-    customSize: 'Custom size, structure and dieline supported',
-    url: `${SITE_URL}/${rel}`,
-    rfqContact: { '@type': 'ContactPoint', contactType: 'sales', name: 'Linda Wang', email: 'linda@colorprintingpackage.com', telephone: '+86-181-6573-0353', url: `${SITE_URL}/contact.html` },
-    additionalProperty: [
-      { '@type': 'PropertyValue', name: 'MOQ', value: '500 PCS' },
-      { '@type': 'PropertyValue', name: 'Customization', value: 'Yes, OEM/ODM supported' },
-      { '@type': 'PropertyValue', name: 'Custom size support', value: 'Custom size, structure and dieline supported' },
-      { '@type': 'PropertyValue', name: 'Printing options', value: 'Offset printing, digital printing, flexographic printing, CMYK, Pantone color and custom logo printing' },
-      { '@type': 'PropertyValue', name: 'Finish options', value: 'Matte lamination, gloss lamination, soft-touch lamination, foil stamping, embossing, debossing, spot UV and window patching' },
-      { '@type': 'PropertyValue', name: 'Applications', value: 'Retail packaging, ecommerce shipping, food packaging, cosmetic packaging, gift packaging, pharma packaging and branded promotional packaging' },
-      { '@type': 'PropertyValue', name: 'Industries', value: 'Food, beverage, coffee and tea, cosmetics, skincare, apparel, gifts, ecommerce, pharmaceutical, pet food and cannabis where compliant' },
-      { '@type': 'PropertyValue', name: 'OEM/ODM', value: 'OEM and ODM custom packaging manufacturing supported' },
-      { '@type': 'PropertyValue', name: 'RFQ contact', value: 'Send size, quantity, material, printing colors, finish, destination country and artwork file for quotation' },
-      { '@type': 'PropertyValue', name: 'Business Model', value: 'B2B, factory direct, RFQ only' }
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': webpageId,
+        url: pageUrl,
+        name: title,
+        description,
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        publisher: { '@id': `${SITE_URL}/#organization` },
+        primaryImageOfPage: {
+          '@type': 'ImageObject',
+          '@id': imageId,
+          url: image,
+          contentUrl: image
+        },
+        mainEntity: { '@id': serviceId }
+      },
+      {
+        '@type': 'Service',
+        '@id': serviceId,
+        name: `Custom manufacturing service for ${cleanName}`,
+        serviceType: 'Custom packaging manufacturing and printing',
+        description,
+        url: pageUrl,
+        image: { '@id': imageId },
+        provider: { '@id': `${SITE_URL}/#organization` },
+        areaServed: 'Worldwide',
+        audience: {
+          '@type': 'BusinessAudience',
+          audienceType: 'B2B packaging buyers, brand owners and procurement teams'
+        },
+        availableChannel: {
+          '@type': 'ServiceChannel',
+          serviceUrl: `${SITE_URL}/contact.html`,
+          servicePhone: {
+            '@type': 'ContactPoint',
+            contactType: 'sales',
+            name: 'Linda Wang',
+            email: 'linda@colorprintingpackage.com',
+            telephone: '+86-181-6573-0353',
+            availableLanguage: ['en', 'zh']
+          }
+        }
+      }
     ]
   };
 }
@@ -902,7 +922,7 @@ export default async function HtmlPage({ params }) {
 
   // Original static <head> content is not rendered inside the extracted body,
   // so SEO schemas are injected here at the App Router layer.
-  const injectProduct = kind === 'products' && rel !== 'products.html';
+  const injectProductService = kind === 'products' && rel !== 'products.html';
   const articleType = kind === 'news' ? 'NewsArticle' : 'Article';
   const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(bodyHtml, articleType);
   const injectTrust = Boolean(trustSchema);
@@ -918,10 +938,10 @@ export default async function HtmlPage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(bc) }}
         />
       ) : null}
-      {injectProduct ? (
+      {injectProductService ? (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(html, rel, title, description, sourceUrl)) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productRfqServiceJsonLd(html, rel, title, description, sourceUrl)) }}
         />
       ) : null}
       {injectArticle ? (
