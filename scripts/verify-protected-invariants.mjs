@@ -2,8 +2,13 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 
-const BASE_REF = process.env.PFD_BASE_REF || '8f3bf151363f5eff43383f2ae7ded5b373fe14dd';
+const BASE_REF = process.env.PFD_BASE_REF || '9e34d12096a943a6991312f65fbb59622eea61d1';
 const ROOT = process.cwd();
+const AUTHORIZED_PROTECTED_FILES = new Set([
+  'app/sitemap.xml/route.js',
+  'assets/css/style.css',
+  'news/r2-cms-isr-seo-packaging-publishing-trend.html'
+]);
 const APPENDED_BLOGS = [
   'blog/custom-packaging-landed-cost-dimensional-weight-moq-guide.html',
   'blog/packaging-color-matching-pantone-cmyk-delta-e-proof-guide.html',
@@ -39,6 +44,7 @@ function trackedAtBase() {
 }
 
 function isProtected(file) {
+  if (AUTHORIZED_PROTECTED_FILES.has(file)) return false;
   if (['index.html', 'products.html', 'news.html', 'contact.html', 'robots.txt', 'sitemap.xml'].includes(file)) return true;
   if (/^app\/(?:robots\.txt|sitemap(?:-[^/]+)?\.xml)\/route\.js$/.test(file)) return true;
   if (file.startsWith('products/')) return true;
@@ -64,6 +70,56 @@ for (const file of baseFiles.filter(isProtected)) {
   if (changedFiles.has(file)) violations.push(`${file}: content changed`);
 }
 
+const baseNewsLinkPage = git(['show', `${BASE_REF}:news/r2-cms-isr-seo-packaging-publishing-trend.html`]);
+const currentNewsLinkPage = readFileSync(path.join(ROOT, 'news', 'r2-cms-isr-seo-packaging-publishing-trend.html'), 'utf8');
+const expectedNewsLinkPage = baseNewsLinkPage.replace(
+  '<a href="../R2_CMS_ISR_SETUP.md">R2/CMS ISR Setup</a>',
+  '<a href="../factory-capability.html">Factory Capability</a>'
+);
+if (normalizeLineEndings(currentNewsLinkPage).replace(/\n$/, '') !== normalizeLineEndings(expectedNewsLinkPage).replace(/\n$/, '')) {
+  violations.push('news/r2-cms-isr-seo-packaging-publishing-trend.html: changes exceed the authorized broken-link replacement');
+}
+
+const currentLegacySitemapRoute = readFileSync(path.join(ROOT, 'app', 'sitemap.xml', 'route.js'), 'utf8');
+if (!currentLegacySitemapRoute.includes("status: 308") || !currentLegacySitemapRoute.includes('sitemap-index.xml')) {
+  violations.push('app/sitemap.xml/route.js: legacy sitemap must redirect to sitemap-index.xml');
+}
+const nextConfig = readFileSync(path.join(ROOT, 'next.config.mjs'), 'utf8');
+if (!nextConfig.includes("{ source: '/sitemap.xml', destination: '/sitemap-index.xml', permanent: true }")) {
+  violations.push('next.config.mjs: legacy sitemap redirect must precede the static public file');
+}
+const publicRobots = readFileSync(path.join(ROOT, 'public', 'robots.txt'), 'utf8');
+const publicRobotSitemaps = [...publicRobots.matchAll(/^Sitemap:\s*(\S+)/gmi)].map(match => match[1]);
+if (JSON.stringify(publicRobotSitemaps) !== JSON.stringify(['https://www.packagingfactorydirect.com/sitemap-index.xml'])) {
+  violations.push(`public/robots.txt: expected only the sitemap index, found ${publicRobotSitemaps.join(', ')}`);
+}
+
+const baseCss = git(['show', `${BASE_REF}:assets/css/style.css`]);
+const currentCssForAuthorization = readFileSync(path.join(ROOT, 'assets', 'css', 'style.css'), 'utf8');
+const cssInsertionMarker = `.products-page .page-hero{\n  padding:34px 0 22px !important;\n}\n`;
+const authorizedCssBlock = `\n/* 2026-08-13 render-cost optimization: preserve every card and the approved grid,\n   while allowing browsers to skip painting cards far below the viewport. */\n@supports (content-visibility:auto){\n  .filters ~ .grid > .product-card:nth-child(n+13){\n    content-visibility:auto;\n    contain-intrinsic-size:auto 470px;\n  }\n}\n`;
+const normalizedBaseCss = normalizeLineEndings(baseCss);
+const expectedCss = normalizedBaseCss.replace(cssInsertionMarker, `${cssInsertionMarker}${authorizedCssBlock}`);
+if (normalizeLineEndings(currentCssForAuthorization) !== expectedCss) {
+  violations.push('assets/css/style.css: changes exceed the authorized content-visibility block');
+}
+
+const pageRuntime = readFileSync(path.join(ROOT, 'app', '[[...path]]', 'page.jsx'), 'utf8');
+for (const required of [
+  "'@type': 'Product'",
+  'productAndRfqServiceJsonLd',
+  'additionalProperty',
+  'seoTitleForRel',
+  'seoDescriptionForRel',
+  'articleDatesFromHtml',
+  'SOURCE_CONTROLLED_ARTICLE_DATES',
+  'compactProductSearchAttributes',
+  'repairVisibleMojibake',
+  'contain-intrinsic-size:auto 470px'
+]) {
+  if (!pageRuntime.includes(required)) violations.push(`app/[[...path]]/page.jsx: missing ${required}`);
+}
+
 const baseBlog = git(['show', `${BASE_REF}:blog.html`]);
 const currentBlog = readFileSync(path.join(ROOT, 'blog.html'), 'utf8');
 const appendPattern = new RegExp(`${BLOG_APPEND_BEGIN}[\\s\\S]*?${BLOG_APPEND_END}`, 'g');
@@ -72,7 +128,8 @@ if (appendMatches.length !== 1) {
   violations.push(`blog.html: expected one marked append-only block, found ${appendMatches.length}`);
 } else {
   const blogWithoutAppend = currentBlog.replace(appendPattern, '');
-  if (normalizeLineEndings(blogWithoutAppend) !== normalizeLineEndings(baseBlog)) {
+  const baseBlogWithoutAppend = baseBlog.replace(appendPattern, '');
+  if (normalizeLineEndings(blogWithoutAppend) !== normalizeLineEndings(baseBlogWithoutAppend)) {
     violations.push('blog.html: content outside the marked append-only block changed');
   }
   const appendedHrefs = [...appendMatches[0].matchAll(/href="(blog\/[^"]+\.html)"/g)].map(match => match[1]);

@@ -30,6 +30,7 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      { source: '/sitemap.xml', destination: '/sitemap-index.xml', permanent: true },
       { source: '/index.html', destination: '/', permanent: true }
     ];
   },

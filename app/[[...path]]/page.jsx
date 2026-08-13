@@ -252,8 +252,29 @@ function removeDuplicateFactoryBlogGallery(html) {
   const orphanDuplicate = /(<\/article>)\s*<h3>\s*<a\s+href=["']blog\/factory-production-showroom-qc-office-trade-show-gallery\.html["'][\s\S]*?<\/h3>\s*<p>[\s\S]*?<\/p>\s*<\/div>\s*<\/article>/i;
   return html.replace(orphanDuplicate, '$1');
 }
+function compactSearchValue(value) {
+  const words = decodeBasicHtmlEntities(value).replace(/\s+/g, ' ').trim().split(' ');
+  const seen = new Set();
+  const kept = [];
+  let length = 0;
+  for (const word of words) {
+    const key = word.toLowerCase().replace(/^[^a-z0-9]+|[^a-z0-9]+$/g, '');
+    if (!key || seen.has(key)) continue;
+    if (length + word.length + 1 > 480) break;
+    seen.add(key);
+    kept.push(word);
+    length += word.length + 1;
+  }
+  return htmlEscape(kept.join(' '));
+}
+function compactProductSearchAttributes(html) {
+  return html.replace(
+    /(<article\b[^>]*class=["'][^"']*\bproduct-card\b[^"']*["'][^>]*\bdata-search=["'])([^"']*)(["'][^>]*>)/gi,
+    (all, before, searchValue, after) => `${before}${compactSearchValue(searchValue)}${after}`
+  );
+}
 function optimizeListingOutputHtml(html, rel) {
-  if (rel === 'products.html') return html;
+  if (rel === 'products.html') return compactProductSearchAttributes(html);
   if (rel === 'blog.html') return removeDuplicateFactoryBlogGallery(html);
   return html;
 }
@@ -331,6 +352,84 @@ function getTitle(html, rel) {
   if (strategic?.title) return strategic.title;
   const m = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
   return m ? m[1].replace(/\s+/g, ' ').trim() : 'Packaging Factory Direct';
+}
+
+const LISTING_META = {
+  'products.html': {
+    title: 'Custom Packaging Products | Packaging Factory Direct',
+    description: 'Browse 182 custom packaging products for boxes, pouches, paper bags, labels, food, cosmetic and pharmaceutical projects. MOQ 500 PCS; request an OEM/ODM quote.'
+  },
+  'blog.html': {
+    title: 'Custom Packaging Blog & B2B Buyer Guides',
+    description: 'Read practical custom packaging guides covering materials, structures, finishes, testing, supplier checks and RFQ preparation for B2B procurement teams.'
+  },
+  'news.html': {
+    title: 'Custom Packaging News & Industry Updates',
+    description: 'Follow custom packaging market, material, production and procurement updates for brands, importers and B2B buyers sourcing factory-direct packaging.'
+  }
+};
+
+function decodeBasicHtmlEntities(value) {
+  return String(value || '')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&nbsp;/gi, ' ');
+}
+
+function repairTextEncoding(value) {
+  return decodeBasicHtmlEntities(value)
+    .replaceAll('Â·', '·')
+    .replaceAll('â€“', '–')
+    .replaceAll('â€”', '—')
+    .replaceAll('â€™', '’')
+    .replaceAll('â€œ', '“')
+    .replaceAll('â€', '”')
+    .replaceAll('éˆ¥?', '—')
+    .replaceAll('鈥?', '–')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function shortenAtWordBoundary(value, maxLength) {
+  const clean = repairTextEncoding(value);
+  if (clean.length <= maxLength) return clean;
+  const candidate = clean.slice(0, maxLength + 1);
+  const cut = candidate.lastIndexOf(' ');
+  return (cut >= Math.floor(maxLength * 0.68) ? candidate.slice(0, cut) : clean.slice(0, maxLength))
+    .replace(/[\s|,;:&–—-]+$/g, '')
+    .trim();
+}
+
+function seoTitleForRel(rawTitle, rel) {
+  if (LISTING_META[rel]?.title) return LISTING_META[rel].title;
+  let title = repairTextEncoding(rawTitle)
+    .replace(/\s*\|\s*OEM Custom Packaging MOQ 500 PCS\s*$/i, '')
+    .replace(/\s*\|\s*Packaging Factory Direct\s*$/i, '')
+    .trim();
+  if (getKindFromRel(rel) === 'products' && title.length < 30) {
+    title = `${title} | Custom Packaging`;
+  }
+  if (title.length <= 60) return title;
+  return shortenAtWordBoundary(title, 60);
+}
+
+function seoDescriptionForRel(rawDescription, rel) {
+  if (LISTING_META[rel]?.description) return LISTING_META[rel].description;
+  const kind = getKindFromRel(rel);
+  let description = repairTextEncoding(rawDescription);
+  if (description.length < 120) {
+    const suffix = kind === 'products'
+      ? ' Request an OEM/ODM quotation; MOQ starts from 500 PCS.'
+      : ' Read the practical specifications and RFQ guidance for B2B buyers.';
+    description = `${description.replace(/[.\s]+$/g, '')}.${suffix}`.trim();
+  }
+  if (description.length > 160) {
+    description = `${shortenAtWordBoundary(description, 159).replace(/[.\s]+$/g, '')}.`;
+  }
+  return description;
 }
 
 const STRATEGIC_META = {
@@ -416,11 +515,23 @@ function repairCorruptedLogoMarkup(bodyHtml) {
     .replace(/<span class=["']logo-mark["']>[^<]{0,12}锟[^<]*<span>/gi, '<span class="logo-mark">▱</span><span>')
     .replace(/<span class=["']logo-mark["']>[^<]{0,12}\ufffd[^<]*<span>/gi, '<span class="logo-mark">▱</span><span>');
 }
+function repairVisibleMojibake(bodyHtml) {
+  return bodyHtml
+    .replaceAll('10kg�?0kg', '10kg-20kg')
+    .replaceAll('set �?rigid', 'set — rigid')
+    .replaceAll('Â·', '·')
+    .replaceAll('â€“', '–')
+    .replaceAll('â€”', '—')
+    .replaceAll('â€™', '’')
+    .replaceAll('â€œ', '“')
+    .replaceAll('â€', '”');
+}
 function extractBody(html, result) {
   const m = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
   let body = m ? m[1] : html;
   body = stripDuplicateBodyAssets(body);
   body = repairCorruptedLogoMarkup(body);
+  body = repairVisibleMojibake(body);
   return result?.source === 'r2' ? rewriteRemoteImageUrls(body, result.sourceUrl) : body;
 }
 
@@ -492,8 +603,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const result = await loadHtml(params);
   const { html, rel, sourceUrl } = result;
-  const title = getTitle(html, rel);
-  const description = getDescription(html, rel);
+  const title = seoTitleForRel(getTitle(html, rel), rel);
+  const description = seoDescriptionForRel(getDescription(html, rel), rel);
   const canonical = getCanonical(html, rel, sourceUrl);
   const image = getOgImage(html, sourceUrl);
   const isProduct = rel.startsWith('products/');
@@ -534,14 +645,36 @@ function firstImageAbsoluteUrl(html, sourceUrl) {
 function firstParagraphText(html) {
   const p = html.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
   if (!p) return '';
-  return p[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 500);
+  return repairTextEncoding(p[1].replace(/<[^>]+>/g, '')).slice(0, 500);
 }
 
-function productRfqServiceJsonLd(html, rel, title, description, sourceUrl) {
+function firstVisibleText(html, pattern) {
+  const match = html.match(pattern);
+  return match ? repairTextEncoding(match[1].replace(/<[^>]+>/g, ' ')) : '';
+}
+
+function productPropertiesFromTable(html) {
+  return Array.from(html.matchAll(/<tr[^>]*>\s*<th[^>]*>([\s\S]*?)<\/th>\s*<td[^>]*>([\s\S]*?)<\/td>\s*<\/tr>/gi))
+    .slice(0, 12)
+    .map(match => ({
+      '@type': 'PropertyValue',
+      name: repairTextEncoding(match[1].replace(/<[^>]+>/g, ' ')),
+      value: repairTextEncoding(match[2].replace(/<[^>]+>/g, ' '))
+    }))
+    .filter(item => item.name && item.value);
+}
+
+function productAndRfqServiceJsonLd(html, rel, title, description, sourceUrl) {
   const image = firstImageAbsoluteUrl(html, sourceUrl);
-  const cleanName = title.replace(/\s*\|\s*.+$/, '').trim();
+  const cleanName = firstVisibleText(html, /<h1\b[^>]*>([\s\S]*?)<\/h1>/i)
+    || repairTextEncoding(title.replace(/\s*\|\s*.+$/, ''));
+  const productDescription = firstParagraphText(html) || repairTextEncoding(description);
+  const category = firstVisibleText(html, /<div\b[^>]*class=["'][^"']*\beyebrow\b[^"']*["'][^>]*>([\s\S]*?)<\/div>/i)
+    || 'Custom Packaging';
+  const additionalProperty = productPropertiesFromTable(html);
   const pageUrl = `${SITE_URL}/${rel}`;
   const webpageId = `${pageUrl}#webpage`;
+  const productId = `${pageUrl}#product`;
   const serviceId = `${pageUrl}#service`;
   const imageId = `${pageUrl}#primaryimage`;
   return {
@@ -551,8 +684,8 @@ function productRfqServiceJsonLd(html, rel, title, description, sourceUrl) {
         '@type': 'WebPage',
         '@id': webpageId,
         url: pageUrl,
-        name: title,
-        description,
+        name: seoTitleForRel(title, rel),
+        description: seoDescriptionForRel(description, rel),
         isPartOf: { '@id': `${SITE_URL}/#website` },
         publisher: { '@id': `${SITE_URL}/#organization` },
         primaryImageOfPage: {
@@ -561,7 +694,24 @@ function productRfqServiceJsonLd(html, rel, title, description, sourceUrl) {
           url: image,
           contentUrl: image
         },
-        mainEntity: { '@id': serviceId }
+        mainEntity: { '@id': productId }
+      },
+      {
+        '@type': 'Product',
+        '@id': productId,
+        name: cleanName,
+        url: pageUrl,
+        image: [image],
+        description: productDescription,
+        category,
+        brand: { '@type': 'Brand', name: 'Packaging Factory Direct' },
+        manufacturer: { '@id': `${SITE_URL}/#organization` },
+        audience: {
+          '@type': 'BusinessAudience',
+          audienceType: 'B2B packaging buyers, brand owners and procurement teams'
+        },
+        ...(additionalProperty.length ? { additionalProperty } : {}),
+        subjectOf: { '@id': serviceId }
       },
       {
         '@type': 'Service',
@@ -572,6 +722,7 @@ function productRfqServiceJsonLd(html, rel, title, description, sourceUrl) {
         url: pageUrl,
         image: { '@id': imageId },
         provider: { '@id': `${SITE_URL}/#organization` },
+        isRelatedTo: { '@id': productId },
         areaServed: 'Worldwide',
         audience: {
           '@type': 'BusinessAudience',
@@ -594,27 +745,142 @@ function productRfqServiceJsonLd(html, rel, title, description, sourceUrl) {
   };
 }
 
+function findArticleDates(value) {
+  if (!value || typeof value !== 'object') return null;
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const found = findArticleDates(item);
+      if (found) return found;
+    }
+    return null;
+  }
+  const types = Array.isArray(value['@type']) ? value['@type'] : [value['@type']];
+  if (types.some(type => ['Article', 'BlogPosting', 'NewsArticle', 'TechArticle'].includes(type))) {
+    return {
+      published: value.datePublished || '',
+      modified: value.dateModified || value.datePublished || ''
+    };
+  }
+  if (Array.isArray(value['@graph'])) return findArticleDates(value['@graph']);
+  return null;
+}
+
+const SOURCE_CONTROLLED_ARTICLE_DATES = {
+  '2026-07-05T00:21:34+08:00': new Set([
+    'blog/custom-cannabis-mylar-bags-guide.html',
+    'blog/custom-paper-box-material-guide.html',
+    'blog/gs1-datamatrix-pharma-packaging-guide.html',
+    'blog/mopp-vmpet-pe-flexible-packaging-guide.html',
+    'news/california-cannabis-packaging-child-resistant.html',
+    'news/new-york-cannabis-packaging-labeling.html',
+    'news/paper-packaging-sustainable-retail-branding.html',
+    'news/pharma-serialization-packaging-demand.html'
+  ]),
+  '2026-07-05T16:08:24+08:00': new Set([
+    'blog/coffee-bag-with-valve-guide.html',
+    'blog/cosmetic-packaging-box-guide.html',
+    'blog/custom-packaging-moq-500-pcs-guide.html',
+    'blog/custom-packaging-sample-process-guide.html',
+    'blog/custom-packaging-rfq-checklist.html',
+    'blog/food-packaging-material-guide.html',
+    'blog/gift-box-insert-guide.html',
+    'blog/pharma-packaging-serialization-guide.html',
+    'blog/shipping-and-packaging-lead-time-guide.html',
+    'blog/stand-up-pouch-material-structure-guide.html'
+  ]),
+  '2026-08-09T19:45:50+08:00': new Set([
+    'blog/beauty-pr-kit-packaging-specification-guide.html',
+    'blog/china-custom-packaging-supplier-audit-evidence-checklist.html',
+    'blog/dermal-filler-secondary-packaging-rfq-guide.html',
+    'blog/flexible-pouch-barrier-otr-wvtr-rfq-guide.html'
+  ]),
+  '2026-08-10T02:17:14+08:00': new Set([
+    'blog/custom-packaging-landed-cost-dimensional-weight-moq-guide.html',
+    'blog/ecommerce-packaging-transit-test-ista-3a-mailer-box-guide.html',
+    'blog/food-pouch-odor-migration-food-contact-document-checklist.html',
+    'blog/packaging-color-matching-pantone-cmyk-delta-e-proof-guide.html'
+  ])
+};
+
+function sourceControlledArticleDates(rel) {
+  for (const [date, paths] of Object.entries(SOURCE_CONTROLLED_ARTICLE_DATES)) {
+    if (paths.has(rel)) return { published: date, modified: date };
+  }
+  return { published: '', modified: '' };
+}
+
+function articleDatesFromHtml(html, rel) {
+  const metaPublished = getMeta(html, 'property', 'article:published_time');
+  const metaModified = getMeta(html, 'property', 'article:modified_time');
+  if (metaPublished) return { published: metaPublished, modified: metaModified || metaPublished };
+  for (const match of html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    try {
+      const dates = findArticleDates(JSON.parse(match[1]));
+      if (dates?.published) return dates;
+    } catch {}
+  }
+  const time = html.match(/<time[^>]+datetime=["']([^"']+)["']/i);
+  return time ? { published: time[1], modified: time[1] } : sourceControlledArticleDates(rel);
+}
+
+function enrichInlineArticleSchemas(bodyHtml, rel) {
+  const dates = articleDatesFromHtml(bodyHtml, rel);
+  if (!dates.published) return bodyHtml;
+  return bodyHtml.replace(
+    /(<script[^>]+type=["']application\/ld\+json["'][^>]*>)([\s\S]*?)(<\/script>)/gi,
+    (all, open, json, close) => {
+      try {
+        const parsed = JSON.parse(json);
+        let changed = false;
+        const visit = value => {
+          if (Array.isArray(value)) return value.forEach(visit);
+          if (!value || typeof value !== 'object') return;
+          const types = Array.isArray(value['@type']) ? value['@type'] : [value['@type']];
+          if (types.some(type => ['Article', 'BlogPosting', 'NewsArticle', 'TechArticle'].includes(type))) {
+            if (!value.datePublished) {
+              value.datePublished = dates.published;
+              changed = true;
+            }
+            if (!value.dateModified) {
+              value.dateModified = dates.modified || dates.published;
+              changed = true;
+            }
+          }
+          Object.values(value).forEach(visit);
+        };
+        visit(parsed);
+        return changed ? `${open}${JSON.stringify(parsed)}${close}` : all;
+      } catch {
+        return all;
+      }
+    }
+  );
+}
+
 function articleJsonLd(html, rel, title, description, sourceUrl) {
   const image = firstImageAbsoluteUrl(html, sourceUrl);
-  const publishedTime = getMeta(html, 'property', 'article:published_time') || undefined;
-  const modifiedTime = getMeta(html, 'property', 'article:modified_time') || undefined;
+  const { published: publishedTime, modified: modifiedTime } = articleDatesFromHtml(html, rel);
   const isNews = rel.startsWith('news/');
+  const fullHeadline = firstVisibleText(html, /<h1\b[^>]*>([\s\S]*?)<\/h1>/i)
+    || repairTextEncoding(title.replace(/\s*\|\s*.+$/, ''));
   return {
     '@context': 'https://schema.org',
     '@type': isNews ? 'NewsArticle' : 'Article',
-    headline: title.replace(/\s*\|\s*.+$/, '').trim(),
-    description: description,
+    headline: shortenAtWordBoundary(fullHeadline, 110),
+    description: seoDescriptionForRel(description, rel),
     image: [image],
     articleSection: isNews ? 'Packaging Industry News' : 'Custom Packaging Buyer Guide',
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/${rel}` },
     author: { '@type': 'Organization', name: 'Packaging Factory Direct', url: SITE_URL },
     publisher: {
       '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
       name: 'Packaging Factory Direct',
+      url: SITE_URL,
       logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo.png` }
     },
-    datePublished: publishedTime,
-    dateModified: modifiedTime || publishedTime
+    ...(publishedTime ? { datePublished: publishedTime } : {}),
+    ...(modifiedTime || publishedTime ? { dateModified: modifiedTime || publishedTime } : {})
   };
 }
 
@@ -912,7 +1178,10 @@ export default async function HtmlPage({ params }) {
   const kind = getKindFromRel(rel);
   const title = getTitle(html, rel);
   const description = getDescription(html, rel);
-  const bodyHtml = sanitizeUnverifiedClaims(normalizeHomepageSemanticH1(extractBody(html, result), rel));
+  const bodyHtml = enrichInlineArticleSchemas(
+    sanitizeUnverifiedClaims(normalizeHomepageSemanticH1(extractBody(html, result), rel)),
+    rel
+  );
   const buyerGuide = buyerGuideSection(kind, rel);
   const contentReview = categoryReviewSection(rel);
   const trustSchema = trustPageJsonLd(rel, title, description);
@@ -932,6 +1201,9 @@ export default async function HtmlPage({ params }) {
 
   return (
     <>
+      {rel === 'products.html' ? (
+        <style>{`@supports (content-visibility:auto){.filters ~ .grid > .product-card:nth-child(n+13){content-visibility:auto;contain-intrinsic-size:auto 470px}}`}</style>
+      ) : null}
       {bc ? (
         <script
           type="application/ld+json"
@@ -941,7 +1213,7 @@ export default async function HtmlPage({ params }) {
       {injectProductService ? (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(productRfqServiceJsonLd(html, rel, title, description, sourceUrl)) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productAndRfqServiceJsonLd(html, rel, title, description, sourceUrl)) }}
         />
       ) : null}
       {injectArticle ? (
