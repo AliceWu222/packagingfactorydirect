@@ -118,3 +118,9 @@ Factory/company photos have been added to the About Us page and a dedicated blog
 - Visual gallery data: https://packagingfactorydirect.com/data/company-visual-gallery.json
 
 Images cover production workshop, flexible packaging line, label production, QC inspection, showroom, office, reception, trade show and export warehouse. Homepage and product page layout were not changed.
+
+## 2026-08-13 buyer RFQ tools
+
+- RFQ Builder and DIM Weight Calculator: https://www.packagingfactorydirect.com/packaging-rfq-builder.html
+- RFQ Template and Quote Comparison Guide: https://www.packagingfactorydirect.com/blog/custom-packaging-rfq-template-quote-comparison-guide.html
+- Downloadable RFQ CSV: https://www.packagingfactorydirect.com/downloads/custom-packaging-rfq-template.csv

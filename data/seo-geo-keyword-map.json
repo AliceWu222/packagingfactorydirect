@@ -169,6 +169,25 @@
         "/quality-control.html",
         "/sample-process.html"
       ]
+    },
+    {
+      "keyword": "custom packaging RFQ template",
+      "intent": "commercial investigation and quote preparation",
+      "primaryUrl": "/blog/custom-packaging-rfq-template-quote-comparison-guide.html",
+      "supportingUrls": [
+        "/packaging-rfq-builder.html",
+        "/downloads/custom-packaging-rfq-template.csv",
+        "/contact.html"
+      ]
+    },
+    {
+      "keyword": "packaging dimensional weight calculator",
+      "intent": "export packaging freight and quote comparison",
+      "primaryUrl": "/packaging-rfq-builder.html",
+      "supportingUrls": [
+        "/blog/custom-packaging-rfq-template-quote-comparison-guide.html",
+        "/blog/custom-packaging-landed-cost-dimensional-weight-moq-guide.html"
+      ]
     }
   ],
   "aiExtractionPattern": [

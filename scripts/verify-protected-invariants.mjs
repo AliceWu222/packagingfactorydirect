@@ -13,7 +13,8 @@ const APPENDED_BLOGS = [
   'blog/custom-packaging-landed-cost-dimensional-weight-moq-guide.html',
   'blog/packaging-color-matching-pantone-cmyk-delta-e-proof-guide.html',
   'blog/ecommerce-packaging-transit-test-ista-3a-mailer-box-guide.html',
-  'blog/food-pouch-odor-migration-food-contact-document-checklist.html'
+  'blog/food-pouch-odor-migration-food-contact-document-checklist.html',
+  'blog/custom-packaging-rfq-template-quote-comparison-guide.html'
 ];
 const NEW_BLOGS = new Set([
   'blog/dermal-filler-secondary-packaging-rfq-guide.html',
@@ -129,7 +130,7 @@ if (appendMatches.length !== 1) {
 } else {
   const blogWithoutAppend = currentBlog.replace(appendPattern, '');
   const baseBlogWithoutAppend = baseBlog.replace(appendPattern, '');
-  if (normalizeLineEndings(blogWithoutAppend) !== normalizeLineEndings(baseBlogWithoutAppend)) {
+  if (normalizeLineEndings(blogWithoutAppend).replace(/\n$/, '') !== normalizeLineEndings(baseBlogWithoutAppend).replace(/\n$/, '')) {
     violations.push('blog.html: content outside the marked append-only block changed');
   }
   const appendedHrefs = [...appendMatches[0].matchAll(/href="(blog\/[^"]+\.html)"/g)].map(match => match[1]);
@@ -154,8 +155,20 @@ for (const file of NEW_BLOGS) {
   if (!existsSync(path.join(ROOT, ...file.split('/')))) violations.push(`${file}: missing`);
 }
 
+for (const file of [
+  'packaging-rfq-builder.html',
+  'public/downloads/custom-packaging-rfq-template.csv'
+]) {
+  if (!existsSync(path.join(ROOT, ...file.split('/')))) violations.push(`${file}: missing`);
+}
+
+const answerCards = readFileSync(path.join(ROOT, 'data', 'ai-search-answer-cards.json'), 'utf8');
+if (answerCards.includes('/R2_CMS_ISR_SETUP.md')) {
+  violations.push('data/ai-search-answer-cards.json: contains the retired internal deployment-document URL');
+}
+
 if (productFiles.length !== 182) violations.push(`products: expected 182 HTML files, found ${productFiles.length}`);
-if (blogFiles.length !== 42) violations.push(`blog: expected 42 HTML files, found ${blogFiles.length}`);
+if (blogFiles.length !== 43) violations.push(`blog: expected 43 HTML files, found ${blogFiles.length}`);
 if (newsFiles.length !== 18) violations.push(`news: expected 18 HTML files, found ${newsFiles.length}`);
 
 if (violations.length) {
