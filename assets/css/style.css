@@ -7,6 +7,15 @@
 .products-page .page-hero{
   padding:34px 0 22px !important;
 }
+
+/* 2026-08-13 render-cost optimization: preserve every card and the approved grid,
+   while allowing browsers to skip painting cards far below the viewport. */
+@supports (content-visibility:auto){
+  .filters ~ .grid > .product-card:nth-child(n+13){
+    content-visibility:auto;
+    contain-intrinsic-size:auto 470px;
+  }
+}
 .products-page .page-hero h1{
   margin:4px 0 10px !important;
 }

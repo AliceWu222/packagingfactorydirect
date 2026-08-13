@@ -24,5 +24,4 @@ Disallow: /.vercel/
 Disallow: /node_modules/
 Disallow: /test-results/
 Disallow: /deliveries/
-Sitemap: https://www.packagingfactorydirect.com/sitemap.xml
 Sitemap: https://www.packagingfactorydirect.com/sitemap-index.xml
