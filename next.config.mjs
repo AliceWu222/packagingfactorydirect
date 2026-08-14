@@ -143,11 +143,75 @@ const nextConfig = {
           { key: 'X-Robots-Tag', value: 'noindex, follow' }
         ]
       },
+      {
+        source: '/llms.txt',
+        headers: [
+          { key: 'Content-Type', value: 'text/plain; charset=utf-8' },
+          { key: 'Cache-Control', value: 'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400' }
+        ]
+      },
+      {
+        source: '/ai-index.json',
+        headers: [
+          { key: 'Content-Type', value: 'application/json; charset=utf-8' },
+          { key: 'Cache-Control', value: 'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400' }
+        ]
+      },
+      {
+        source: '/ai-discovery.json',
+        headers: [
+          { key: 'Content-Type', value: 'application/json; charset=utf-8' },
+          { key: 'Cache-Control', value: 'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400' }
+        ]
+      },
+      {
+        source: '/.well-known/ai-site.json',
+        headers: [
+          { key: 'Content-Type', value: 'application/json; charset=utf-8' },
+          { key: 'Cache-Control', value: 'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400' }
+        ]
+      },
       // Images / fonts / other static assets: long cache is fine (they rarely change)
       {
         source: '/assets/img/:path*',
         headers: [
           { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` }
+        ]
+      },
+      {
+        source: '/assets/:path*.png',
+        headers: [
+          { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` }
+        ]
+      },
+      {
+        source: '/assets/:path*.jpg',
+        headers: [
+          { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` }
+        ]
+      },
+      {
+        source: '/assets/:path*.jpeg',
+        headers: [
+          { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` }
+        ]
+      },
+      {
+        source: '/assets/:path*.svg',
+        headers: [
+          { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` }
+        ]
+      },
+      {
+        source: '/assets/:path*.woff2',
+        headers: [
+          { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` }
+        ]
+      },
+      {
+        source: '/downloads/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400' }
         ]
       },
       {

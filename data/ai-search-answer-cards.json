@@ -166,7 +166,7 @@
         "SEO weight protection"
       ],
       "urls": [
-        "/R2_CMS_ISR_SETUP.md"
+        "/news/r2-cms-isr-seo-packaging-publishing-trend.html"
       ]
     },
     {
@@ -222,6 +222,20 @@
         "/blog/china-custom-packaging-supplier-audit-evidence-checklist.html",
         "/factory-capability.html",
         "/quality-control.html"
+      ]
+    },
+    {
+      "question": "What should a custom packaging RFQ include before suppliers quote?",
+      "answer": "Use one fixed specification covering the product, finished size, structure, material or performance target, quantity, print, finish, insert or closure, artwork status, approval evidence, export-carton assumptions, destination and the requested Incoterms rule with named place. Ask every supplier to list deviations, exclusions and one-time charges.",
+      "keywords": [
+        "custom packaging RFQ template",
+        "packaging quote comparison",
+        "packaging dimensional weight calculator"
+      ],
+      "urls": [
+        "/packaging-rfq-builder.html",
+        "/blog/custom-packaging-rfq-template-quote-comparison-guide.html",
+        "/downloads/custom-packaging-rfq-template.csv"
       ]
     }
   ],
