@@ -66,7 +66,6 @@ function normalizeItemsForSite(items, kind) {
 
 async function readLocalIndex() {
   const paths = [
-    path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'ai-index.json'),
     path.join(/*turbopackIgnore: true*/ process.cwd(), 'ai-index.json')
   ];
   for (const p of paths) {
@@ -168,9 +167,17 @@ export async function GET() {
   const allProducts = mergeByUrl(localProducts, remoteProducts);
   const allBlog = mergeByUrl(localBlog, remoteBlog);
   const allNews = mergeByUrl(localNews, remoteNews);
+  const generatedAt = new Date().toISOString();
   const payload = {
     ...local,
-    version: 'v100-public-content-inventory',
+    version: 'v101-live-content-inventory',
+    generatedAt,
+    snapshotGeneratedAt: local.generatedAt || null,
+    contentCounts: {
+      products: allProducts.length,
+      blogGuides: allBlog.length,
+      newsPages: allNews.length
+    },
     site: SITE_URL,
     contact: 'Linda Wang',
     email: 'linda@colorprintingpackage.com',

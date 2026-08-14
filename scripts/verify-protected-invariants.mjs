@@ -266,6 +266,58 @@ if (JSON.stringify(currentPublicFeed.products.slice(-FEED_APPEND_URLS.length)) !
   violations.push('newly appended static feed items and manifest items are inconsistent');
 }
 
+for (const relativePath of ['ai-index.json']) {
+  const aiIndex = JSON.parse(readFileSync(path.join(ROOT, ...relativePath.split('/')), 'utf8'));
+  const counts = {
+    products: (aiIndex.products || []).length,
+    blogGuides: (aiIndex.blogGuides || []).length,
+    newsPages: (aiIndex.newsBriefs || []).length
+  };
+  if (counts.products !== 192 || counts.blogGuides !== 45 || counts.newsPages !== 18) {
+    violations.push(`${relativePath}: stale content inventory ${JSON.stringify(counts)}`);
+  }
+  if (JSON.stringify(aiIndex.contentCounts) !== JSON.stringify(counts)) {
+    violations.push(`${relativePath}: contentCounts do not match inventory arrays`);
+  }
+  const classified = aiIndex.pageClassifications || {};
+  if ((classified.productDetails || []).length !== 192 || (classified.blogGuides || []).length !== 45 || (classified.newsPages || []).length !== 18) {
+    violations.push(`${relativePath}: stale page classifications`);
+  }
+  if (!aiIndex.generatedAt || Number.isNaN(Date.parse(aiIndex.generatedAt)) || Date.parse(aiIndex.generatedAt) < Date.parse('2026-08-14T00:00:00Z')) {
+    violations.push(`${relativePath}: generatedAt is missing or stale`);
+  }
+}
+
+if (existsSync(path.join(ROOT, 'public', 'ai-index.json'))) {
+  violations.push('public/ai-index.json: obsolete static shadow must be absent');
+}
+if (existsSync(path.join(ROOT, 'public', 'llms.txt'))) {
+  violations.push('public/llms.txt: obsolete static shadow must be absent');
+}
+if (!existsSync(path.join(ROOT, 'data', 'llms-source.txt'))) {
+  violations.push('data/llms-source.txt: buyer-facing LLM source is missing');
+}
+
+const aiIndexRoute = readFileSync(path.join(ROOT, 'app', 'ai-index.json', 'route.js'), 'utf8');
+for (const required of [
+  "version: 'v101-live-content-inventory'",
+  'const generatedAt = new Date().toISOString()',
+  'snapshotGeneratedAt: local.generatedAt || null',
+  'contentCounts:'
+]) {
+  if (!aiIndexRoute.includes(required)) violations.push(`app/ai-index.json/route.js: missing ${required}`);
+}
+if (aiIndexRoute.includes("'public', 'ai-index.json'")) {
+  violations.push('app/ai-index.json/route.js: still reads the route-shadowing public snapshot');
+}
+const llmsRoute = readFileSync(path.join(ROOT, 'app', 'llms.txt', 'route.js'), 'utf8');
+if (!llmsRoute.includes("'data', 'llms-source.txt'") || llmsRoute.includes("'public', 'llms.txt'")) {
+  violations.push('app/llms.txt/route.js: must read the non-public buyer-facing source only');
+}
+if (!existsSync(path.join(ROOT, 'scripts', 'sync-ai-index.mjs'))) {
+  violations.push('scripts/sync-ai-index.mjs: missing');
+}
+
 if (productFiles.length !== 192) violations.push(`products: expected 192 HTML files, found ${productFiles.length}`);
 if (blogFiles.length !== 45) violations.push(`blog: expected 45 HTML files, found ${blogFiles.length}`);
 if (newsFiles.length !== 18) violations.push(`news: expected 18 HTML files, found ${newsFiles.length}`);
@@ -286,5 +338,6 @@ console.log(JSON.stringify({
   blogListingAppendOnly: true,
   productListingAppendOnly: true,
   staticProductFeedItems: currentPublicFeed.products.length,
+  staticAiIndexItems: { products: 192, blogGuides: 45, newsPages: 18 },
   desktopFourColumnRulePresent: true
 }, null, 2));

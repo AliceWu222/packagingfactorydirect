@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "sync:ai-index": "node --no-warnings scripts/sync-ai-index.mjs",
     "check": "node --check next.config.mjs",
     "check:routes": "node --check next.config.mjs && find app -name 'route.js' -print -exec node --check {} \\;"
   },
