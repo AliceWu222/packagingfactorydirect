@@ -14,6 +14,18 @@ const ISR_SECONDS = Number(process.env.PFD_ISR_SECONDS || process.env.PRODUCT_PA
 
 const REMOTE_DETAIL_PREFIXES = ['products/', 'blog/', 'news/'];
 const REMOTE_LISTING_PAGES = new Set(['products.html', 'blog.html', 'news.html']);
+const APPENDED_PRODUCT_FAQ_PATHS = new Set([
+  'products/custom-perfume-gift-box-insert-fragrance-sets.html',
+  'products/custom-six-candle-gift-box-aromatherapy-discovery-sets.html',
+  'products/custom-candle-reed-diffuser-gift-box-satin-insert.html',
+  'products/custom-candle-care-set-gift-box-fitted-tool-insert.html',
+  'products/custom-candle-diffuser-gift-box-paperboard-insert.html',
+  'products/custom-home-fragrance-gift-box-room-spray-candle.html',
+  'products/custom-pink-corrugated-mailer-box-beauty-subscriptions.html',
+  'products/custom-beauty-product-mailer-box-matching-paper-bag.html',
+  'products/custom-ribbon-closure-rigid-gift-box-jewelry.html',
+  'products/custom-floral-embossed-hang-tags-bridal-boutiques.html'
+]);
 const PRODUCT_LIST_INITIAL_RENDER_LIMIT = Number(process.env.PFD_PRODUCT_LIST_INITIAL_RENDER_LIMIT || 36);
 
 function contentBaseUrl() {
@@ -357,7 +369,7 @@ function getTitle(html, rel) {
 const LISTING_META = {
   'products.html': {
     title: 'Custom Packaging Products | Packaging Factory Direct',
-    description: 'Browse 182 custom packaging products for boxes, pouches, paper bags, labels, food, cosmetic and pharmaceutical projects. MOQ 500 PCS; request an OEM/ODM quote.'
+    description: 'Browse 192 custom packaging products for boxes, pouches, paper bags, labels, food, cosmetic and pharmaceutical projects. MOQ 500 PCS; request an OEM/ODM quote.'
   },
   'blog.html': {
     title: 'Custom Packaging Blog & B2B Buyer Guides',
@@ -960,6 +972,31 @@ function categoryFaqJsonLd(html, rel) {
   };
 }
 
+function appendedProductFaqJsonLd(html, rel) {
+  if (!APPENDED_PRODUCT_FAQ_PATHS.has(rel.replace(/^\/+/, ''))) return null;
+  const faqStart = html.search(/<h2[^>]*>\s*Buyer FAQ\s*<\/h2>/i);
+  if (faqStart < 0) return null;
+  const faqEnd = html.indexOf('</section>', faqStart);
+  const faqRegion = html.slice(faqStart, faqEnd >= 0 ? faqEnd : undefined);
+  const pairs = Array.from(faqRegion.matchAll(/<h3[^>]*>([\s\S]*?)<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/gi))
+    .map(match => ({
+      question: match[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
+      answer: match[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+    }))
+    .filter(item => item.question && item.answer)
+    .slice(0, 8);
+  if (pairs.length < 2) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: pairs.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer }
+    }))
+  };
+}
+
 function categoryReviewSection(rel) {
   const sources = CATEGORY_REVIEW[rel];
   if (!sources) return '';
@@ -1187,6 +1224,7 @@ export default async function HtmlPage({ params }) {
   const trustSchema = trustPageJsonLd(rel, title, description);
   const faqSchema = faqPageJsonLd(rel);
   const categoryFaqSchema = categoryFaqJsonLd(bodyHtml, rel);
+  const appendedProductFaqSchema = appendedProductFaqJsonLd(html, rel);
   const collectionSchema = collectionPageJsonLd(html, rel, title, description);
 
   // Original static <head> content is not rendered inside the extracted body,
@@ -1195,7 +1233,7 @@ export default async function HtmlPage({ params }) {
   const articleType = kind === 'news' ? 'NewsArticle' : 'Article';
   const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(bodyHtml, articleType);
   const injectTrust = Boolean(trustSchema);
-  const injectFaq = Boolean(faqSchema || categoryFaqSchema);
+  const injectFaq = Boolean(faqSchema || categoryFaqSchema || appendedProductFaqSchema);
   const injectCollection = Boolean(collectionSchema);
   const productsLoaderScript = rel === 'products.html' ? productListLoaderScriptForRenderedUrls() : '';
 
@@ -1231,7 +1269,7 @@ export default async function HtmlPage({ params }) {
       {injectFaq ? (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema || categoryFaqSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema || categoryFaqSchema || appendedProductFaqSchema) }}
         />
       ) : null}
       {injectCollection ? (
