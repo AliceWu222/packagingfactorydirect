@@ -14,7 +14,9 @@ const APPENDED_BLOGS = [
   'blog/packaging-color-matching-pantone-cmyk-delta-e-proof-guide.html',
   'blog/ecommerce-packaging-transit-test-ista-3a-mailer-box-guide.html',
   'blog/food-pouch-odor-migration-food-contact-document-checklist.html',
-  'blog/custom-packaging-rfq-template-quote-comparison-guide.html'
+  'blog/custom-packaging-rfq-template-quote-comparison-guide.html',
+  'blog/how-to-measure-product-for-custom-box.html',
+  'blog/gsm-vs-pt-mm-packaging-paperboard-guide.html'
 ];
 const NEW_BLOGS = new Set([
   'blog/dermal-filler-secondary-packaging-rfq-guide.html',
@@ -168,7 +170,7 @@ if (answerCards.includes('/R2_CMS_ISR_SETUP.md')) {
 }
 
 if (productFiles.length !== 182) violations.push(`products: expected 182 HTML files, found ${productFiles.length}`);
-if (blogFiles.length !== 43) violations.push(`blog: expected 43 HTML files, found ${blogFiles.length}`);
+if (blogFiles.length !== 45) violations.push(`blog: expected 45 HTML files, found ${blogFiles.length}`);
 if (newsFiles.length !== 18) violations.push(`news: expected 18 HTML files, found ${newsFiles.length}`);
 
 if (violations.length) {
