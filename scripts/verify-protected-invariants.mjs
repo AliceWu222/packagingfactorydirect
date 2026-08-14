@@ -34,7 +34,9 @@ const APPENDED_BLOGS = [
   'blog/packaging-color-matching-pantone-cmyk-delta-e-proof-guide.html',
   'blog/ecommerce-packaging-transit-test-ista-3a-mailer-box-guide.html',
   'blog/food-pouch-odor-migration-food-contact-document-checklist.html',
-  'blog/custom-packaging-rfq-template-quote-comparison-guide.html'
+  'blog/custom-packaging-rfq-template-quote-comparison-guide.html',
+  'blog/how-to-measure-product-for-custom-box.html',
+  'blog/gsm-vs-pt-mm-packaging-paperboard-guide.html'
 ];
 const NEW_BLOGS = new Set([
   'blog/dermal-filler-secondary-packaging-rfq-guide.html',
@@ -175,9 +177,11 @@ if (productBeginAt < 0 || productEndAt < productBeginAt || secondProductBeginAt 
   violations.push('products.html: expected exactly one marked append-only product block');
 } else {
   let removeStart = productBeginAt;
-  if (removeStart > 0 && currentProducts[removeStart - 1] === 0x0a) removeStart -= 1;
+  if (removeStart > 1 && currentProducts[removeStart - 2] === 0x0d && currentProducts[removeStart - 1] === 0x0a) removeStart -= 2;
+  else if (removeStart > 0 && currentProducts[removeStart - 1] === 0x0a) removeStart -= 1;
   let removeEnd = productEndAt + productEnd.length;
-  if (currentProducts[removeEnd] === 0x0a) removeEnd += 1;
+  if (currentProducts[removeEnd] === 0x0d && currentProducts[removeEnd + 1] === 0x0a) removeEnd += 2;
+  else if (currentProducts[removeEnd] === 0x0a) removeEnd += 1;
   const productsWithoutAppend = Buffer.concat([
     currentProducts.subarray(0, removeStart),
     currentProducts.subarray(removeEnd)
@@ -192,7 +196,7 @@ if (productBeginAt < 0 || productEndAt < productBeginAt || secondProductBeginAt 
   if (JSON.stringify(appendedProductHrefs) !== JSON.stringify(APPENDED_PRODUCTS)) {
     violations.push(`products.html: appended card order or URLs changed (${appendedProductHrefs.join(', ')})`);
   }
-  const afterAppend = currentProducts.subarray(removeEnd, removeEnd + 96).toString('ascii');
+  const afterAppend = currentProducts.subarray(removeEnd, removeEnd + 96).toString('ascii').replace(/^\r?\n/, '');
   if (!afterAppend.startsWith('</div></div></section><section class="buyer-solution-hubs section"')) {
     violations.push('products.html: append-only block is not at the end of the existing product grid');
   }
@@ -263,7 +267,7 @@ if (JSON.stringify(currentPublicFeed.products.slice(-FEED_APPEND_URLS.length)) !
 }
 
 if (productFiles.length !== 192) violations.push(`products: expected 192 HTML files, found ${productFiles.length}`);
-if (blogFiles.length !== 43) violations.push(`blog: expected 43 HTML files, found ${blogFiles.length}`);
+if (blogFiles.length !== 45) violations.push(`blog: expected 45 HTML files, found ${blogFiles.length}`);
 if (newsFiles.length !== 18) violations.push(`news: expected 18 HTML files, found ${newsFiles.length}`);
 
 if (violations.length) {
