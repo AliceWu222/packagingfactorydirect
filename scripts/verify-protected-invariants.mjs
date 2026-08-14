@@ -7,8 +7,28 @@ const ROOT = process.cwd();
 const AUTHORIZED_PROTECTED_FILES = new Set([
   'app/sitemap.xml/route.js',
   'assets/css/style.css',
-  'news/r2-cms-isr-seo-packaging-publishing-trend.html'
+  'news/r2-cms-isr-seo-packaging-publishing-trend.html',
+  'products.html'
 ]);
+const APPENDED_PRODUCTS = [
+  'products/custom-perfume-gift-box-insert-fragrance-sets.html',
+  'products/custom-six-candle-gift-box-aromatherapy-discovery-sets.html',
+  'products/custom-candle-reed-diffuser-gift-box-satin-insert.html',
+  'products/custom-candle-care-set-gift-box-fitted-tool-insert.html',
+  'products/custom-candle-diffuser-gift-box-paperboard-insert.html',
+  'products/custom-home-fragrance-gift-box-room-spray-candle.html',
+  'products/custom-pink-corrugated-mailer-box-beauty-subscriptions.html',
+  'products/custom-beauty-product-mailer-box-matching-paper-bag.html',
+  'products/custom-ribbon-closure-rigid-gift-box-jewelry.html',
+  'products/custom-floral-embossed-hang-tags-bridal-boutiques.html'
+];
+const PRODUCT_APPEND_BEGIN = '<!-- BEGIN 2026-08-14 CUSTOM PACKAGING PRODUCT APPEND -->';
+const PRODUCT_APPEND_END = '<!-- END 2026-08-14 CUSTOM PACKAGING PRODUCT APPEND -->';
+const FEED_APPEND_URLS = [
+  'products/custom-magnetic-gift-box-gold-foil-logo.html',
+  'products/custom-pink-magnetic-jewelry-gift-box-set-gold-foil-thank-you-card-drawstring-pouch.html',
+  ...APPENDED_PRODUCTS
+];
 const APPENDED_BLOGS = [
   'blog/custom-packaging-landed-cost-dimensional-weight-moq-guide.html',
   'blog/packaging-color-matching-pantone-cmyk-delta-e-proof-guide.html',
@@ -109,6 +129,8 @@ const pageRuntime = readFileSync(path.join(ROOT, 'app', '[[...path]]', 'page.jsx
 for (const required of [
   "'@type': 'Product'",
   'productAndRfqServiceJsonLd',
+  'appendedProductFaqJsonLd',
+  'APPENDED_PRODUCT_FAQ_PATHS',
   'additionalProperty',
   'seoTitleForRel',
   'seoDescriptionForRel',
@@ -142,6 +164,40 @@ if (appendMatches.length !== 1) {
   }
 }
 
+const baseProducts = git(['show', `${BASE_REF}:products.html`], null);
+const currentProducts = readFileSync(path.join(ROOT, 'products.html'));
+const productBegin = Buffer.from(PRODUCT_APPEND_BEGIN);
+const productEnd = Buffer.from(PRODUCT_APPEND_END);
+const productBeginAt = currentProducts.indexOf(productBegin);
+const secondProductBeginAt = productBeginAt < 0 ? -1 : currentProducts.indexOf(productBegin, productBeginAt + 1);
+const productEndAt = currentProducts.indexOf(productEnd);
+if (productBeginAt < 0 || productEndAt < productBeginAt || secondProductBeginAt >= 0) {
+  violations.push('products.html: expected exactly one marked append-only product block');
+} else {
+  let removeStart = productBeginAt;
+  if (removeStart > 0 && currentProducts[removeStart - 1] === 0x0a) removeStart -= 1;
+  let removeEnd = productEndAt + productEnd.length;
+  if (currentProducts[removeEnd] === 0x0a) removeEnd += 1;
+  const productsWithoutAppend = Buffer.concat([
+    currentProducts.subarray(0, removeStart),
+    currentProducts.subarray(removeEnd)
+  ]);
+  const normalizedProductsWithoutAppend = normalizeLineEndings(productsWithoutAppend.toString('latin1'));
+  const normalizedBaseProducts = normalizeLineEndings(baseProducts.toString('latin1'));
+  if (normalizedProductsWithoutAppend !== normalizedBaseProducts) {
+    violations.push('products.html: bytes outside the marked append-only block changed');
+  }
+  const productBlock = currentProducts.subarray(productBeginAt, productEndAt + productEnd.length).toString('utf8');
+  const appendedProductHrefs = [...productBlock.matchAll(/href="(products\/[^"]+\.html)"/g)].map(match => match[1]);
+  if (JSON.stringify(appendedProductHrefs) !== JSON.stringify(APPENDED_PRODUCTS)) {
+    violations.push(`products.html: appended card order or URLs changed (${appendedProductHrefs.join(', ')})`);
+  }
+  const afterAppend = currentProducts.subarray(removeEnd, removeEnd + 96).toString('ascii');
+  if (!afterAppend.startsWith('</div></div></section><section class="buyer-solution-hubs section"')) {
+    violations.push('products.html: append-only block is not at the end of the existing product grid');
+  }
+}
+
 const productFiles = readdirSync(path.join(ROOT, 'products')).filter(name => name.endsWith('.html'));
 const blogFiles = readdirSync(path.join(ROOT, 'blog')).filter(name => name.endsWith('.html'));
 const newsFiles = readdirSync(path.join(ROOT, 'news')).filter(name => name.endsWith('.html'));
@@ -153,6 +209,22 @@ if (!/grid-template-columns\s*:\s*repeat\(4\s*,/i.test(css)) {
 
 for (const file of NEW_BLOGS) {
   if (!existsSync(path.join(ROOT, ...file.split('/')))) violations.push(`${file}: missing`);
+}
+
+for (const file of APPENDED_PRODUCTS) {
+  const localPath = path.join(ROOT, ...file.split('/'));
+  if (!existsSync(localPath)) {
+    violations.push(`${file}: missing`);
+    continue;
+  }
+  const html = readFileSync(localPath, 'utf8');
+  const slug = path.basename(file, '.html');
+  const image = path.join(ROOT, 'assets', 'img', 'products', `${slug}-1.webp`);
+  if (!existsSync(image)) violations.push(`${file}: product image missing`);
+  if (!html.includes(`https://www.packagingfactorydirect.com/${file}`)) violations.push(`${file}: self canonical missing`);
+  if (!html.includes('FAQPage') || !html.includes('BreadcrumbList')) violations.push(`${file}: FAQ or breadcrumb schema missing`);
+  if (/"@type"\s*:\s*"(?:Offer|AggregateRating|Review)"/.test(html)) violations.push(`${file}: contains prohibited commercial or review schema`);
+  if (!html.includes('Packaging Only')) violations.push(`${file}: packaging-only scope is unclear`);
 }
 
 for (const file of [
@@ -167,7 +239,30 @@ if (answerCards.includes('/R2_CMS_ISR_SETUP.md')) {
   violations.push('data/ai-search-answer-cards.json: contains the retired internal deployment-document URL');
 }
 
-if (productFiles.length !== 182) violations.push(`products: expected 182 HTML files, found ${productFiles.length}`);
+const basePublicFeed = JSON.parse(git(['show', `${BASE_REF}:public/product-feed.json`]));
+const currentPublicFeed = JSON.parse(readFileSync(path.join(ROOT, 'public', 'product-feed.json'), 'utf8'));
+const baseManifest = JSON.parse(git(['show', `${BASE_REF}:data/products.manifest.json`]));
+const currentManifest = JSON.parse(readFileSync(path.join(ROOT, 'data', 'products.manifest.json'), 'utf8'));
+for (const [label, baseFeed, currentFeed] of [
+  ['public/product-feed.json', basePublicFeed, currentPublicFeed],
+  ['data/products.manifest.json', baseManifest, currentManifest]
+]) {
+  const baseItems = baseFeed.products || [];
+  const currentItems = currentFeed.products || [];
+  if (JSON.stringify(currentItems.slice(0, baseItems.length)) !== JSON.stringify(baseItems)) {
+    violations.push(`${label}: existing feed products changed or moved`);
+  }
+  const appendedUrls = currentItems.slice(baseItems.length).map(item => item.url);
+  if (JSON.stringify(appendedUrls) !== JSON.stringify(FEED_APPEND_URLS)) {
+    violations.push(`${label}: appended URLs or order changed (${appendedUrls.join(', ')})`);
+  }
+  if (currentItems.length !== 192) violations.push(`${label}: expected 192 products, found ${currentItems.length}`);
+}
+if (JSON.stringify(currentPublicFeed.products.slice(-FEED_APPEND_URLS.length)) !== JSON.stringify(currentManifest.products.slice(-FEED_APPEND_URLS.length))) {
+  violations.push('newly appended static feed items and manifest items are inconsistent');
+}
+
+if (productFiles.length !== 192) violations.push(`products: expected 192 HTML files, found ${productFiles.length}`);
 if (blogFiles.length !== 43) violations.push(`blog: expected 43 HTML files, found ${blogFiles.length}`);
 if (newsFiles.length !== 18) violations.push(`news: expected 18 HTML files, found ${newsFiles.length}`);
 
@@ -185,5 +280,7 @@ console.log(JSON.stringify({
   newsHtmlFiles: newsFiles.length,
   protectedFilesChanged: 0,
   blogListingAppendOnly: true,
+  productListingAppendOnly: true,
+  staticProductFeedItems: currentPublicFeed.products.length,
   desktopFourColumnRulePresent: true
 }, null, 2));
