@@ -36,7 +36,9 @@ const APPENDED_BLOGS = [
   'blog/food-pouch-odor-migration-food-contact-document-checklist.html',
   'blog/custom-packaging-rfq-template-quote-comparison-guide.html',
   'blog/how-to-measure-product-for-custom-box.html',
-  'blog/gsm-vs-pt-mm-packaging-paperboard-guide.html'
+  'blog/gsm-vs-pt-mm-packaging-paperboard-guide.html',
+  'blog/packaging-specification-glossary-for-buyers.html',
+  'blog/public-packaging-catalog-taxonomy-methodology.html'
 ];
 const NEW_BLOGS = new Set([
   'blog/dermal-filler-secondary-packaging-rfq-guide.html',
@@ -273,14 +275,14 @@ for (const relativePath of ['ai-index.json']) {
     blogGuides: (aiIndex.blogGuides || []).length,
     newsPages: (aiIndex.newsBriefs || []).length
   };
-  if (counts.products !== 192 || counts.blogGuides !== 45 || counts.newsPages !== 18) {
+  if (counts.products !== 192 || counts.blogGuides !== 47 || counts.newsPages !== 18) {
     violations.push(`${relativePath}: stale content inventory ${JSON.stringify(counts)}`);
   }
   if (JSON.stringify(aiIndex.contentCounts) !== JSON.stringify(counts)) {
     violations.push(`${relativePath}: contentCounts do not match inventory arrays`);
   }
   const classified = aiIndex.pageClassifications || {};
-  if ((classified.productDetails || []).length !== 192 || (classified.blogGuides || []).length !== 45 || (classified.newsPages || []).length !== 18) {
+  if ((classified.productDetails || []).length !== 192 || (classified.blogGuides || []).length !== 47 || (classified.newsPages || []).length !== 18) {
     violations.push(`${relativePath}: stale page classifications`);
   }
   if (!aiIndex.generatedAt || Number.isNaN(Date.parse(aiIndex.generatedAt)) || Date.parse(aiIndex.generatedAt) < Date.parse('2026-08-14T00:00:00Z')) {
@@ -319,7 +321,7 @@ if (!existsSync(path.join(ROOT, 'scripts', 'sync-ai-index.mjs'))) {
 }
 
 if (productFiles.length !== 192) violations.push(`products: expected 192 HTML files, found ${productFiles.length}`);
-if (blogFiles.length !== 45) violations.push(`blog: expected 45 HTML files, found ${blogFiles.length}`);
+if (blogFiles.length !== 47) violations.push(`blog: expected 47 HTML files, found ${blogFiles.length}`);
 if (newsFiles.length !== 18) violations.push(`news: expected 18 HTML files, found ${newsFiles.length}`);
 
 if (violations.length) {
@@ -338,6 +340,6 @@ console.log(JSON.stringify({
   blogListingAppendOnly: true,
   productListingAppendOnly: true,
   staticProductFeedItems: currentPublicFeed.products.length,
-  staticAiIndexItems: { products: 192, blogGuides: 45, newsPages: 18 },
+  staticAiIndexItems: { products: 192, blogGuides: 47, newsPages: 18 },
   desktopFourColumnRulePresent: true
 }, null, 2));

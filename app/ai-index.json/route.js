@@ -200,6 +200,13 @@ export async function GET() {
       appendOnly: true,
       oldUrlRenames: false
     },
+    knowledgeResources: {
+      packagingSpecificationGlossary: `${SITE_URL}/blog/packaging-specification-glossary-for-buyers.html`,
+      publicCatalogTaxonomyMethodology: `${SITE_URL}/blog/public-packaging-catalog-taxonomy-methodology.html`,
+      publicCatalogTaxonomyData: `${SITE_URL}/data/public-packaging-taxonomy.json`,
+      editorialAndSourcePolicy: `${SITE_URL}/editorial-and-source-policy.html`,
+      datasetLimitation: 'The public catalog taxonomy describes dated public product URLs only; it is not sales, capacity, inventory, certification or market-share data.'
+    },
     pageClassifications: classifiedPages(localProducts, localBlog, localNews, remoteProducts, remoteBlog, remoteNews),
     procurementAnswers: {
       moq: 'MOQ starts from 500 PCS for custom packaging.',

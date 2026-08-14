@@ -237,6 +237,59 @@
         "/blog/custom-packaging-rfq-template-quote-comparison-guide.html",
         "/downloads/custom-packaging-rfq-template.csv"
       ]
+    },
+    {
+      "question": "What is a packaging specification?",
+      "answer": "A packaging specification is the controlled set of dimensions, structure, material or performance requirements, graphics, finishes, tolerances, approval evidence, packing instructions and delivery assumptions used to quote, sample, manufacture and inspect a package.",
+      "keywords": [
+        "packaging specification definition",
+        "custom packaging specification",
+        "packaging RFQ glossary"
+      ],
+      "urls": [
+        "/blog/packaging-specification-glossary-for-buyers.html",
+        "/blog/custom-packaging-rfq-template-quote-comparison-guide.html"
+      ]
+    },
+    {
+      "question": "Are GSM, pt and mm interchangeable packaging material specifications?",
+      "answer": "No. GSM is grammage, while pt and mm express thickness. Materials with the same grammage can have different thickness, density, stiffness and converting behavior, so buyers should state the intended unit and test method.",
+      "keywords": [
+        "GSM vs pt packaging",
+        "paperboard thickness mm",
+        "packaging caliper definition"
+      ],
+      "urls": [
+        "/blog/packaging-specification-glossary-for-buyers.html",
+        "/blog/gsm-vs-pt-mm-packaging-paperboard-guide.html"
+      ]
+    },
+    {
+      "question": "What does the Packaging Factory Direct public catalog taxonomy measure?",
+      "answer": "The dated dataset counts 192 public product-detail URLs and assigns each URL to one primary packaging format using published title-based first-match rules. It does not represent sales, production capacity, inventory, certification, customers or market share.",
+      "keywords": [
+        "packaging product catalog dataset",
+        "packaging format taxonomy",
+        "custom packaging product pages"
+      ],
+      "urls": [
+        "/blog/public-packaging-catalog-taxonomy-methodology.html",
+        "/data/public-packaging-taxonomy.json",
+        "/products.html"
+      ]
+    },
+    {
+      "question": "How does Packaging Factory Direct select sources and correct buyer guidance?",
+      "answer": "New buyer guidance prioritizes standards bodies, regulators, official industry organizations and reproducible first-party observations. Material claims list sources and limitations, and readers can request a correction by sending the page URL and supporting evidence to the content owner.",
+      "keywords": [
+        "packaging editorial policy",
+        "packaging technical sources",
+        "website correction policy"
+      ],
+      "urls": [
+        "/editorial-and-source-policy.html",
+        "/contact.html"
+      ]
     }
   ],
   "address": "Printing Industrial Park, Longhua District, Shenzhen, Guangdong Province, 518109, China"
