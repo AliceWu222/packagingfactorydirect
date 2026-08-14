@@ -10,8 +10,7 @@ const LEGACY_HOST = 'https://packagingfactorydirect.com';
 
 async function readLocal() {
   const paths = [
-    path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'llms.txt'),
-    path.join(/*turbopackIgnore: true*/ process.cwd(), 'llms.txt')
+    path.join(/*turbopackIgnore: true*/ process.cwd(), 'data', 'llms-source.txt')
   ];
   for (const p of paths) {
     const t = await fs.readFile(p, 'utf8').catch(() => '');
