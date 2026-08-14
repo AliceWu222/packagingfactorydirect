@@ -83,9 +83,31 @@ const payload = {
     fullProductFeed: `${SITE_URL}/product-feed.json?full=1`,
     answerCards: `${SITE_URL}/data/ai-search-answer-cards.json`,
     keywordMap: `${SITE_URL}/data/seo-geo-keyword-map.json`,
+    publicCatalogTaxonomy: `${SITE_URL}/data/public-packaging-taxonomy.json`,
     sitemap: `${SITE_URL}/sitemap.xml`,
     sitemapIndex: `${SITE_URL}/sitemap-index.xml`
   },
+  knowledgeResources: [
+    {
+      type: 'buyer-glossary',
+      name: 'Packaging Specification Glossary for B2B Buyers',
+      url: `${SITE_URL}/blog/packaging-specification-glossary-for-buyers.html`,
+      evidencePolicy: 'Definitions are linked to primary standards, regulators and official industry sources; limitations are visible.'
+    },
+    {
+      type: 'first-party-dataset',
+      name: 'Public Packaging Catalog Taxonomy: 192 Product Pages',
+      url: `${SITE_URL}/blog/public-packaging-catalog-taxonomy-methodology.html`,
+      dataUrl: `${SITE_URL}/data/public-packaging-taxonomy.json`,
+      snapshotDate: '2026-08-15',
+      limitations: 'Public URL classification only; not sales, capacity, inventory, certification or market-share data.'
+    },
+    {
+      type: 'editorial-policy',
+      name: 'Editorial and Source Policy',
+      url: `${SITE_URL}/editorial-and-source-policy.html`
+    }
+  ],
   indexingProtection: {
     indexableContent: ['homepage', 'product listing', 'product detail pages', 'category pages', 'blog guides', 'news pages', 'buyer-guide pages'],
     notForCitation: ['internal setup files', 'deployment reports', 'logs', 'package files', 'lock files', 'source control folders'],

@@ -1779,7 +1779,7 @@
     }
   ],
   "version": "v101-synced-static-content-inventory",
-  "generatedAt": "2026-08-14",
+  "generatedAt": "2026-08-15",
   "geoPolicy": "Pages are structured for AI answer engines with direct answers, comparison tables, RFQ checklists, FAQPage schema and stable canonical URLs.",
   "targetKeywordClusters": [
     {
@@ -2287,6 +2287,22 @@
       "image": "https://www.packagingfactorydirect.com/assets/img/hero/hero-1.webp",
       "category": "B2B Packaging Guide",
       "source": "local-html"
+    },
+    {
+      "title": "Packaging Specification Glossary for B2B Buyers",
+      "url": "https://www.packagingfactorydirect.com/blog/packaging-specification-glossary-for-buyers.html",
+      "description": "Define packaging dimensions, GSM, caliper, ECT, OTR, WVTR, dielines, color tolerances, inserts and shipping terms before requesting a quote.",
+      "image": "https://www.packagingfactorydirect.com/assets/img/hero/hero-1.webp",
+      "category": "B2B Packaging Guide",
+      "source": "local-html"
+    },
+    {
+      "title": "Public Packaging Catalog Taxonomy: 192 Product Pages",
+      "url": "https://www.packagingfactorydirect.com/blog/public-packaging-catalog-taxonomy-methodology.html",
+      "description": "A reproducible classification of 192 public packaging product pages by primary format, with methods, counts, limitations and a downloadable JSON dataset.",
+      "image": "https://www.packagingfactorydirect.com/assets/img/hero/hero-1.webp",
+      "category": "B2B Packaging Guide",
+      "source": "local-html"
     }
   ],
   "newsBriefs": [
@@ -2686,7 +2702,7 @@
   },
   "contentCounts": {
     "products": 192,
-    "blogGuides": 45,
+    "blogGuides": 47,
     "newsPages": 18
   },
   "pageClassifications": {
@@ -5403,6 +5419,26 @@
         "source": "local-html",
         "type": "blog-guide",
         "buyerIntent": "technical B2B custom packaging selection, verification and RFQ education"
+      },
+      {
+        "title": "Packaging Specification Glossary for B2B Buyers",
+        "url": "https://www.packagingfactorydirect.com/blog/packaging-specification-glossary-for-buyers.html",
+        "description": "Define packaging dimensions, GSM, caliper, ECT, OTR, WVTR, dielines, color tolerances, inserts and shipping terms before requesting a quote.",
+        "image": "https://www.packagingfactorydirect.com/assets/img/hero/hero-1.webp",
+        "category": "B2B Packaging Guide",
+        "source": "local-html",
+        "type": "blog-guide",
+        "buyerIntent": "technical B2B custom packaging selection, verification and RFQ education"
+      },
+      {
+        "title": "Public Packaging Catalog Taxonomy: 192 Product Pages",
+        "url": "https://www.packagingfactorydirect.com/blog/public-packaging-catalog-taxonomy-methodology.html",
+        "description": "A reproducible classification of 192 public packaging product pages by primary format, with methods, counts, limitations and a downloadable JSON dataset.",
+        "image": "https://www.packagingfactorydirect.com/assets/img/hero/hero-1.webp",
+        "category": "B2B Packaging Guide",
+        "source": "local-html",
+        "type": "blog-guide",
+        "buyerIntent": "technical B2B custom packaging selection, verification and RFQ education"
       }
     ],
     "newsPages": [
@@ -5651,5 +5687,12 @@
         "buyerIntent": "custom packaging market and procurement update"
       }
     ]
+  },
+  "knowledgeResources": {
+    "packagingSpecificationGlossary": "https://www.packagingfactorydirect.com/blog/packaging-specification-glossary-for-buyers.html",
+    "publicCatalogTaxonomyMethodology": "https://www.packagingfactorydirect.com/blog/public-packaging-catalog-taxonomy-methodology.html",
+    "publicCatalogTaxonomyData": "https://www.packagingfactorydirect.com/data/public-packaging-taxonomy.json",
+    "editorialAndSourcePolicy": "https://www.packagingfactorydirect.com/editorial-and-source-policy.html",
+    "datasetLimitation": "The public catalog taxonomy describes dated public product URLs only; it is not sales, capacity, inventory, certification or market-share data."
   }
 }

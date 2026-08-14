@@ -5,6 +5,13 @@ import { readLocalHtmlInventory } from '../app/content-inventory.js';
 const ROOT = process.cwd();
 const SITE_URL = 'https://www.packagingfactorydirect.com';
 const SNAPSHOT_PATHS = ['ai-index.json'];
+const KNOWLEDGE_RESOURCES = {
+  packagingSpecificationGlossary: `${SITE_URL}/blog/packaging-specification-glossary-for-buyers.html`,
+  publicCatalogTaxonomyMethodology: `${SITE_URL}/blog/public-packaging-catalog-taxonomy-methodology.html`,
+  publicCatalogTaxonomyData: `${SITE_URL}/data/public-packaging-taxonomy.json`,
+  editorialAndSourcePolicy: `${SITE_URL}/editorial-and-source-policy.html`,
+  datasetLimitation: 'The public catalog taxonomy describes dated public product URLs only; it is not sales, capacity, inventory, certification or market-share data.'
+};
 
 function canonicalKey(value) {
   if (!value) return '';
@@ -50,6 +57,7 @@ function synchronizedSnapshot(base, inventory, generatedAt) {
       blogGuides: blogGuides.length,
       newsPages: newsBriefs.length
     },
+    knowledgeResources: KNOWLEDGE_RESOURCES,
     products,
     blogGuides,
     newsBriefs,
@@ -81,7 +89,7 @@ async function main() {
     readLocalHtmlInventory('news')
   ]);
   const inventory = { products, blogGuides, newsBriefs };
-  const generatedAt = new Date().toISOString().slice(0, 10);
+  const generatedAt = new Date(Date.now() + (8 * 60 * 60 * 1000)).toISOString().slice(0, 10);
   const results = [];
 
   for (const relativePath of SNAPSHOT_PATHS) {

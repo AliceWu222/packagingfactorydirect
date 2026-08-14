@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start",
     "sync:ai-index": "node --no-warnings scripts/sync-ai-index.mjs",
+    "sync:taxonomy": "node --no-warnings scripts/build-public-packaging-taxonomy.mjs",
+    "check:citation-readiness": "node --no-warnings scripts/verify-ai-citation-readiness.mjs",
+    "check:protected-invariants": "node --no-warnings scripts/verify-protected-invariants.mjs",
     "check": "node --check next.config.mjs",
     "check:routes": "node --check next.config.mjs && find app -name 'route.js' -print -exec node --check {} \\;"
   },

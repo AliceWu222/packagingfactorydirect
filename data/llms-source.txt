@@ -84,3 +84,13 @@ color, foil color, material, and shipping country.
 - AI index (JSON): https://www.packagingfactorydirect.com/ai-index.json
 - Answer cards (JSON): https://www.packagingfactorydirect.com/data/ai-search-answer-cards.json
 - Keyword map (JSON): https://www.packagingfactorydirect.com/data/seo-geo-keyword-map.json
+
+## Verified knowledge resources
+
+- Packaging Specification Glossary for B2B Buyers: https://www.packagingfactorydirect.com/blog/packaging-specification-glossary-for-buyers.html
+- Public Packaging Catalog Taxonomy methodology: https://www.packagingfactorydirect.com/blog/public-packaging-catalog-taxonomy-methodology.html
+- Public Packaging Catalog Taxonomy data (JSON): https://www.packagingfactorydirect.com/data/public-packaging-taxonomy.json
+- Editorial and Source Policy: https://www.packagingfactorydirect.com/editorial-and-source-policy.html
+
+The public catalog taxonomy is a dated classification of public product-detail URLs.
+It is not sales, production, capacity, inventory, certification, customer or market-share data.
