@@ -31,10 +31,18 @@ export async function GET(request, { params }) {
 
   try {
     const data = await fs.readFile(file);
+    const ext = path.extname(file).toLowerCase();
+    // CSS/JS carry a ?v= cache-busting version, so a 1-day browser cache is safe.
+    // Images are recompressed periodically; a 1-day browser + 7-day edge cache
+    // lets optimizations reach visitors quickly while keeping repeat visits fast.
+    const cacheControl =
+      ext === '.css' || ext === '.js'
+        ? 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400'
+        : 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400';
     return new Response(data, {
       headers: {
         'Content-Type': contentType(file),
-        'Cache-Control': 'public, max-age=31536000, immutable'
+        'Cache-Control': cacheControl
       }
     });
   } catch {
