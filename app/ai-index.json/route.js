@@ -146,6 +146,8 @@ function classifiedPages(localProducts, localBlog, localNews, remoteProducts, re
     ],
     faq: [core('/faq.html', 'Buyer FAQ', 'faq', 'MOQ, quote, sample, shipping and OEM/ODM answers')],
     factoryCapability: [core('/factory-capability.html', 'Factory capability', 'trust-page', 'factory direct production capability')],
+    certifications: [core('/certifications.html', 'Certifications & compliance', 'trust-page', 'food-grade, FSC, REACH and ISO-aligned compliance documents for custom packaging')],
+    caseStudies: [core('/case-studies.html', 'Packaging case studies', 'trust-page', 'B2B custom packaging project examples for cosmetics, food, coffee, ecommerce and retail')],
     qualityControl: [core('/quality-control.html', 'Quality control', 'trust-page', 'quality inspection and pre-shipment control')],
     sampleProcess: [core('/sample-process.html', 'Sample process', 'trust-page', 'custom packaging sampling workflow')],
     shipping: [core('/shipping.html', 'Shipping and lead time', 'trust-page', 'worldwide shipping and export delivery')],
