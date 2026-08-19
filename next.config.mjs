@@ -171,29 +171,31 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400' }
         ]
       },
-      // Images / fonts / other static assets: long cache is fine (they rarely change)
+      // Images / fonts / other static assets: medium cache so optimized
+      // recompressed images propagate to browsers within a day while still
+      // benefiting from edge caching.
       {
         source: '/assets/img/:path*',
         headers: [
-          { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` }
+          { key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400' }
         ]
       },
       {
         source: '/assets/:path*.png',
         headers: [
-          { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` }
+          { key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400' }
         ]
       },
       {
         source: '/assets/:path*.jpg',
         headers: [
-          { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` }
+          { key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400' }
         ]
       },
       {
         source: '/assets/:path*.jpeg',
         headers: [
-          { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` }
+          { key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400' }
         ]
       },
       {
@@ -217,7 +219,7 @@ const nextConfig = {
       {
         source: '/:path*.webp',
         headers: [
-          { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` }
+          { key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400' }
         ]
       }
     ];
