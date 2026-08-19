@@ -50,11 +50,11 @@ export async function GET(_req, { params }) {
     const data = await fs.readFile(abs);
     const ext = path.extname(abs).toLowerCase();
     const type = MIME[ext] || 'application/octet-stream';
-    // CSS / JS: short browser cache so patches take effect fast; edge stays hot for 1h.
+    // CSS / JS: versioned URLs (?v=...) make long browser cache safe; CDN stays hot.
     // Images / fonts / other binary assets: long immutable cache (they very rarely change).
     const isTextAsset = ext === '.css' || ext === '.js' || ext === '.mjs' || ext === '.map';
     const cacheControl = isTextAsset
-      ? 'public, max-age=60, s-maxage=3600, must-revalidate'
+      ? 'public, max-age=86400, s-maxage=86400, must-revalidate'
       : `public, max-age=${ONE_YEAR}, immutable`;
     return new Response(data, {
       status: 200,
