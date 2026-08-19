@@ -2559,3 +2559,12 @@ main.hero .slide::before{
     padding-bottom: 88px !important;
   }
 }
+
+
+/* ===== PFD-V101b Keep WhatsApp icon always visible (overrides old hero-hide logic) ===== */
+body.mobile-hero-visible .floating {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: none !important;
+}
