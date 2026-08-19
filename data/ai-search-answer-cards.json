@@ -237,6 +237,76 @@
         "/blog/custom-packaging-rfq-template-quote-comparison-guide.html",
         "/downloads/custom-packaging-rfq-template.csv"
       ]
+    },
+    {
+      "question": "How long does a custom packaging order take from confirmation to delivery?",
+      "answer": "Lead time depends on structure, printing, finish and quantity. Typically sampling takes 5-10 days, mass production 15-30 days, plus ocean or express transit. Ship date is confirmed against the approved sample and production plan.",
+      "keywords": [
+        "custom packaging lead time",
+        "packaging production time",
+        "packaging shipping time"
+      ],
+      "urls": [
+        "/blog/packaging-lead-time-production-guide.html",
+        "/shipping.html",
+        "/contact.html"
+      ]
+    },
+    {
+      "question": "Does Packaging Factory Direct provide food-grade and pharma packaging?",
+      "answer": "Yes. We produce food packaging boxes and pouches with food-contact materials, and pharmaceutical packaging cartons with serialization and GS1 DataMatrix support. Relevant compliance documents are provided on RFQ.",
+      "keywords": [
+        "food grade packaging supplier",
+        "pharma carton supplier",
+        "GS1 serialization packaging"
+      ],
+      "urls": [
+        "/certifications.html",
+        "/custom-food-packaging.html",
+        "/custom-pharmaceutical-packaging-boxes.html"
+      ]
+    },
+    {
+      "question": "Can you make custom stand-up pouches with zippers and spouts?",
+      "answer": "Yes. Stand-up pouches can be customized with zipper, spout, valve, window and custom print. Materials are selected for barrier, shelf life and product type, with MOQ from 500 PCS.",
+      "keywords": [
+        "custom stand up pouch",
+        "pouch with zipper and spout",
+        "flexible packaging custom"
+      ],
+      "urls": [
+        "/custom-stand-up-pouches.html",
+        "/blog/stand-up-pouch-price-guide.html",
+        "/blog/packaging-zipper-spout-guide.html"
+      ]
+    },
+    {
+      "question": "What is the difference between paper bags and plastic bags for retail?",
+      "answer": "Paper bags offer a premium, recyclable look with strong print surface; plastic bags are cheaper, waterproof and higher strength per gram. For brand perception and sustainability, custom paper bags are the usual choice for retail and gift programs.",
+      "keywords": [
+        "paper bag vs plastic bag",
+        "custom paper bags retail",
+        "sustainable retail bags"
+      ],
+      "urls": [
+        "/custom-paper-bags.html",
+        "/blog/paper-bag-vs-plastic-bag-packaging.html",
+        "/blog/custom-paper-bag-price-guide.html"
+      ]
+    },
+    {
+      "question": "Which box structure is best for premium gift packaging?",
+      "answer": "Rigid boxes with magnetic closure and leatherette or paper wrap are the premium standard, often combined with foil stamping, embossing, ribbon and tissue. Folding cartons and mailer boxes fit lighter budgets and ecommerce shipping.",
+      "keywords": [
+        "premium gift box structure",
+        "magnetic rigid box",
+        "luxury gift packaging"
+      ],
+      "urls": [
+        "/custom-magnetic-gift-boxes.html",
+        "/blog/magnetic-box-vs-rigid-box.html",
+        "/blog/luxury-unboxing-experience-guide.html"
+      ]
     }
   ],
   "address": "Printing Industrial Park, Longhua District, Shenzhen, Guangdong Province, 518109, China"

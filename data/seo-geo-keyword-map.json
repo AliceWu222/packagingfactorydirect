@@ -188,6 +188,66 @@
         "/blog/custom-packaging-rfq-template-quote-comparison-guide.html",
         "/blog/custom-packaging-landed-cost-dimensional-weight-moq-guide.html"
       ]
+    },
+    {
+      "keyword": "custom packaging price",
+      "intent": "packaging cost research before RFQ",
+      "primaryUrl": "/blog/custom-rigid-box-price-guide.html",
+      "supportingUrls": [
+        "/blog/custom-folding-carton-price-guide.html",
+        "/blog/custom-paper-bag-price-guide.html",
+        "/blog/stand-up-pouch-price-guide.html",
+        "/blog/custom-packaging-landed-cost-budget-guide.html"
+      ]
+    },
+    {
+      "keyword": "rigid box vs folding carton",
+      "intent": "packaging structure comparison",
+      "primaryUrl": "/blog/rigid-box-vs-folding-carton.html",
+      "supportingUrls": [
+        "/blog/magnetic-box-vs-rigid-box.html",
+        "/blog/mailer-box-vs-gift-box.html"
+      ]
+    },
+    {
+      "keyword": "cosmetic packaging boxes",
+      "intent": "beauty industry packaging sourcing",
+      "primaryUrl": "/custom-cosmetic-packaging-boxes.html",
+      "supportingUrls": [
+        "/blog/cosmetics-packaging-box-supplier-guide.html",
+        "/blog/skincare-box-packaging-guide.html",
+        "/blog/perfume-box-packaging-guide.html"
+      ]
+    },
+    {
+      "keyword": "stand up pouch price",
+      "intent": "flexible packaging cost research",
+      "primaryUrl": "/blog/stand-up-pouch-price-guide.html",
+      "supportingUrls": [
+        "/custom-stand-up-pouches.html",
+        "/blog/stand-up-pouch-vs-flat-pouch.html",
+        "/blog/packaging-zipper-spout-guide.html"
+      ]
+    },
+    {
+      "keyword": "packaging certifications",
+      "intent": "supplier compliance and trust verification",
+      "primaryUrl": "/certifications.html",
+      "supportingUrls": [
+        "/blog/food-grade-packaging-certificates.html",
+        "/blog/packaging-sustainability-certifications.html",
+        "/quality-control.html"
+      ]
+    },
+    {
+      "keyword": "import packaging to usa",
+      "intent": "cross-border packaging procurement compliance",
+      "primaryUrl": "/blog/packaging-import-customs-guide-usa.html",
+      "supportingUrls": [
+        "/blog/packaging-import-customs-guide-eu.html",
+        "/blog/packaging-shipping-cost-landed-calculator-guide.html",
+        "/shipping.html"
+      ]
     }
   ],
   "aiExtractionPattern": [

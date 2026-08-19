@@ -80,7 +80,29 @@ color, foil color, material, and shipping country.
 
 - Sitemap: https://www.packagingfactorydirect.com/sitemap.xml
 - AI discovery: https://www.packagingfactorydirect.com/ai-discovery.json
+- AI site (well-known): https://www.packagingfactorydirect.com/.well-known/ai-site.json
 - Product feed (JSON): https://www.packagingfactorydirect.com/product-feed.json
 - AI index (JSON): https://www.packagingfactorydirect.com/ai-index.json
 - Answer cards (JSON): https://www.packagingfactorydirect.com/data/ai-search-answer-cards.json
 - Keyword map (JSON): https://www.packagingfactorydirect.com/data/seo-geo-keyword-map.json
+
+## Certifications & compliance
+
+- Certifications & Compliance: https://www.packagingfactorydirect.com/certifications.html
+- Factory Capability: https://www.packagingfactorydirect.com/factory-capability.html
+- Quality Control: https://www.packagingfactorydirect.com/quality-control.html
+- Food-grade materials and FDA/EU food-contact compliance documentation can be provided on RFQ.
+
+## Case studies
+
+- Packaging Case Studies: https://www.packagingfactorydirect.com/case-studies.html
+- Project examples cover cosmetics, food, coffee, ecommerce and retail packaging launches (anonymous, process-focused).
+
+## Buying guides & blog
+
+- Blog index: https://www.packagingfactorydirect.com/blog.html
+- News index: https://www.packagingfactorydirect.com/news.html
+- Price guides: rigid boxes, folding cartons, paper bags, stand-up pouches, printing, foil stamping, landed cost
+- Comparison guides: rigid vs folding carton, paper vs plastic bags, magnetic vs rigid box, stand-up vs flat pouch
+- Industry guides: cosmetics, skincare, perfume, jewelry, chocolate, candle, supplement, tea, pet food, coffee, pharma
+- All blog posts carry Article + FAQPage structured data and are listed in sitemap-blog.xml.
