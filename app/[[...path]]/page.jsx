@@ -972,6 +972,32 @@ function categoryFaqJsonLd(html, rel) {
   };
 }
 
+function blogFaqJsonLd(html, rel) {
+  const kind = getKindFromRel(rel);
+  if ((kind !== 'blog' && kind !== 'news') || rel === 'blog.html' || rel === 'news.html') return null;
+  const faqStart = html.search(/<h2[^>]*>\s*FAQ[^<]*<\/h2>/i);
+  if (faqStart < 0) return null;
+  const faqEnd = html.indexOf('</section>', faqStart);
+  const faqRegion = html.slice(faqStart, faqEnd >= 0 ? faqEnd : undefined);
+  const pairs = Array.from(faqRegion.matchAll(/<h3[^>]*>([\s\S]*?)<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/gi))
+    .map(match => ({
+      question: match[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
+      answer: match[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+    }))
+    .filter(item => item.question && item.answer)
+    .slice(0, 8);
+  if (pairs.length < 2) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: pairs.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer }
+    }))
+  };
+}
+
 function appendedProductFaqJsonLd(html, rel) {
   if (!APPENDED_PRODUCT_FAQ_PATHS.has(rel.replace(/^\/+/, ''))) return null;
   const faqStart = html.search(/<h2[^>]*>\s*Buyer FAQ\s*<\/h2>/i);
@@ -1224,6 +1250,7 @@ export default async function HtmlPage({ params }) {
   const trustSchema = trustPageJsonLd(rel, title, description);
   const faqSchema = faqPageJsonLd(rel);
   const categoryFaqSchema = categoryFaqJsonLd(bodyHtml, rel);
+  const blogFaqSchema = blogFaqJsonLd(html, rel);
   const appendedProductFaqSchema = appendedProductFaqJsonLd(html, rel);
   const collectionSchema = collectionPageJsonLd(html, rel, title, description);
 
@@ -1233,7 +1260,7 @@ export default async function HtmlPage({ params }) {
   const articleType = kind === 'news' ? 'NewsArticle' : 'Article';
   const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(bodyHtml, articleType);
   const injectTrust = Boolean(trustSchema);
-  const injectFaq = Boolean(faqSchema || categoryFaqSchema || appendedProductFaqSchema);
+  const injectFaq = Boolean(faqSchema || categoryFaqSchema || blogFaqSchema || appendedProductFaqSchema);
   const injectCollection = Boolean(collectionSchema);
   const productsLoaderScript = rel === 'products.html' ? productListLoaderScriptForRenderedUrls() : '';
 
@@ -1269,7 +1296,7 @@ export default async function HtmlPage({ params }) {
       {injectFaq ? (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema || categoryFaqSchema || appendedProductFaqSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema || categoryFaqSchema || blogFaqSchema || appendedProductFaqSchema) }}
         />
       ) : null}
       {injectCollection ? (
