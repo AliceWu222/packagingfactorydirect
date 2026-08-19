@@ -60,11 +60,35 @@ function keepSingleSitemapIndex(text) {
   return `${withoutSitemaps}\nSitemap: ${CANONICAL_HOST}/sitemap-index.xml\n`;
 }
 
+// Explicitly allow mainstream AI search crawlers (ChatGPT, Gemini, Perplexity,
+// Claude) so AI engines can read llms.txt, ai-index.json and product pages.
+// Mirrors the industry-leading pattern used by LuxoPack.
+const AI_CRAWLERS = [
+  'GPTBot',
+  'OAI-SearchBot',
+  'ChatGPT-User',
+  'Google-Extended',
+  'PerplexityBot',
+  'ClaudeBot',
+  'anthropic-ai',
+  'cohere-ai',
+  'Bytespider'
+];
+
+function allowAiCrawlers(text) {
+  let out = text.trimEnd() + '\n';
+  for (const ua of AI_CRAWLERS) {
+    out += `\nUser-agent: ${ua}\nAllow: /\n`;
+  }
+  return out;
+}
+
 export async function GET() {
   const raw = await readLocal();
   let text = protectInternalFiles(normalizeHost(raw));
   text = ensureLine(text, `Allow: ${CANONICAL_HOST}/ai-discovery.json`.replace(CANONICAL_HOST, ''));
   text = ensureLine(text, `Allow: /.well-known/ai-site.json`);
+  text = allowAiCrawlers(text);
   text = keepSingleSitemapIndex(text);
   return new Response(text, { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 's-maxage=3600, stale-while-revalidate' } });
 }

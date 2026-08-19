@@ -1041,6 +1041,29 @@ function appendedProductFaqJsonLd(html, rel) {
   };
 }
 
+// Product detail pages get an injected "Related RFQ FAQ" <dl> block from
+// buyerGuideSection. Mirror those visible Q&A pairs into FAQPage JSON-LD so
+// Google and AI engines can read them directly. Content matches exactly what
+// the buyer sees; nothing is invented here.
+function productRfqFaqJsonLd(kind, rel) {
+  if (kind !== 'products' || rel === 'products.html') return null;
+  const pairs = [
+    ['What is the MOQ?', 'MOQ starts from 500 PCS for custom packaging orders.'],
+    ['Can you make custom size and structure?', 'Yes. OEM/ODM custom size, dieline and structure are supported after artwork and material review.'],
+    ['What affects quotation speed?', 'Size, quantity, material, printing colors, finish, destination country and artwork file are the key RFQ fields.'],
+    ['Can I approve a sample before mass production?', 'Yes. Buyers can confirm dieline, artwork, material and sample before production setup.']
+  ];
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: pairs.map(item => ({
+      '@type': 'Question',
+      name: item[0],
+      acceptedAnswer: { '@type': 'Answer', text: item[1] }
+    }))
+  };
+}
+
 function categoryReviewSection(rel) {
   const sources = CATEGORY_REVIEW[rel];
   if (!sources) return '';
@@ -1270,6 +1293,7 @@ export default async function HtmlPage({ params }) {
   const categoryFaqSchema = categoryFaqJsonLd(bodyHtml, rel);
   const blogFaqSchema = blogFaqJsonLd(html, rel);
   const appendedProductFaqSchema = appendedProductFaqJsonLd(html, rel);
+  const productRfqFaqSchema = productRfqFaqJsonLd(kind, rel);
   const collectionSchema = collectionPageJsonLd(html, rel, title, description);
 
   // Original static <head> content is not rendered inside the extracted body,
@@ -1278,7 +1302,7 @@ export default async function HtmlPage({ params }) {
   const articleType = kind === 'news' ? 'NewsArticle' : 'Article';
   const injectArticle = (kind === 'blog' || kind === 'news') && rel !== 'blog.html' && rel !== 'news.html' && !hasInlineJsonLdOfType(bodyHtml, articleType);
   const injectTrust = Boolean(trustSchema);
-  const injectFaq = Boolean(faqSchema || categoryFaqSchema || blogFaqSchema || appendedProductFaqSchema);
+  const injectFaq = Boolean(faqSchema || categoryFaqSchema || blogFaqSchema || appendedProductFaqSchema || productRfqFaqSchema);
   const injectCollection = Boolean(collectionSchema);
   const productsLoaderScript = rel === 'products.html' ? productListLoaderScriptForRenderedUrls() : '';
 
@@ -1314,7 +1338,7 @@ export default async function HtmlPage({ params }) {
       {injectFaq ? (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema || categoryFaqSchema || blogFaqSchema || appendedProductFaqSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema || categoryFaqSchema || blogFaqSchema || appendedProductFaqSchema || productRfqFaqSchema) }}
         />
       ) : null}
       {injectCollection ? (
