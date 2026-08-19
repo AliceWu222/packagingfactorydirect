@@ -1,0 +1,11 @@
+import { readFileSync } from "fs";
+const f = process.argv[2];
+const c = readFileSync(f, "utf8");
+console.log("file:", f);
+console.log("len:", c.length);
+console.log("lang:", c.match(/<html[^>]*lang="([^"]+)"/)?.[1]);
+console.log("dir:", c.match(/<html[^>]*dir="([^"]+)"/)?.[1]);
+console.log("title:", c.match(/<title>([^<]*)<\/title>/)?.[1]?.slice(0, 60));
+console.log("has DE hero:", c.includes("Hersteller"));
+console.log("has EN hero:", c.includes("Custom Packaging Manufacturer for Global"));
+console.log("canonical:", c.match(/<link[^>]*rel="canonical"[^>]*href="([^"]+)"/)?.[1]);
