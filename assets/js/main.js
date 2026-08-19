@@ -98,8 +98,9 @@
     }
 
     function start(){
+      // Auto-advance disabled: keep the first slide fixed on load.
       stop();
-      timer = window.setInterval(function(){ show(current + 1); }, delay);
+      // timer = window.setInterval(function(){ show(current + 1); }, delay);
     }
 
     function stop(){
@@ -159,8 +160,9 @@
       dots.forEach(function(dot, i){ dot.classList.toggle('is-active', i === current); });
     }
     function start(){
+      // Auto-advance disabled: keep the first slide fixed on load.
       stop();
-      timer = window.setInterval(function(){ show(current + 1); }, delay);
+      // timer = window.setInterval(function(){ show(current + 1); }, delay);
     }
     function stop(){
       if(timer){ window.clearInterval(timer); timer = null; }
