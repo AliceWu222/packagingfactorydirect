@@ -91,10 +91,16 @@ const websiteJsonLd = {
 const measurementId = process.env.NEXT_PUBLIC_GA4_ID || process.env.NEXT_PUBLIC_GA_ID || '';
 const gtmId = process.env.NEXT_PUBLIC_GTM_ID || '';
 
+const LANG_FOR_PATH = { '/de': 'de', '/fr': 'fr', '/es': 'es', '/ja': 'ja', '/ar': 'ar' };
+
 export default function RootLayout({ children }) {
+  // Multi-language: fix <html lang> + RTL early in the browser so screen readers
+  // and crawlers that execute JS see the right language immediately.
+  const langFixScript = `try{var p=location.pathname.split('/')[1]||'',m={'de':'de','fr':'fr','es':'es','ja':'ja','ar':'ar'};if(m[p]){document.documentElement.lang=m[p];if(p==='ar')document.documentElement.dir='rtl';}}catch(e){}`;
   return (
     <html lang="en">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: langFixScript }} />
         <meta name="theme-color" content="#0f3f2c" />
         <meta name="format-detection" content="telephone=yes,email=yes,address=yes" />
         <link rel="preload" as="image" href="/assets/img/hero/hero-1.webp" fetchPriority="high" media="(min-width: 761px)" />
