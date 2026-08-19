@@ -171,6 +171,28 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400' }
         ]
       },
+      // Multi-language HTML: no edge/browser cache so the edge middleware can
+      // rewrite <html lang> (and dir=rtl for Arabic) on every request.
+      {
+        source: '/de/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }]
+      },
+      {
+        source: '/fr/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }]
+      },
+      {
+        source: '/es/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }]
+      },
+      {
+        source: '/ja/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }]
+      },
+      {
+        source: '/ar/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }]
+      },
       // Images / fonts / other static assets: medium cache so optimized
       // recompressed images propagate to browsers within a day while still
       // benefiting from edge caching.
