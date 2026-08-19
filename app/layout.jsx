@@ -124,8 +124,8 @@ export default function RootLayout({ children }) {
         <link rel="alternate" type="application/json" href="/ai-discovery.json" title="Packaging Factory Direct AI discovery" />
         <link rel="alternate" type="application/json" href="/ai-index.json" title="Packaging Factory Direct AI index" />
         <link rel="alternate" type="application/json" href="/product-feed.json" title="Packaging Factory Direct product feed" />
-        <link rel="stylesheet" href="/assets/css/style.css?v=v97-seo-geo-sitemap-json" />
-        <script src="/assets/js/main.js?v=v100-rfq-indexing" defer></script>
+        <link rel="stylesheet" href="/assets/css/style.css?v=v104-perf-ux" />
+        <script src="/assets/js/main.js?v=v104-perf-ux" defer></script>
         {measurementId ? <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script> : null}
         {measurementId ? <script dangerouslySetInnerHTML={{ __html: `
 window.dataLayer = window.dataLayer || [];
