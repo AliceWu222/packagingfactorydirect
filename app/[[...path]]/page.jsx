@@ -446,7 +446,7 @@ function seoDescriptionForRel(rawDescription, rel) {
 
 const STRATEGIC_META = {
   'index.html': {
-    title: 'Custom Packaging Manufacturer | Packaging Factory Direct',
+    title: 'Custom Packaging Manufacturer China Factory | MOQ 500 PCS',
     description: 'Custom packaging manufacturer for boxes, pouches, paper bags and labels. MOQ 500 PCS, OEM/ODM, custom printing and worldwide shipping. Request a factory quote.'
   },
   'products/hyaluronic-acid-dermal-filler-packaging-boxes-medical-aesthetic.html': {

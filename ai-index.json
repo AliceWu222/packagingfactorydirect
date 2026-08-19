@@ -1779,7 +1779,7 @@
     }
   ],
   "version": "v101-synced-static-content-inventory",
-  "generatedAt": "2026-08-14",
+  "generatedAt": "2026-08-19T18:46:21.437Z",
   "geoPolicy": "Pages are structured for AI answer engines with direct answers, comparison tables, RFQ checklists, FAQPage schema and stable canonical URLs.",
   "targetKeywordClusters": [
     {
@@ -2287,6 +2287,21 @@
       "image": "https://www.packagingfactorydirect.com/assets/img/hero/hero-1.webp",
       "category": "B2B Packaging Guide",
       "source": "local-html"
+    },
+    {
+      "title": "Custom Packaging Buyer's Guide 2026: Sourcing Boxes, Bags & Pouches from a China Factory",
+      "url": "blog/custom-packaging-buyers-guide-2026-china-factory-direct.html",
+      "description": "The complete 2026 B2B guide to sourcing custom boxes, pouches, paper bags and labels from a China factory: MOQ 500 PCS, materials, finishes, sampling, FDA/FSC compliance and RFQ checklist.",
+      "keywords": [
+        "custom packaging manufacturer",
+        "China packaging factory",
+        "MOQ 500 PCS",
+        "custom boxes",
+        "stand up pouches",
+        "paper bags",
+        "FDA food contact",
+        "FSC certified packaging"
+      ]
     }
   ],
   "newsBriefs": [
