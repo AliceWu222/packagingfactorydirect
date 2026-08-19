@@ -1,0 +1,240 @@
+[products/luxury-rigid-gift-boxes-magnetic-ribbon-eva-inserts.html]
+TAG: High-Value OEM Product
+H3: Luxury Rigid Gift Boxes with Magnetic Closure, Ribbon and EVA Inserts
+P: Luxury rigid gift boxes with magnetic closure, ribbon, EVA foam inserts and gold foil printing for fragrance, cosmetics, jewelry, electronics and premium brand packaging.
+
+[products/branded-thank-you-cards-insert-cards-ecommerce.html]
+TAG: High-Value OEM Product
+H3: Branded Thank You Cards and Insert Cards for Ecommerce Packaging
+P: Branded thank you cards, insert cards, care instruction cards and QR review cards for ecommerce, apparel, cosmetics, gift boxes and retail packaging programs.
+
+[products/custom-packaging-boxes.html]
+TAG: OEM & Customize
+H3: Custom Packaging Boxes
+P: Paperboard boxes, folding cartons and branded retail packaging.
+
+[products/foldable-magnetic-boxes.html]
+TAG: OEM & Customize
+H3: Foldable Magnetic Boxes
+P: Space-saving magnetic closure rigid boxes for premium brands.
+
+[products/custom-gift-boxes.html]
+TAG: OEM & Customize
+H3: Custom Gift Boxes
+P: Gift boxes with inserts, ribbon, foil stamping and custom printing.
+
+[products/book-printing.html]
+TAG: OEM & Customize
+H3: Book Printing
+P: Custom book printing for catalogs, manuals, brochures and brand programs.
+
+[products/catalog-printing.html]
+TAG: OEM & Customize
+H3: Catalog Printing
+P: Premium catalog and booklet printing for B2B marketing and product sales.
+
+[products/custom-paper-bags.html]
+TAG: OEM & Customize
+H3: Custom Paper Bags
+P: Shopping bags, gift bags and retail paper bags with handles.
+
+[products/custom-cards-playing-cards.html]
+TAG: OEM & Customize
+H3: Cards & Playing Cards
+P: Printed cards, game cards, thank you cards and card decks.
+
+[products/presentation-folders.html]
+TAG: OEM & Customize
+H3: Presentation Folders
+P: PP folders, ring binders, paper folders and presentation folders.
+
+[products/custom-paper-cups.html]
+TAG: OEM & Customize
+H3: Paper Cups
+P: Custom printed paper cups for coffee, beverage and foodservice brands.
+
+[products/food-packaging-boxes.html]
+TAG: OEM & Customize
+H3: Food Packaging Boxes
+P: Food-grade cartons for bakery, snacks, takeaway and restaurant brands.
+
+[products/pharmaceutical-packaging-boxes.html]
+TAG: OEM & Customize
+H3: Pharmaceutical Packaging Boxes
+P: Medical and pharmaceutical folding cartons with batch and code panels.
+
+[products/food-containers.html]
+TAG: OEM & Customize
+H3: Food Containers
+P: Paper bowls, cups, trays and containers for foodservice packaging.
+
+[products/weight-loss-pill-packaging-boxes.html]
+TAG: OEM & Customize
+H3: Weight Loss Pill Boxes
+P: Supplement boxes for weight loss pills, capsules and wellness products.
+
+[products/cosmetic-packaging-boxes.html]
+TAG: OEM & Customize
+H3: Cosmetic Packaging Boxes
+P: Skincare, beauty, perfume and cosmetic cartons with premium finishes.
+
+[products/sandwich-packaging-boxes.html]
+TAG: OEM & Customize
+H3: Sandwich Packaging Boxes
+P: Eco-friendly sandwich boxes, sleeves and window food packaging.
+
+[products/custom-pizza-boxes.html]
+TAG: OEM & Customize
+H3: Pizza Boxes
+P: Custom pizza boxes in kraft, white board and corrugated board.
+
+[products/stand-up-pouches.html]
+TAG: OEM & Customize
+H3: Stand Up Pouches
+P: High-barrier stand-up pouches for food, coffee, pet food and cannabis.
+
+[products/flat-bottom-bags.html]
+TAG: OEM & Customize
+H3: Flat Bottom Bags
+P: Flat bottom bags for coffee, pet food, snacks and premium retail packaging.
+
+[products/three-side-seal-bags.html]
+TAG: OEM & Customize
+H3: Three Side Seal Bags
+P: Three-side seal pouches for powders, snacks, samples and medical products.
+
+[products/spout-pouches.html]
+TAG: OEM & Customize
+H3: Spout Pouches
+P: Spout pouches for sauce, baby food, liquids and beverage refill packaging.
+
+[products/custom-coffee-bags.html]
+TAG: OEM & Customize
+H3: Custom Coffee Bags
+P: Coffee bags with valve, zipper, flat bottom and high-barrier structures.
+
+[products/pet-food-stand-up-pouches.html]
+TAG: OEM & Customize
+H3: Pet Food Stand Up Pouches
+P: Pet food bags for dog food, cat food and treat packaging.
+
+[products/cat-food-bags.html]
+TAG: OEM & Customize
+H3: Cat Food Bags
+P: Custom cat food pouches with high barrier, zipper and custom printing.
+
+[products/dog-food-bags.html]
+TAG: OEM & Customize
+H3: Dog Food Bags
+P: Dog food bags with heavy-duty seal, zipper and strong laminate films.
+
+[products/cannabis-mylar-bags.html]
+TAG: OEM & Customize
+H3: Cannabis Mylar Bags
+P: Smell-proof mylar bags and child-resistant pouches for cannabis brands.
+
+[products/pre-roll-packaging-boxes.html]
+TAG: OEM & Customize
+H3: Pre Roll Packaging Boxes
+P: Pre-roll boxes, tubes packaging and cannabis retail packs.
+
+[products/variable-data-pharma-boxes.html]
+TAG: OEM & Customize
+H3: Variable Data Pharma Boxes
+P: One-item-one-code pharma boxes with GS1 DataMatrix and serialization.
+
+[products/hyaluronic-acid-packaging-boxes.html]
+TAG: OEM & Customize
+H3: Hyaluronic Acid Packaging Boxes
+P: Medical aesthetic cartons for hyaluronic acid, injectable gel and skincare kits.
+
+[products/medical-aesthetic-one-code-boxes.html]
+TAG: OEM & Customize
+H3: Medical Aesthetic One-Code Boxes
+P: Anti-counterfeit packaging for medical beauty products and traceability systems.
+
+[products/pet-food-pharma-bottles.html]
+TAG: OEM & Customize
+H3: PET Food & Pharma Bottles
+P: PET bottles and containers for food, supplements, pharma and cosmetics.
+
+[products/custom-printed-tape.html]
+TAG: OEM & Customize
+H3: Custom Printed Tape
+P: Custom packaging tape, BOPP tape and branded sealing tape.
+
+[products/custom-tin-boxes.html]
+TAG: OEM & Customize
+H3: Tin Boxes
+P: Tinplate boxes and metal tins for food, gifts, tea and premium retail.
+
+[products/custom-courier-bags.html]
+TAG: OEM & Customize
+H3: Courier Bags
+P: Courier bags, mailer bags and shipping bags for ecommerce delivery.
+
+[products/custom-shipping-boxes.html]
+TAG: OEM & Customize
+H3: Shipping Boxes
+P: Corrugated shipping boxes, mailer boxes and export cartons.
+
+[products/bubble-mailers.html]
+TAG: OEM & Customize
+H3: Bubble Mailers
+P: Protective bubble mailers and padded envelopes for ecommerce shipping.
+
+[products/apparel-zipper-bags.html]
+TAG: OEM & Customize
+H3: Apparel Zipper Bags
+P: Clear zipper bags and clothing packaging for apparel brands.
+
+[products/stickers-and-labels.html]
+TAG: OEM & Customize
+H3: Stickers & Labels
+P: Custom stickers, roll labels, barcode labels and product labels.
+
+[products/security-labels.html]
+TAG: OEM & Customize
+H3: Security Labels
+P: Anti-counterfeit labels, tamper-evident labels and holographic labels.
+
+[products/custom-tissue-paper.html]
+TAG: OEM & Customize
+H3: Custom Tissue Paper
+P: Printed tissue paper for retail packaging, gifts and ecommerce unboxing.
+
+[products/thank-you-cards.html]
+TAG: OEM & Customize
+H3: Thank You Cards
+P: Branded thank-you cards, insert cards and after-sale cards.
+
+[products/custom-printed-matte-finish-stand-up-pouch-resealable-zipper-coffee-tea.html]
+TAG: New Pouch Product
+H3: Custom Printed Matte Finish Stand-Up Pouch with Resealable Zipper for Coffee and Tea
+P: Matte finish stand-up pouches with resealable zipper, rich brand printing and shelf-ready structure for coffee beans, ground coffee and tea packaging.
+
+[products/high-barrier-aluminum-foil-flat-bottom-pouch-tear-notch-pet-food-packaging.html]
+TAG: New Pouch Product
+H3: High-Barrier Aluminum Foil Flat Bottom Pouch with Tear Notch for Pet Food Packaging
+P: Flat bottom aluminum foil pet food pouches with strong barrier, tear notch and stable shelf presentation for premium cat food and dog food brands.
+
+[products/child-resistant-stand-up-pouch-smell-proof-zipper-cannabis-cbd-products.html]
+TAG: New Pouch Product
+H3: Child-Resistant Stand-Up Pouch with Smell-Proof Zipper for Cannabis and CBD Products
+P: Child-resistant smell-proof stand-up pouches for cannabis flower, edibles and CBD products with compliant structure, premium printing and secure zipper closure.
+
+[products/food-grade-eight-side-sealed-side-gusset-pouch-one-way-degassing-valve-coffee-beans.html]
+TAG: New Pouch Product
+H3: Food-Grade Eight-Side Sealed Side Gusset Pouch with One-Way Degassing Valve for Coffee Beans
+P: Eight-side sealed coffee bean pouch with one-way degassing valve, food-grade barrier layers and premium print performance for specialty coffee brands.
+
+[products/transparent-window-stand-up-pouch-kraft-paper-surface-organic-food-nuts.html]
+TAG: New Pouch Product
+H3: Transparent Window Stand-Up Pouch with Kraft Paper Surface for Organic Food and Nuts
+P: Kraft paper stand-up pouch with clear window for organic food, nuts and healthy snacks, combining natural shelf appeal with practical resealable packaging.
+
+[products/heavy-duty-quad-seal-stand-up-bag-die-cut-handle-premium-cat-dog-food.html]
+TAG: New Pouch Product
+H3: Heavy-Duty Quad Seal Stand-Up Bag with Die-Cut Handle for Premium Cat and Dog Food
+P: Heavy-duty quad seal pet food bag with die-cut handle, reinforced seals and premium printing for upscale cat food and dog food packaging programs.
+

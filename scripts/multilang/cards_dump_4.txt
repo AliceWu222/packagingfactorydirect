@@ -1,0 +1,240 @@
+[products/tyvek-lidding-paper.html]
+TAG: New Medical Material
+H3: Tyvek Lidding Paper
+P: Medical Tyvek lidding paper for sterile blister and tray sealing, offering breathability, microbial barrier performance and clean peel opening.
+
+[products/medical-lidding-film.html]
+TAG: New Medical Material
+H3: Medical Lidding Film
+P: Custom medical lidding film with peelable seal performance, high clarity and secure tray sealing for device packaging, diagnostics and healthcare kits.
+
+[products/tyvek-lidding-film-for-blister-packaging.html]
+TAG: New Medical Material
+H3: Tyvek Lidding Film for Blister Packaging
+P: Tyvek lidding film for blister packaging with breathable sterile barrier, peelable sealing and dependable tray compatibility for medical devices and sterile kits.
+
+[products/heat-seal-medical-lidding-paper.html]
+TAG: New Medical Material
+H3: Heat Seal Medical Lidding Paper
+P: Heat seal medical lidding paper with controlled sealability, peelable opening and reliable sterile barrier support for trays, blisters and healthcare packs.
+
+[products/coated-medical-lidding-paper.html]
+TAG: New Medical Material
+H3: Coated Medical Lidding Paper
+P: Coated medical lidding paper for sterile tray sealing with engineered coating, smooth print surface and dependable compatibility with medical blister systems.
+
+[products/medical-vacuum-packaging-bags.html]
+TAG: New Medical Material
+H3: Medical Vacuum Packaging Bags
+P: Medical vacuum packaging bags with strong barrier structure, secure sealing and clean presentation for medical components, implants and sterile device protection.
+
+[products/dental-sterilization-pouches.html]
+TAG: New Medical Bag
+H3: Dental Sterilization Pouches
+P: Medical-grade dental sterilization pouches with clean peel opening and dependable sterile barrier performance for dental tools, probes and procedure kits.
+
+[products/surgical-instrument-sterilization-pouches.html]
+TAG: New Medical Bag
+H3: Surgical Instrument Sterilization Pouches
+P: High-barrier surgical instrument sterilization pouches built for sterile packaging of scissors, forceps, clamps and procedure sets.
+
+[products/medical-packaging-bags-needles-syringes.html]
+TAG: New Medical Bag
+H3: Medical Packaging Bags for Needles and Syringes
+P: Sterile medical packaging bags for needles and syringes with clean medical printing, clear presentation and secure barrier structure.
+
+[products/injection-needle-sterilization-bags.html]
+TAG: New Medical Bag
+H3: Injection Needle Sterilization Bags
+P: Precision sterile bags for injection needles, supporting clean barrier protection, compact sizing and easy medical labeling.
+
+[products/microneedle-sterilization-packaging-bags.html]
+TAG: New Medical Bag
+H3: Microneedle Sterilization Packaging Bags
+P: Premium sterile packaging bags for microneedle devices and skin-treatment products with clean presentation and secure medical barrier.
+
+[products/wound-dressing-sterilization-bags.html]
+TAG: New Medical Bag
+H3: Wound Dressing Sterilization Bags
+P: Sterile wound dressing bags for gauze, bandages and first-aid components with medical-grade barrier structure and easy-open seal.
+
+[products/medical-patch-packaging-bags.html]
+TAG: New Medical Bag
+H3: Medical Patch Packaging Bags
+P: Custom packaging bags for medical patches with sterile barrier, easy-tear opening and clean branded presentation for healthcare products.
+
+[products/alcohol-pad-sterilization-packaging-bags.html]
+TAG: New Medical Bag
+H3: Alcohol Pad Sterilization Packaging Bags
+P: Sterile packaging bags for alcohol pads and antiseptic wipes with compact design, clean print and dependable sealing for medical distribution.
+
+[products/medical-sponge-sterilization-packaging-bags.html]
+TAG: New Medical Bag
+H3: Medical Sponge Sterilization Packaging Bags
+P: Sterile packaging bags for medical sponges and gauze products with secure heat seals and clean presentation for hospitals and OEM brands.
+
+[products/latex-glove-sterilization-packaging-bags.html]
+TAG: New Medical Bag
+H3: Latex Glove Sterilization Packaging Bags
+P: Medical glove sterilization bags for latex gloves and examination gloves with sterile protection, clean display and scalable OEM printing.
+
+[products/custom-takeaway-boxes-wholesale-eco-friendly-logo-printed-disposable-food-packaging-boxes-manufacturer.html]
+TAG: New Food Packaging
+H3: Custom Takeaway Boxes Wholesale | Eco-Friendly Logo Printed Disposable Food Packaging Boxes Manufacturer
+P: Eco-friendly custom takeaway boxes with logo printing for restaurants, delivery brands, catering companies and food packaging distributors.
+
+[products/custom-greaseproof-paper-food-bulk-printed-logo-wrapping-paper-sheets-fast-food-baking.html]
+TAG: New Food Packaging
+H3: Custom Greaseproof Paper for Food | Bulk Printed Logo Wrapping Paper Sheets for Fast Food & Baking
+P: Bulk custom greaseproof paper sheets with printed logo for burgers, bakery products, sandwiches, fries and fast food wrapping.
+
+[products/custom-wrapping-paper-logo-premium-branded-tissue-paper-packaging-gifts-retail-products.html]
+TAG: New Packaging Accessory
+H3: Custom Wrapping Paper with Logo | Premium Branded Tissue Paper Packaging for Gifts & Retail Products
+P: Premium custom wrapping paper and branded tissue paper with logo for gift boxes, retail packaging, boutique products and e-commerce unboxing.
+
+[products/custom-sushi-boxes-wholesale-disposable-paper-sushi-packaging-window-japanese-catering.html]
+TAG: New Food Packaging
+H3: Custom Sushi Boxes Wholesale | Disposable Paper Sushi Packaging with Window for Japanese Catering
+P: Custom sushi boxes with clear window, premium food-safe paperboard and branded Japanese-style presentation for sushi takeaway and catering.
+
+[products/custom-sandwich-boxes-window-food-grade-kraft-paper-wedge-sandwich-packaging-manufacturer.html]
+TAG: New Food Packaging
+H3: Custom Sandwich Boxes with Window | Food Grade Kraft Paper Wedge Sandwich Packaging Manufacturer
+P: Custom kraft sandwich wedge boxes with clear window and food-grade structure for cafes, convenience stores and fresh food takeaway.
+
+[products/custom-french-fries-boxes-bulk-printed-disposable-paper-scoop-cups-holders-fast-food-restaurant.html]
+TAG: New Food Packaging
+H3: Custom French Fries Boxes Bulk | Printed Disposable Paper Scoop Cups & Holders for Fast Food Restaurant
+P: Bulk custom French fries boxes, scoop cups and holders with printed logo for fast food restaurants, snack shops and takeaway chains.
+
+[products/custom-paper-food-trays-wholesale-grease-resistant-disposable-cardboard-food-boat-trays-catering.html]
+TAG: New Food Packaging
+H3: Custom Paper Food Trays Wholesale | Grease-Resistant Disposable Cardboard Food Boat Trays for Catering
+P: Custom paper food trays and cardboard food boat trays with grease-resistant options for catering, events, fries, snacks and street food.
+
+[products/custom-paper-cups-logo-bulk-eco-friendly-disposable-coffee-cups-cold-drink-hot-beverage-cups.html]
+TAG: New Food Packaging
+H3: Custom Paper Cups with Logo | Bulk Eco-Friendly Disposable Coffee Cups & Cold Drink Hot Beverage Cups
+P: Custom paper cups with logo for hot coffee, cold drinks, takeaway beverages and eco-friendly foodservice branding.
+
+[products/custom-cookie-boxes-wholesale-branded-bakery-biscuit-packaging-gift-boxes-window-divider.html]
+TAG: New Food Packaging
+H3: Custom Cookie Boxes Wholesale | Branded Bakery Biscuit Packaging Gift Boxes with Window & Divider
+P: Custom cookie boxes with window and divider for bakery biscuits, gift sets, retail cookie packs and premium confectionery packaging.
+
+[products/custom-donut-boxes-bulk-logo-printed-cardboard-doughnut-bakery-boxes-pastry-takeout-packaging.html]
+TAG: New Food Packaging
+H3: Custom Donut Boxes Bulk | Logo Printed Cardboard Doughnut Bakery Boxes & Pastry Takeout Packaging
+P: Custom donut boxes with logo printing for doughnuts, pastries and bakery takeout, available in bulk for retail and delivery.
+
+[products/custom-cupcake-boxes-wholesale-branded-bakery-muffin-packaging-gift-boxes-window-inserts-manufacturer.html]
+TAG: New Food Packaging
+H3: Custom Cupcake Boxes Wholesale | Branded Bakery Muffin Packaging Gift Boxes with Window and Inserts Manufacturer
+P: Custom cupcake boxes with window and insert options for muffins, cupcakes and premium bakery gift sets.
+
+[products/custom-chocolate-boxes-bulk-luxury-logo-printed-candy-truffle-packaging-gift-boxes-dividers.html]
+TAG: New Food Packaging
+H3: Custom Chocolate Boxes Bulk | Luxury Logo Printed Candy & Truffle Packaging Gift Boxes with Dividers
+P: Luxury chocolate boxes with dividers for truffles, candies and premium confectionery gifting.
+
+[products/custom-hot-dog-boxes-wholesale-disposable-paperboard-fast-food-trays-clamshell-packaging-holders.html]
+TAG: New Food Packaging
+H3: Custom Hot Dog Boxes Wholesale | Disposable Paperboard Fast Food Trays & Clamshell Packaging Holders
+P: Disposable paperboard hot dog boxes and holders for fast food brands, street food and takeaway service.
+
+[products/custom-noodle-boxes-bulk-leak-proof-disposable-paper-chopstick-noodle-pails-takeout-containers.html]
+TAG: New Food Packaging
+H3: Custom Noodle Boxes Bulk | Leak-Proof Disposable Paper Chopstick Noodle Pails & Takeout Containers
+P: Leak-proof paper noodle boxes and takeaway pails with chopstick-friendly structure for hot meals.
+
+[products/custom-popcorn-boxes-logo-bulk-eco-friendly-paper-cardboard-popcorn-tubs-boxes-cinema.html]
+TAG: New Food Packaging
+H3: Custom Popcorn Boxes with Logo | Bulk Eco-Friendly Paper Cardboard Popcorn Tubs & Boxes for Cinema
+P: Eco-friendly popcorn tubs and cardboard boxes with custom logo for cinema, events and snack retail.
+
+[products/custom-parchment-paper-baking-food-grade-non-stick-greaseproof-sheets-cooking-oven-liners.html]
+TAG: New Food Packaging
+H3: Custom Parchment Paper for Baking | Food Grade Non-Stick Greaseproof Sheets for Cooking & Oven Liners
+P: Food-grade parchment paper sheets for baking, cooking, wrapping and oven lining applications.
+
+[products/custom-lunch-boxes-wholesale-disposable-kraft-cardboard-meal-prep-food-containers-takeaway-packaging.html]
+TAG: New Food Packaging
+H3: Custom Lunch Boxes Wholesale | Disposable Kraft Cardboard Meal Prep Food Containers & Takeaway Packaging
+P: Disposable kraft lunch boxes and meal prep containers for takeaway meals, catering and healthy food brands.
+
+[products/custom-food-sleeves-logo-printed-paperboard-belly-bands-meal-prep-containers-soap-packaging.html]
+TAG: New Food Packaging
+H3: Custom Food Sleeves with Logo | Printed Paperboard Belly Bands for Meal Prep Containers & Soap Packaging
+P: Printed paperboard food sleeves and belly bands for meal containers, retail packs and branded presentation.
+
+[products/custom-taco-boxes-bulk-grease-resistant-disposable-paper-taco-holders-catering-takeout-packing-boxes.html]
+TAG: New Food Packaging
+H3: Custom Taco Boxes Bulk | Grease-Resistant Disposable Paper Taco Holders & Catering Takeout Packing Boxes
+P: Grease-resistant taco boxes and taco holders for catering, delivery and Mexican food takeaway packaging.
+
+[products/custom-burrito-packaging-wholesale-printed-foil-paper-burrito-wraps-disposable-cardboard-takeaway-boxes.html]
+TAG: New Food Packaging
+H3: Custom Burrito Packaging Wholesale | Printed Foil Paper Burrito Wraps & Disposable Cardboard Takeaway Boxes
+P: Custom burrito wraps and takeaway boxes for burrito brands, food delivery and quick-service packaging.
+
+[products/custom-magnetic-gift-box-gold-foil-logo.html]
+TAG: Luxury Packaging
+H3: Custom Magnetic Gift Box with Gold Foil Logo
+P: Premium matte black magnetic closure gift boxes with gold foil branding, custom interior insert tray and luxury presentation for high-end retail brands.
+
+[products/custom-pink-magnetic-jewelry-gift-box-set-gold-foil-thank-you-card-drawstring-pouch.html]
+TAG: Luxury Packaging
+H3: Luxury Custom Magnetic Gift Box Set with Gold Foil Logo
+P: Complete luxury unboxing set �?rigid magnetic gift box, gold foil thank you card, branded tissue paper and drawstring pouch for jewelry, cosmetics, skincare, candles and boutique brands.
+
+[products/custom-perfume-gift-box-insert-fragrance-sets.html]
+TAG: Fragrance Packaging
+H3: Custom Perfume Gift Box with Insert for Fragrance Sets
+P: Rigid presentation box with a bottle-specific insert for perfume and atomizer gift sets.
+
+[products/custom-six-candle-gift-box-aromatherapy-discovery-sets.html]
+TAG: Candle Gift Packaging
+H3: Custom 6-Candle Gift Box for Aromatherapy Discovery Sets
+P: Rigid candle collection box with a fitted six-cavity insert for mini jar discovery sets.
+
+[products/custom-candle-reed-diffuser-gift-box-satin-insert.html]
+TAG: Home Fragrance Packaging
+H3: Custom Candle and Reed Diffuser Gift Box with Satin Insert
+P: Rigid home fragrance presentation box with a supportive satin-style multi-item insert.
+
+[products/custom-candle-care-set-gift-box-fitted-tool-insert.html]
+TAG: Candle Accessory Packaging
+H3: Custom Candle Care Set Gift Box with Fitted Tool Insert
+P: Presentation box with separate fitted cavities for candle jars and long care tools.
+
+[products/custom-candle-diffuser-gift-box-paperboard-insert.html]
+TAG: Home Fragrance Packaging
+H3: Custom Candle and Diffuser Gift Box with Paperboard Insert
+P: Rigid gift box with separate tray positions for a candle, diffuser bottle and sticks.
+
+[products/custom-home-fragrance-gift-box-room-spray-candle.html]
+TAG: Home Fragrance Packaging
+H3: Custom Home Fragrance Gift Box for Room Spray and Candle
+P: Book-style rigid gift box with a fitted tray for spray and candle retail sets.
+
+[products/custom-pink-corrugated-mailer-box-beauty-subscriptions.html]
+TAG: Beauty Mailer Packaging
+H3: Custom Pink Corrugated Mailer Box for Beauty Subscriptions
+P: Self-locking printed mailer box for recurring beauty kits and skincare ecommerce orders.
+
+[products/custom-beauty-product-mailer-box-matching-paper-bag.html]
+TAG: Cosmetic Retail Packaging
+H3: Custom Beauty Product Mailer Box with Matching Paper Bag
+P: Corrugated beauty mailer box with optional color-matched paper bag and tissue components.
+
+[products/custom-ribbon-closure-rigid-gift-box-jewelry.html]
+TAG: Jewelry Gift Packaging
+H3: Custom Ribbon Closure Rigid Gift Box for Jewelry
+P: Compact setup gift box with an integrated ribbon closure for jewelry and bridal gifts.
+
+[products/custom-floral-embossed-hang-tags-bridal-boutiques.html]
+TAG: Apparel Hang Tags
+H3: Custom Floral Embossed Hang Tags for Bridal Boutiques
+P: Tactile paper hang tags with botanical embossing, punched holes and custom attachment options.
+

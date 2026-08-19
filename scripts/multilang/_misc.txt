@@ -1,0 +1,245 @@
+TEXT:a	+86 181 6573 0353
+TEXT:b	100%
+TEXT:td	1200gsm / 1500gsm / 1800gsm greyboard option
+TEXT:td	1200gsm, 1500gsm, 1800gsm or custom greyboard thickness
+TEXT:b	24h
+TEXT:td	300gsm C1S / 350gsm SBS / 400gsm ivory board
+TEXT:b	40+
+TEXT:td	500 PCS custom printed packaging
+TEXT:td	500 PCS for custom packaging
+TEXT:td	500 PCS for luxury rigid box projects
+TEXT:b	500+
+TEXT:a	About Us
+TEXT:small	Address: Printing Industrial Park, Longhua District, Shenzhen, Guangdong Province, 518109, China
+TEXT:td	AI / PDF / PSD preferred with 3 mm bleed
+TEXT:i	Anti-counterfeit Coding
+TEXT:span	Anti-counterfeit Coding
+TEXT:span	Apparel Hang Tags
+TEXT:th	Applications
+TEXT:th	Artwork
+TEXT:td	B2B RFQ only, no public retail price
+TEXT:th	Barrier target
+TEXT:i	Batch Traceability
+TEXT:span	Batch Traceability
+TEXT:span	Beauty Mailer Packaging
+TEXT:div	Beauty Packaging
+TEXT:a	Blog
+TEXT:th	Board
+TEXT:div	Bottles & Containers
+TEXT:td	Burger box, pizza box, tray, bowl, paper cup, sleeve
+TEXT:th	Business model
+TEXT:span	Candle Accessory Packaging
+TEXT:span	Candle Gift Packaging
+TEXT:a	Cannabis Packaging Solutions
+TEXT:a	Chat on WhatsApp
+TEXT:th	Closure
+TEXT:td	Coating selected by oil level and food-contact condition
+TEXT:th	Coding
+TEXT:a	Coffee & Tea Packaging Solutions
+TEXT:div	Coffee Packaging
+TEXT:h4	Contact
+TEXT:div	Contact
+TEXT:a	Contact Us
+TEXT:a	Cosmetic Packaging Solutions
+TEXT:span	Cosmetic Retail Packaging
+TEXT:a	Custom Chocolate Boxes Bulk | Luxury Logo Printed Candy & Truffle Packaging Gift Boxes with Dividers
+TEXT:a	Custom Coffee Bags with Valve
+TEXT:a	Custom Cosmetic Packaging Boxes
+TEXT:a	Custom Cupcake Boxes Wholesale | Branded Bakery Muffin Packaging Gift Boxes with Window and Inserts Manufacturer
+TEXT:a	Custom Food Packaging
+TEXT:a	Custom Gift Boxes
+TEXT:a	Custom Hot Dog Boxes Wholesale | Disposable Paperboard Fast Food Trays & Clamshell Packaging Holders
+TEXT:a	Custom Labels And Stickers
+TEXT:td	Custom logo printing, full-color CMYK, kraft ink effect, green eco graphics, QR code, barcode and inside printing options
+TEXT:a	Custom Magnetic Gift Boxes
+TEXT:a	Custom Packaging Boxes
+TEXT:option	Custom Packaging Boxes
+TEXT:a	Custom Paper Bags
+TEXT:a	Custom Pharmaceutical Packaging Boxes
+TEXT:a	Custom Stand Up Pouches
+TEXT:i	Custom Structures
+TEXT:span	Custom Structures
+TEXT:div	Customizable
+TEXT:th	Customization
+TEXT:a	Ecommerce Mailer Packaging Solutions
+TEXT:a	Email Inquiry
+TEXT:a	Email RFQ
+TEXT:td	EVA foam, paper tray, molded pulp, PET tray, sponge and custom die-cut insert
+TEXT:td	EVA, paperboard tray, molded pulp or PET insert
+TEXT:td	Export carton or custom packed according to order requirement
+TEXT:small	FACTORY DIRECT
+TEXT:i	Factory Direct
+TEXT:span	Factory Direct
+TEXT:div	Factory Direct Packaging Solutions
+TEXT:div	FACTORY DIRECT · MOQ 500 PCS
+TEXT:div	Factory Direct · MOQ 500 PCS
+TEXT:i	Fast Samples
+TEXT:span	Fast Samples
+TEXT:a	FDA Food-Contact Test Report
+TEXT:div	Featured Categories
+TEXT:th	Features
+TEXT:th	Finish
+TEXT:th	Finishing
+TEXT:td	Flat packed or finished product packed in export carton
+TEXT:div	Flexible Packaging
+TEXT:i	Foil & Embossing
+TEXT:span	Foil & Embossing
+TEXT:td	Foil stamping, embossing, spot UV, soft-touch lamination
+TEXT:a	Foldable Magnetic Boxes
+TEXT:i	Food & Cannabis Ready
+TEXT:span	Food & Cannabis Ready
+TEXT:a	Food & Restaurant Packaging Solutions
+TEXT:i	Food Grade Materials
+TEXT:span	Food Grade Materials
+TEXT:div	Food Packaging
+TEXT:td	Food-grade paperboard, kraft board, PE/PLA/water-based coating
+TEXT:td	Food-grade structure, strong folding lock, easy assembly, printable surfaces, recyclable paper options and stable takeaway performance
+TEXT:td	Food-safe low-odor ink option
+TEXT:span	Fragrance Packaging
+TEXT:div	Fresh Premium Product Lines
+TEXT:a	FSC® C144065
+TEXT:a	Get RFQ Quote →
+TEXT:b	Global
+TEXT:i	Global Delivery
+TEXT:span	Global Delivery
+TEXT:td	Gold foil logo, embossing, debossing, spot UV, matte lamination, ribbon closure options
+TEXT:td	Gold foil, embossing, debossing, soft-touch, spot UV, special paper and ribbon
+TEXT:i	Gravure & Digital Printing
+TEXT:span	Gravure & Digital Printing
+TEXT:td	Gravure or digital printing, matte/gloss/soft-touch finish
+TEXT:th	Grease resistance
+TEXT:td	GS1 DataMatrix ECC200, QR, barcode and batch code panel
+TEXT:i	GS1 Serialization
+TEXT:span	GS1 Serialization
+TEXT:a	Heavy Duty Hidden Neodymium Magnets for Gift Boxes | Small Strong Magnetic Closures
+TEXT:i	High Barrier Films
+TEXT:span	High Barrier Films
+TEXT:span	High-Margin OEM
+TEXT:span	High-Value OEM
+TEXT:span	High-Value OEM Product
+TEXT:div	High-Value Product Lines
+TEXT:div	High-Value Product Picks
+TEXT:a	Home
+TEXT:span	Home Fragrance Packaging
+TEXT:span	Industry Solution
+TEXT:th	Insert
+TEXT:i	ISO Print Quality
+TEXT:span	ISO Print Quality
+TEXT:td	ISO/IEC 15415 Grade A target by project requirement
+TEXT:span	Jewelry Gift Packaging
+TEXT:td	Kraft paperboard, white card, coated food-grade board, corrugated paperboard and optional grease-resistant inner coating
+TEXT:option	Labels & Stickers
+TEXT:th	Lead time
+TEXT:span	Linda Wang ·
+TEXT:a	linda@colorprintingpackage.com
+TEXT:a	Luxury Gift Packaging Solutions
+TEXT:span	Luxury Packaging
+TEXT:div	Luxury Packaging
+TEXT:td	Magnetic box, drawer box, lid-and-base box, foldable rigid box, ribbon box
+TEXT:td	Magnetic, drawer, lid-base, foldable rigid box
+TEXT:div	Mailing Packaging
+TEXT:th	Material
+TEXT:th	Material options
+TEXT:th	Material structure
+TEXT:td	Matte, gloss, foil, embossing, varnish, lamination
+TEXT:button	Menu
+TEXT:td	MOPP/VMPET/PE, PET/AL/PE, Kraft/VMPET/PE optional
+TEXT:h4	MOQ
+TEXT:th	MOQ
+TEXT:i	MOQ 500 PCS
+TEXT:span	MOQ 500 PCS
+TEXT:b	MOQ 500 PCS
+TEXT:span	MOQ 500 PCS · OEM / ODM Custom Packaging Manufacturer
+TEXT:div	MOQ PCS
+TEXT:div	Need Custom Packaging?
+TEXT:span	New Accessories Product
+TEXT:span	New Flexible Product
+TEXT:span	New Food Packaging
+TEXT:div	New High-Margin Product Picks
+TEXT:span	New High-Value OEM
+TEXT:span	New Medical Bag
+TEXT:span	New Medical Material
+TEXT:span	New Medical Product
+TEXT:span	New Packaging Accessory
+TEXT:span	New Pouch Product
+TEXT:span	New SEO Product
+TEXT:a	News
+TEXT:i	OEM & Customize
+TEXT:span	OEM & Customize
+TEXT:span	OEM & Customize · MOQ 500 PCS
+TEXT:a	Online Chat
+TEXT:td	OTR/WVTR selected by product shelf-life requirement
+TEXT:span	PACKAGING
+TEXT:th	Packing
+TEXT:option	Paper Bags
+TEXT:div	Paper Bags
+TEXT:div	Paper Packaging
+TEXT:th	Paperboard
+TEXT:i	Paperboard & Kraft
+TEXT:span	Paperboard & Kraft
+TEXT:td	Paperboard, kraft paper, PET, BOPP, PVC, tinplate or laminated film
+TEXT:td	Perfume, candles, skincare, jewelry, electronics, gift sets and luxury retail
+TEXT:td	Perfume, skincare, jewelry, premium electronics, corporate VIP gifts, candle packaging, boutique retail
+TEXT:div	Pet Food Packaging
+TEXT:a	Pet Food Packaging Solutions
+TEXT:div	Pharma Packaging
+TEXT:option	Pharma Packaging Boxes
+TEXT:a	Pharmaceutical & Medical Packaging Solutions
+TEXT:i	Premium Finishes
+TEXT:span	Premium Finishes
+TEXT:div	Printed Accessories
+TEXT:th	Printing
+TEXT:span	Product Category
+TEXT:div	Product Lines
+TEXT:a	Products
+TEXT:h4	Products
+TEXT:div	Products
+TEXT:a	Request A Quote
+TEXT:td	Restaurants, cafes, meal prep brands, food trucks, catering, delivery meals, salad bowls, rice boxes and combo meals
+TEXT:i	Retail Ready
+TEXT:span	Retail Ready
+TEXT:div	RFQ Response
+TEXT:i	Rigid & Foldable
+TEXT:span	Rigid & Foldable
+TEXT:td	Rigid grey board with matte black wrapping paper, gold foil stamping, EVA or paperboard insert tray
+TEXT:td	Sampling and production time confirmed by specification
+TEXT:button	Search
+TEXT:th	Security
+TEXT:a	Send RFQ on WhatsApp
+TEXT:div	Shipping Packaging
+TEXT:div	Shipping Support
+TEXT:td	Size, material, logo, print content, structure, pack-out and export specifications
+TEXT:td	Size, shape, handle style, window, inner coating, paper weight, color, logo, QR code, insert and export carton packing
+TEXT:td	Size, structure, material, color, logo, finish, barcode, QR code
+TEXT:option	Stand Up Pouches
+TEXT:th	Structure
+TEXT:button	Submit RFQ
+TEXT:div	Takeaway Food Packaging
+TEXT:td	Tamper-evident label, anti-counterfeit label, variable data printing
+TEXT:div	Tin Packaging
+TEXT:th	Use Case
+TEXT:th	Verification
+TEXT:a	View Products
+TEXT:a	WhatsApp Linda
+TEXT:i	Worldwide Shipping
+TEXT:span	Worldwide Shipping
+TEXT:td	Zipper, valve, spout, tear notch, child-resistant zipper optional
+TEXT:span	· WhatsApp +86 181 6573 0353
+TEXT:em	↺
+TEXT:em	⌘
+TEXT:span	■/span>
+TEXT:em	▢
+TEXT:em	▣
+TEXT:em	▤
+TEXT:em	▥
+TEXT:span	▱
+TEXT:em	◈
+TEXT:em	◉
+TEXT:em	◍
+TEXT:em	◎
+TEXT:em	✎
+TEXT:b	✓
+TEXT:em	✦
+TEXT:em	❋
+TEXT:em	❦
+TEXT:em	❧

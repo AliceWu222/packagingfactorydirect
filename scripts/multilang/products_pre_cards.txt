@@ -1,0 +1,20 @@
+
+<section class="page-hero">
+<div class="container">
+<div class="eyebrow">Products
+</div>
+<h1>B2B Custom Packaging Products
+</h1>
+<p>All products are OEM/customize and RFQ-based. MOQ 500 PCS. No retail prices.
+</p>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+<div class="filters">
+<input aria-label="Filter products" autocomplete="off" data-product-search="" id="productSearch" name="q" placeholder="Search coffee bags, pharma boxes, pizza boxes, labels, paper bags..." type="search"/>
+</div>
+<p class="notice" id="searchStatus">
+</p>
+<div class="grid">

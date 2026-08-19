@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+
+<title>Custom Packaging Manufacturer China Factory | MOQ 500 PCS
+</title>
+<meta content="Factory direct B2B custom packaging manufacturer for boxes, bags, pouches, labels, bottles, paper printing and pharma packaging. MOQ 500 PCS." name="description"/>
+
+<link href="https://packagingfactorydirect.com/" rel="canonical"/>
+<link href="assets/css/style.css" rel="stylesheet"/>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Packaging Factory Direct","url":"https://packagingfactorydirect.com","email":"linda@colorprintingpackage.com","telephone":"+86 181 6573 0353","address":{"@type":"PostalAddress","streetAddress":"Printing Industrial Park, Longhua District","addressLocality":"Shenzhen","addressRegion":"Guangdong Province","postalCode":"518109","addressCountry":"China"}}
+</script>
+<meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/>
+<meta content="Packaging Factory Direct" name="author"/>
+<meta content="English" name="language"/>
+<meta content="PackagingFactoryDirect | B2B Custom Packaging Manufacturer MOQ 500 PCS" property="og:title"/>
+<meta content="Factory direct B2B custom packaging manufacturer for boxes, bags, pouches, labels, bottles, paper printing and pharma packaging. MOQ 500 PCS." property="og:description"/>
+<meta content="https://packagingfactorydirect.com/" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="PackagingFactoryDirect | B2B Custom Packaging Manufacturer MOQ 500 PCS" name="twitter:title"/>
+<meta content="Factory direct B2B custom packaging manufacturer for boxes, bags, pouches, labels, bottles, paper printing and pharma packaging. MOQ 500 PCS." name="twitter:description"/>
+<meta content="https://packagingfactorydirect.com/assets/img/hero/hero-1.webp" property="og:image"/>
+<meta content="https://packagingfactorydirect.com/assets/img/hero/hero-1.webp" name="twitter:image"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Packaging Factory Direct","url":"https://packagingfactorydirect.com","potentialAction":{"@type":"SearchAction","target":"https://packagingfactorydirect.com/products.html?q={search_term_string}","query-input":"required name=search_term_string"}}
+</script>
+</head>

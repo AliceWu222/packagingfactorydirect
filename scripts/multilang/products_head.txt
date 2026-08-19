@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+
+<title>Products | High-Intent B2B Custom Packaging Products MOQ 500 PCS
+</title>
+<meta content="Browse high-intent custom packaging products including tamper-evident pharma boxes, serialized medical cartons, child-resistant cannabis packaging, mailer boxes, security labels and luxury packaging. OEM / customize. MOQ 500 PCS." name="description"/>
+
+<link href="https://packagingfactorydirect.com/products.html" rel="canonical"/>
+<link href="assets/css/style.css" rel="stylesheet"/>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Packaging Factory Direct","url":"https://packagingfactorydirect.com","email":"linda@colorprintingpackage.com","telephone":"+86 181 6573 0353","address":{"@type":"PostalAddress","streetAddress":"Printing Industrial Park, Longhua District","addressLocality":"Shenzhen","addressRegion":"Guangdong Province","postalCode":"518109","addressCountry":"China"}}
+</script>
+<meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/>
+<meta content="Packaging Factory Direct" name="author"/>
+<meta content="English" name="language"/>
+<meta content="Products | High-Intent B2B Custom Packaging Products MOQ 500 PCS" property="og:title"/>
+<meta content="Browse high-intent custom packaging products including tamper-evident pharma boxes, serialized medical cartons, child-resistant cannabis packaging, mailer boxes, security labels and luxury packaging. OEM / customize. MOQ 500 PCS." property="og:description"/>
+<meta content="https://packagingfactorydirect.com/products.html" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Products | High-Intent B2B Custom Packaging Products MOQ 500 PCS" name="twitter:title"/>
+<meta content="Browse high-intent custom packaging products including tamper-evident pharma boxes, serialized medical cartons, child-resistant cannabis packaging, mailer boxes, security labels and luxury packaging. OEM / customize. MOQ 500 PCS." name="twitter:description"/>
+<meta content="https://packagingfactorydirect.com/assets/img/products/custom-tamper-evident-hyaluronic-acid-injection-box-gs1-datamatrix-pre-filled-syringes-1.webp" property="og:image"/>
+<meta content="https://packagingfactorydirect.com/assets/img/products/custom-tamper-evident-hyaluronic-acid-injection-box-gs1-datamatrix-pre-filled-syringes-1.webp" name="twitter:image"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Packaging Factory Direct","url":"https://packagingfactorydirect.com","potentialAction":{"@type":"SearchAction","target":"https://packagingfactorydirect.com/products.html?q={search_term_string}","query-input":"required name=search_term_string"}}
+</script>
+</head>

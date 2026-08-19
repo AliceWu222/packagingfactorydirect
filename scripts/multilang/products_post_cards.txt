@@ -1,0 +1,60 @@
+
+</div>
+</div>
+</section>
+<div class="floating">
+<div class="floating-head">Need Custom Packaging?
+</div>
+<div class="floating-body">
+<p class="floating-lead">MOQ 500 PCS · Fast Factory Quote
+</p>
+<p class="floating-detail">Click below to contact us quickly by WhatsApp or email. We can help with dieline, samples, printing, materials and worldwide shipping.
+</p>
+<a class="btn" href="https://wa.me/8618165730353?text=Hello%20Linda%2C%20I%20need%20custom%20packaging.%20Please%20help%20with%20dieline%2C%20samples%2C%20printing%2C%20materials%20and%20worldwide%20shipping." rel="noopener" target="_blank">Chat on WhatsApp
+</a>
+<a class="btn light" href="mailto:linda@colorprintingpackage.com?subject=Packaging Inquiry&amp;body=Hello Linda, I need custom packaging. Please help with dieline, samples, printing, materials and worldwide shipping.">Email Inquiry
+</a>
+<a class="floating-email" href="mailto:linda@colorprintingpackage.com">linda@colorprintingpackage.com
+</a>
+</div>
+</div>
+
+<footer class="footer">
+<div class="container footer-grid">
+<div>
+<h3>Packaging Factory Direct
+</h3>
+<p>B2B custom packaging factory for boxes, bags, pouches, labels, bottles and printed paper products.
+</p>
+</div>
+<div>
+<h4>Products
+</h4>
+<p>Paper Boxes
+<br/>Stand Up Pouches
+<br/>Pharma Boxes
+<br/>Luxury Packaging
+</p>
+</div>
+<div>
+<h4>Contact
+</h4>
+<p>Linda Wang
+<br/>linda@colorprintingpackage.com
+<br/>+86 181 6573 0353
+<br/>Address: Printing Industrial Park, Longhua District, Shenzhen, Guangdong Province, 518109, China
+</p>
+</div>
+<div>
+<h4>MOQ
+</h4>
+<p>All custom products start from 500 PCS. OEM &amp; Customize only. No retail price shown.
+</p>
+</div>
+</div>
+</footer>
+
+<script src="assets/js/main.js">
+</script>
+</body>
+</html>

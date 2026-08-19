@@ -78,10 +78,11 @@ function requestToHtmlPath(parts) {
   return `${joined}.html`;
 }
 function getKindFromRel(rel) {
-  if (rel === 'products.html' || rel.startsWith('products/')) return 'products';
-  if (rel === 'blog.html' || rel.startsWith('blog/')) return 'blog';
-  if (rel === 'news.html' || rel.startsWith('news/')) return 'news';
-  if (rel === 'index.html') return 'homepage';
+  const langRel = rel.replace(/^(de|fr|es|ja|ar)\//, '');
+  if (rel === 'products.html' || langRel === 'products.html' || langRel.startsWith('products/')) return 'products';
+  if (rel === 'blog.html' || langRel === 'blog.html' || langRel.startsWith('blog/')) return 'blog';
+  if (rel === 'news.html' || langRel === 'news.html' || langRel.startsWith('news/')) return 'news';
+  if (rel === 'index.html' || langRel === 'index.html') return 'homepage';
   if (rel === 'sitemap.xml') return 'sitemap';
   if (rel.startsWith('industry/')) return 'industry';
   if (!rel.includes('/') && rel.endsWith('.html') && rel.startsWith('custom-')) return 'category';
@@ -511,8 +512,40 @@ function getMeta(html, attr, name) {
   return m ? m[1].trim() : '';
 }
 function getCanonical(html, rel, sourceUrl) {
+  // Multi-language: de/fr/es/ja/ar subdirectory pages.
+  //   fr/index.html -> https://www.packagingfactorydirect.com/fr/
+  //   fr/products/x.html -> https://www.packagingfactorydirect.com/fr/products/x.html
+  const langMatch = rel.match(/^(de|fr|es|ja|ar)\/(.+)$/);
+  if (langMatch) {
+    const sub = langMatch[2];
+    if (sub === 'index.html' || sub === 'index') return `${SITE_URL}/${langMatch[1]}/`;
+    return `${SITE_URL}/${langMatch[1]}/${sub}`;
+  }
   if (rel === 'index.html') return SITE_URL + '/';
   return `${SITE_URL}/${rel}`;
+}
+
+// Multi-language alternates: every page on the English site links to the 5
+// localized versions (x-default = English). Localized pages link back to all 6.
+const LANG_ALIASES = { de: 'de-DE', fr: 'fr-FR', es: 'es-ES', ja: 'ja-JP', ar: 'ar-SA' };
+function getLanguageAlternates(rel) {
+  const langMatch = rel.match(/^(de|fr|es|ja|ar)\/(.+)$/);
+  const sub = langMatch ? langMatch[2] : rel;
+  const subUrl = (sub === 'index.html' || sub === 'index') ? '' : `/${sub}`;
+  const alt = { 'x-default': `${SITE_URL}${subUrl}`, en: `${SITE_URL}${subUrl}` };
+  for (const [code, hreflang] of Object.entries(LANG_ALIASES)) {
+    alt[hreflang] = `${SITE_URL}/${code}${subUrl}`;
+  }
+  return alt;
+}
+// Inject hreflang alternate links into <head> server-side (crawler-friendly).
+function injectHreflang(html, rel) {
+  if (!html.includes('</head>')) return html;
+  const alts = getLanguageAlternates(rel);
+  const tags = Object.entries(alts)
+    .map(([hreflang, href]) => `<link rel="alternate" hreflang="${hreflang}" href="${href}"/>`)
+    .join('');
+  return html.replace('</head>', tags + '</head>');
 }
 function getOgImage(html, sourceUrl) {
   const m = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']*)["'][^>]*>/i);
@@ -582,6 +615,10 @@ export async function generateStaticParams() {
     { path: ['news.html'] },
     { path: ['contact.html'] },
     { path: ['procurement-guides.html'] },
+    { path: ['materials.html'] },
+    { path: ['finishes.html'] },
+    { path: ['factory.html'] },
+    { path: ['samples.html'] },
     { path: ['custom-packaging-boxes.html'] },
     { path: ['custom-gift-boxes.html'] },
     { path: ['custom-magnetic-gift-boxes.html'] },
@@ -604,8 +641,43 @@ export async function generateStaticParams() {
   const detailParams = (
     await Promise.all(['products', 'blog', 'news', 'industry'].map(localDetailParams))
   ).flat();
+  // Multi-language prebuild: de/fr/es/ja/ar home + listing + contact + 20 product pages.
+  const langRoots = ['de', 'fr', 'es', 'ja', 'ar'];
+  const langCore = ['', 'products.html', 'contact.html'];
+  const langProducts = [
+    'products/custom-packaging-boxes.html',
+    'products/custom-gift-boxes.html',
+    'products/custom-magnetic-gift-box-gold-foil-logo.html',
+    'products/luxury-rigid-gift-boxes-magnetic-ribbon-eva-inserts.html',
+    'products/stand-up-pouches.html',
+    'products/custom-coffee-bags.html',
+    'products/pet-food-stand-up-pouches.html',
+    'products/food-packaging-boxes.html',
+    'products/pharmaceutical-packaging-boxes.html',
+    'products/cosmetic-packaging-boxes.html',
+    'products/food-containers.html',
+    'products/custom-paper-bags.html',
+    'products/custom-shipping-boxes.html',
+    'products/bubble-mailers.html',
+    'products/custom-courier-bags.html',
+    'products/custom-tin-boxes.html',
+    'products/pet-food-pharma-bottles.html',
+    'products/custom-tissue-paper.html',
+    'products/custom-cards-playing-cards.html',
+    'products/custom-takeaway-boxes-wholesale-eco-friendly-logo-printed-disposable-food-packaging-boxes-manufacturer.html'
+  ];
+  const langParams = [];
+  for (const l of langRoots) {
+    for (const core of langCore) {
+      const p = core === '' ? [l, 'index.html'] : [l, core];
+      langParams.push({ path: p });
+    }
+    for (const prod of langProducts) {
+      langParams.push({ path: [l, ...prod.split('/')] });
+    }
+  }
   const seen = new Set();
-  return [...coreParams, ...detailParams].filter(item => {
+  return [...coreParams, ...detailParams, ...langParams].filter(item => {
     const key = (item.path || []).join('/');
     if (seen.has(key)) return false;
     seen.add(key);
@@ -619,15 +691,16 @@ export async function generateMetadata({ params }) {
   const description = seoDescriptionForRel(getDescription(html, rel), rel);
   const canonical = getCanonical(html, rel, sourceUrl);
   const image = getOgImage(html, sourceUrl);
-  const isProduct = rel.startsWith('products/');
-  const isArticle = rel.startsWith('blog/') || rel.startsWith('news/');
+  const langRel = rel.replace(/^(de|fr|es|ja|ar)\//, '');
+  const isProduct = langRel.startsWith('products/');
+  const isArticle = langRel.startsWith('blog/') || langRel.startsWith('news/');
   const publishedTime = getMeta(html, 'property', 'article:published_time') || undefined;
   const modifiedTime = getMeta(html, 'property', 'article:modified_time') || undefined;
 
   return {
     title,
     description,
-    alternates: { canonical },
+    alternates: { canonical, languages: getLanguageAlternates(rel) },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
     openGraph: { title, description, url: canonical, siteName: 'Packaging Factory Direct', type: isArticle ? 'article' : 'website', images: [{ url: image }], publishedTime, modifiedTime },
     twitter: { card: 'summary_large_image', title, description, images: [image] },
@@ -1347,7 +1420,7 @@ export default async function HtmlPage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
         />
       ) : null}
-      <main dangerouslySetInnerHTML={{ __html: bodyHtml + contentReview + buyerGuide }} />
+      <main dangerouslySetInnerHTML={{ __html: injectHreflang(bodyHtml, rel) + contentReview + buyerGuide }} />
       {productsLoaderScript ? (
         <script dangerouslySetInnerHTML={{ __html: productsLoaderScript.replace(/^<script>|<\/script>$/g, '') }} />
       ) : null}
