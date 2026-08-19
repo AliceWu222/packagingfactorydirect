@@ -920,6 +920,14 @@ const TRUST_PAGES = {
   'artwork-guidelines.html': {
     name: 'Artwork Guidelines',
     about: 'Artwork, dieline, color, bleed, font and prepress requirements for custom packaging RFQ and production.'
+  },
+  'certifications.html': {
+    name: 'Certifications & Compliance',
+    about: 'Food-grade FDA/EU 1935/2004 materials, FSC-certified paper options, REACH declarations, ISO-aligned quality management and compliance documents for custom packaging.'
+  },
+  'case-studies.html': {
+    name: 'Packaging Case Studies',
+    about: 'B2B custom packaging project examples across cosmetics, food, coffee, ecommerce and retail brands, from dieline and sampling to production, QC and worldwide delivery.'
   }
 };
 
@@ -944,6 +952,16 @@ const CATEGORY_REVIEW = {
   'custom-pharmaceutical-packaging-boxes.html': [
     ['GS1 2D barcodes in healthcare', 'https://www.gs1.org/industries/healthcare/2d-barcode-healthcare'],
     ['FDA Drug Supply Chain Security Act', 'https://www.fda.gov/drugs/drug-supply-chain-security-act-dscsa/title-ii-drug-quality-and-security-act']
+  ],
+  'certifications.html': [
+    ['FDA Packaging & Food Contact Substances', 'https://www.fda.gov/food/food-ingredients-packaging/packaging-food-contact-substances-fcs'],
+    ['European Commission Food Contact Materials', 'https://food.ec.europa.eu/food-safety/chemical-safety/food-contact-materials_en'],
+    ['FSC Forest Stewardship Council', 'https://fsc.org/'],
+    ['ISO 18601 packaging and environment reference', 'https://www.iso.org/standard/55869.html']
+  ],
+  'case-studies.html': [
+    ['ISO 18601 packaging and environment reference', 'https://www.iso.org/standard/55869.html'],
+    ['GS1 packaging standards', 'https://www.gs1.org/standards']
   ]
 };
 

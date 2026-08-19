@@ -68,7 +68,7 @@ const orgJsonLd = {
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Custom paper bags, labels and stickers' } }
     ]
   },
-  sameAs: []
+  sameAs: ['https://wa.me/8618165730353']
 };
 
 const websiteJsonLd = {

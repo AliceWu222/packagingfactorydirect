@@ -8,7 +8,7 @@ const SECURITY_HEADERS = [
 ];
 const HTML_CACHE_HEADERS = [
   ...SECURITY_HEADERS,
-  { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
+  { key: 'Cache-Control', value: 'public, max-age=60, s-maxage=7200, stale-while-revalidate=86400' }
 ];
 
 const nextConfig = {
@@ -110,7 +110,7 @@ const nextConfig = {
         headers: [
           ...SECURITY_HEADERS,
           { key: 'X-Robots-Tag', value: 'noindex, follow' },
-          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=7200, stale-while-revalidate=86400' }
+          { key: 'Cache-Control', value: 'public, max-age=60, s-maxage=7200, stale-while-revalidate=86400' }
         ]
       },
       {
