@@ -187,16 +187,25 @@ async function scanLocalHtmlEntries() {
     ...(await walkHtml('blog')),
     ...(await walkHtml('news')),
     ...(await walkHtml('products')),
-    ...(await walkHtml('industry'))
+    ...(await walkHtml('industry')),
+    ...(await walkHtml('de')),
+    ...(await walkHtml('fr')),
+    ...(await walkHtml('es')),
+    ...(await walkHtml('ja')),
+    ...(await walkHtml('ar'))
   ];
   const seen = new Map();
   for (const file of files) seen.set(file.path.replace(/\\/g, '/'), file);
-  return Array.from(seen.values()).map(file => ({
-    loc: file.path === 'index.html' ? `${SITE_URL}/` : `${SITE_URL}/${file.path.replace(/\\/g, '/')}`,
-    lastmod: (file.mtime || new Date()).toISOString().slice(0, 10),
-    changefreq: changefreqForPath(file.path),
-    priority: priorityForPath(file.path)
-  }));
+  return Array.from(seen.values()).map(file => {
+    const p = file.path.replace(/\\/g, '/');
+    const isLangIndex = /^(de|fr|es|ja|ar)\/index\.html$/.test(p);
+    return {
+      loc: p === 'index.html' ? `${SITE_URL}/` : isLangIndex ? `${SITE_URL}/${p.replace(/\/index\.html$/, '/')}` : `${SITE_URL}/${p}`,
+      lastmod: (file.mtime || new Date()).toISOString().slice(0, 10),
+      changefreq: changefreqForPath(file.path),
+      priority: priorityForPath(file.path)
+    };
+  });
 }
 
 function changefreqForPath(filePath) {

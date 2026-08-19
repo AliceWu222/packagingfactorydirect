@@ -73,6 +73,9 @@ async function getParamObject(params) {
 function requestToHtmlPath(parts) {
   const joined = (parts || []).join('/');
   if (!joined || joined === 'index' || joined === 'index.html') return 'index.html';
+  // Multilingual root: /de or /de/ -> de/index.html
+  if (/^(de|fr|es|ja|ar)$/.test(joined)) return `${joined}/index.html`;
+  if (/^(de|fr|es|ja|ar)\/$/.test(joined + '/')) return `${joined}/index.html`;
   if (joined.endsWith('.html')) return joined;
   if (joined.includes('.') && !joined.endsWith('.html')) return null;
   return `${joined}.html`;
