@@ -163,7 +163,9 @@ async function walkHtml(dir, prefix = '') {
       out.push(...nested);
     } else if (item.isFile() && item.name.endsWith('.html')) {
       const stat = await fs.stat(abs).catch(() => null);
-      out.push({ path: `${dir.replace(/\\/g, '/')}/${rel}`, mtime: stat?.mtime });
+      // dir is the cumulative path relative to process.cwd() (e.g. "de/products");
+      // prepending `rel` would duplicate segments. Use dir + item.name only.
+      out.push({ path: `${dir.replace(/\\/g, '/')}/${item.name}`, mtime: stat?.mtime });
     }
   }
   return out;
