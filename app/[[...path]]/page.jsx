@@ -148,6 +148,15 @@ function rewriteRemoteImageUrls(bodyHtml, sourceUrl) {
       return before + htmlEscape(rewritten) + after;
     });
 }
+function normalizeLocalAssetPaths(bodyHtml) {
+  // Local static HTML uses relative asset paths (../assets/...) that break on
+  // nested URLs (e.g. /de/products/xxx.html resolves ../assets to /de/assets/).
+  // Rewrite every img/srcset/href to absolute /assets/... so all URL depths work.
+  return bodyHtml
+    .replace(/(<(?:img|source|link|script)\b[^>]*?\b(?:src|srcset|href)=["'])((?:\.\.?\/)+assets\/)([^"']+)(["'][^>]*>)/gi, (all, before, prefix, rest, after) => {
+      return before + '/assets/' + rest + after;
+    });
+}
 function stripDuplicateBodyAssets(bodyHtml) {
   // Layout already loads /assets/css/style.css and /assets/js/main.js.
   // Removing duplicate body script improves INP/TBT without changing the static HTML source files.
@@ -580,6 +589,9 @@ function extractBody(html, result) {
   body = stripDuplicateBodyAssets(body);
   body = repairCorruptedLogoMarkup(body);
   body = repairVisibleMojibake(body);
+  // Normalize relative ../assets/ paths to absolute /assets/ for any URL depth
+  // (critical for multilingual pages like /de/products/xxx.html).
+  body = normalizeLocalAssetPaths(body);
   return result?.source === 'r2' ? rewriteRemoteImageUrls(body, result.sourceUrl) : body;
 }
 
