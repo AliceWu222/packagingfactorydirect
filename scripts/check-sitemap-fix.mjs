@@ -1,0 +1,10 @@
+const mod = await import('file:///C:/Users/Administrator/AccioWork/2026-07-18-05-34-49/packagingfactorydirect_site/app/sitemap-utils.mjs');
+console.log('exports:', Object.keys(mod));
+const e = await mod.scanLocalHtmlEntries();
+const bad = e.filter(x => x.loc.includes('products/products'));
+console.log('DUPLICATED products/products:', bad.length);
+const langIdx = e.filter(x => /\.com\/(de|fr|es|ja|ar)\/$/.test(x.loc));
+console.log('lang index locs:', langIdx.map(x => x.loc).join(', '));
+const deProds = e.filter(x => /\.com\/de\/products\//.test(x.loc));
+console.log('de product locs sample:', deProds.slice(0, 3).map(x => x.loc).join('\n'));
+console.log('total entries:', e.length);

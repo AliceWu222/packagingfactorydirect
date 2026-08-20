@@ -1,0 +1,12 @@
+const mod = await import('file:///C:/Users/Administrator/AccioWork/2026-07-18-05-34-49/packagingfactorydirect_site/app/sitemap-utils.mjs');
+console.log('exports:', Object.keys(mod));
+const entries = await mod.readSitemapEntries();
+console.log('total entries:', entries.length);
+const pages = entries.filter(e => !e.loc.includes('/products/') && !e.loc.includes('/blog/') && !e.loc.includes('/news/'));
+console.log('pages entries:', pages.length);
+const langIdx = entries.filter(x => /\.com\/(de|fr|es|ja|ar)\/?$/.test(x.loc));
+console.log('lang index locs:', langIdx.map(x => x.loc).join(', '));
+const bad = entries.filter(x => x.loc.includes('products/products'));
+console.log('DUPLICATED products/products:', bad.length);
+const deProds = entries.filter(x => /\.com\/de\/products\//.test(x.loc));
+console.log('de product sample:', deProds.slice(0, 3).map(x => x.loc).join('\n'));
