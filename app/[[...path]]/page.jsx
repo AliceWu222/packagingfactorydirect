@@ -530,7 +530,9 @@ function getCanonical(html, rel, sourceUrl) {
   const langMatch = rel.match(/^(de|fr|es|ja|ar)\/(.+)$/);
   if (langMatch) {
     const sub = langMatch[2];
-    if (sub === 'index.html' || sub === 'index') return `${SITE_URL}/${langMatch[1]}/`;
+    // Language home: canonical must be the non-trailing-slash URL (/de),
+    // because /de/ issues a 308 redirect to /de.
+    if (sub === 'index.html' || sub === 'index') return `${SITE_URL}/${langMatch[1]}`;
     return `${SITE_URL}/${langMatch[1]}/${sub}`;
   }
   if (rel === 'index.html') return SITE_URL + '/';

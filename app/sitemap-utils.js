@@ -204,7 +204,7 @@ async function scanLocalHtmlEntries() {
     const p = file.path.replace(/\\/g, '/');
     const isLangIndex = /^(de|fr|es|ja|ar)\/index\.html$/.test(p);
     return {
-      loc: p === 'index.html' ? `${SITE_URL}/` : isLangIndex ? `${SITE_URL}/${p.replace(/\/index\.html$/, '/')}` : `${SITE_URL}/${p}`,
+      loc: p === 'index.html' ? `${SITE_URL}/` : isLangIndex ? `${SITE_URL}/${p.replace(/\/index\.html$/, '')}` : `${SITE_URL}/${p}`,
       lastmod: (file.mtime || new Date()).toISOString().slice(0, 10),
       changefreq: changefreqForPath(file.path),
       priority: priorityForPath(file.path)
