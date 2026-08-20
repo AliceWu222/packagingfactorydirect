@@ -100,6 +100,7 @@ export default function RootLayout({ children }) {
         <meta name="format-detection" content="telephone=yes,email=yes,address=yes" />
         <link rel="preload" as="image" href="/assets/img/hero/hero-1.webp" fetchPriority="high" media="(min-width: 761px)" />
         <link rel="preload" as="image" href="/assets/img/hero/mobile-vertical-slide-1.webp" fetchPriority="high" media="(max-width: 760px)" />
+        <link rel="preload" as="image" href="/assets/img/hero/mobile-hero-products-1.webp" fetchPriority="high" media="(max-width: 760px)" />
         <style dangerouslySetInnerHTML={{ __html: `
 @media (max-width: 760px) {
   html.pfd-mobile-lcp-lock .mobile-hero-slide { display: none !important; }
