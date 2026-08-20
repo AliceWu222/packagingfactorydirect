@@ -106,7 +106,9 @@ function isSensitivePath(pathName) {
 function isIndexableLoc(loc) {
   if (!loc || !loc.startsWith(SITE_URL)) return false;
   const urlPath = loc.replace(SITE_URL + '/', '').replace(SITE_URL, 'index.html') || 'index.html';
-  return (urlPath === 'index.html' || urlPath.endsWith('.html')) && !isSensitivePath(urlPath);
+  // Language root URLs (de/, fr/, ...) are directory-style locs without .html.
+  const isLangRoot = /^(de|fr|es|ja|ar)\/?$/.test(urlPath);
+  return (urlPath === 'index.html' || urlPath.endsWith('.html') || isLangRoot) && !isSensitivePath(urlPath);
 }
 
 function extractLocalEntries(xml) {
