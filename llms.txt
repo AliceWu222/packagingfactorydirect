@@ -1,4 +1,4 @@
-# Packaging Factory Direct
+﻿# Packaging Factory Direct
 
 > B2B custom packaging manufacturer. MOQ 500 PCS. OEM / ODM custom packaging for boxes, bags, pouches, labels, bottles, paper printing and premium packaging.
 
@@ -124,3 +124,10 @@ Images cover production workshop, flexible packaging line, label production, QC 
 - RFQ Builder and DIM Weight Calculator: https://www.packagingfactorydirect.com/packaging-rfq-builder.html
 - RFQ Template and Quote Comparison Guide: https://www.packagingfactorydirect.com/blog/custom-packaging-rfq-template-quote-comparison-guide.html
 - Downloadable RFQ CSV: https://www.packagingfactorydirect.com/downloads/custom-packaging-rfq-template.csv
+## Multilingual versions
+
+- Deutsch: https://www.packagingfactorydirect.com/de
+- Français: https://www.packagingfactorydirect.com/fr
+- Español: https://www.packagingfactorydirect.com/es
+- 日本語: https://www.packagingfactorydirect.com/ja
+- العربية: https://www.packagingfactorydirect.com/ar

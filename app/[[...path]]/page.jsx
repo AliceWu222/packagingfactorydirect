@@ -463,12 +463,16 @@ const STRATEGIC_META = {
     description: 'Custom packaging manufacturer for boxes, pouches, paper bags and labels. MOQ 500 PCS, OEM/ODM, custom printing and worldwide shipping. Request a factory quote.'
   },
   'products/hyaluronic-acid-dermal-filler-packaging-boxes-medical-aesthetic.html': {
-    title: 'Dermal Filler Packaging Boxes Manufacturer | MOQ 500 PCS',
-    description: 'Custom dermal filler packaging boxes for aesthetic clinics and medical brands. MOQ 500 PCS with vial inserts, QR codes, batch panels and custom printing.'
+    title: 'Dermal Filler Boxes in 500 PCS | Get Custom Vial Boxes Quotes',
+    description: 'Order custom dermal filler packaging boxes in 500 PCS with vial inserts, QR codes and batch panels. Get a factory-direct quote for aesthetic clinic and medical brand packaging.'
   },
   'products/luxury-rigid-gift-boxes-magnetic-ribbon-eva-inserts.html': {
-    title: 'Luxury Rigid Gift Boxes Manufacturer | MOQ 500 PCS',
-    description: 'Luxury rigid gift boxes with magnetic closures, ribbon and EVA inserts. MOQ 500 PCS with custom sizes, logo printing, foil, embossing and export packing.'
+    title: 'Custom Luxury Rigid Gift Boxes | Order 500 PCS with Ribbon + EVA',
+    description: 'Order custom luxury rigid gift boxes in 500 PCS with magnetic closures, ribbon and EVA inserts. Compare factory-direct pricing with foil, embossing and export packing.'
+  },
+  'blog/pharma-packaging-serialization-guide.html': {
+    title: 'Pharma Serialization Guide: 5 Steps to GS1 DataMatrix Boxes',
+    description: 'Learn pharma packaging serialization in 5 steps — GS1 DataMatrix, batch traceability and tamper-evident cartons. Get a free quote for serialized pharma boxes at MOQ 500 PCS.'
   },
   'products/foldable-magnetic-boxes.html': {
     title: 'Foldable Magnetic Boxes Manufacturer | MOQ 500 PCS',
