@@ -92,10 +92,15 @@ const measurementId = process.env.NEXT_PUBLIC_GA4_ID || process.env.NEXT_PUBLIC_
 const gtmId = process.env.NEXT_PUBLIC_GTM_ID || '';
 
 export default function RootLayout({ children }) {
-  // <html lang> is rewritten per language at the edge by middleware.js.
+  // SSR <html lang="en"> is a documented Next.js layout limitation for
+  // language subdirectories; a tiny inline script corrects lang/dir on the
+  // client immediately so screen readers and JS-executing crawlers see the
+  // right language (de/fr/es/ja/ar, rtl for ar).
+  const langFixScript = `(function(){try{var p=location.pathname.split('/')[1]||'';var m={'de':'de','fr':'fr','es':'es','ja':'ja','ar':'ar'};if(m[p]){document.documentElement.lang=m[p];if(p==='ar')document.documentElement.dir='rtl';}}catch(e){}})();`;
   return (
     <html lang="en">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: langFixScript }} />
         <meta name="theme-color" content="#0f3f2c" />
         <meta name="format-detection" content="telephone=yes,email=yes,address=yes" />
         <link rel="preload" as="image" href="/assets/img/hero/hero-1.webp" fetchPriority="high" media="(min-width: 761px)" />
