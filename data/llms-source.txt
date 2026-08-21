@@ -1,4 +1,4 @@
-# Packaging Factory Direct
+﻿# Packaging Factory Direct
 
 > B2B custom packaging manufacturer based in Shenzhen, China.
 > Factory direct pricing. MOQ 500 PCS. OEM and ODM only. No public retail price.
@@ -106,3 +106,11 @@ color, foil color, material, and shipping country.
 - Comparison guides: rigid vs folding carton, paper vs plastic bags, magnetic vs rigid box, stand-up vs flat pouch
 - Industry guides: cosmetics, skincare, perfume, jewelry, chocolate, candle, supplement, tea, pet food, coffee, pharma
 - All blog posts carry Article + FAQPage structured data and are listed in sitemap-blog.xml.
+## Multilingual versions
+
+- Deutsch: https://www.packagingfactorydirect.com/de
+- Francais: https://www.packagingfactorydirect.com/fr
+- Espanol: https://www.packagingfactorydirect.com/es
+- Nihongo: https://www.packagingfactorydirect.com/ja
+- Al-Arabiyya: https://www.packagingfactorydirect.com/ar
+
